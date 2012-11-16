@@ -1,7 +1,5 @@
-submit_rendezvous
-=================
-
 Submit - Rendezvous
+===================
 
 This project was one of my first attempts at PHP web development for the
 purposes of a course as an undergrad at the University of Crete. It implements
