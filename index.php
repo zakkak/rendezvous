@@ -1,29 +1,30 @@
 <!--
-/* Copyright (c) 2012, Michael K. Papamichael <papamixATgmail.com>
- * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- *     * Redistributions of source code must retain the above copyright notice,
- *     * this list of conditions and the following disclaimer.  Redistributions in
- *     * binary form must reproduce the above copyright notice, this list of
- *     * conditions and the following disclaimer in the documentation and/or other
- *     * materials provided with the distribution.  Any redistribution, use, or
- *     * modification is done solely for personal benefit and not for any
- *     * commercial purpose or for monetary gain
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
+
+ Copyright (c) 2012, Michael K. Papamichael <papamixATgmail.com>
+ All rights reserved.
+ 
+ Redistribution and use in source and binary forms, with or without
+ modification, are permitted provided that the following conditions are met:
+ 
+     * Redistributions of source code must retain the above copyright notice,
+     * this list of conditions and the following disclaimer.  Redistributions in
+     * binary form must reproduce the above copyright notice, this list of
+     * conditions and the following disclaimer in the documentation and/or other
+     * materials provided with the distribution.  Any redistribution, use, or
+     * modification is done solely for personal benefit and not for any
+     * commercial purpose or for monetary gain
+ 
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 -->
 
 <?php 
@@ -43,10 +44,9 @@ session_start();
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Submit-Rendezvous&nbsp;created by Michael Papamichael&nbsp;&copy;&nbsp;2007</title>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-7">
+<title>Submit-Rendezvous created by Michael Papamichael &copy; 2007-12</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="SHORTCUT ICON" HREF="<?php echo $favicon_path;?>">
-<!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> -->
 <link type="text/css" rel="stylesheet" href="theme/style.css">
 <!--[if IE 5]>
 <link rel="stylesheet" type="text/css" href="theme/ie5style.css">
@@ -92,7 +92,7 @@ else	// not logged in
 }
 echo '<br><br>';
 // safe mode check
-if( ini_get('safe_mode') ){echo '<strong>Warning:</strong> PHP is running in SAFE MODE, which is known to cause problems with this site. To disable SAFE MODE contact your web server administrator.<br><br>';}
+if( ini_get('safe_mode') ){echo '<b>Warning:</b> PHP is running in SAFE MODE, which is known to cause problems with this site. To disable SAFE MODE contact your web server administrator.<br><br>';}
 
 
 /*************  REST OF PAGE  *****************/
@@ -112,9 +112,9 @@ if(check_db())
             {
                 echo ' You have the following options:<br><br>
                     <table>
-                    <tr><td align="right"><strong> Submit: </strong></td><td align="left">Select this tab to submit a file.</td></tr>
-                    <tr><td align="right"><strong> Rendezvous: </strong></td><td align="left">Select this tab to book/cancel a rendezvous.</td></tr>
-                    <tr><td align="right"><strong> Advanced: </strong></td><td align="left">Select this tab for advanced options.</td></tr>
+                    <tr><td align="right"><b> Submit: </b></td><td align="left">Select this tab to submit a file.</td></tr>
+                    <tr><td align="right"><b> Rendezvous: </b></td><td align="left">Select this tab to book/cancel a rendezvous.</td></tr>
+                    <tr><td align="right"><b> Advanced: </b></td><td align="left">Select this tab for advanced options.</td></tr>
                     </table>
                     ';
             }
@@ -122,9 +122,9 @@ if(check_db())
             {
                 echo '<br><br>You have the following options:<br><br>
                     <table>
-                    <tr><td align="right"><strong> Submit: </strong></td><td align="left">Select this tab to manage Submit Sessions.</td></tr>
-                    <tr><td align="right"><strong> Rendezvous: </strong></td><td align="left">Select this tab to manage Rendezvous Sessions.</td></tr>
-                    <tr><td align="right"><strong> Advanced: </strong></td><td align="left">Select this tab to perform Advanced Tasks.</td></tr>
+                    <tr><td align="right"><b> Submit: </b></td><td align="left">Select this tab to manage Submit Sessions.</td></tr>
+                    <tr><td align="right"><b> Rendezvous: </b></td><td align="left">Select this tab to manage Rendezvous Sessions.</td></tr>
+                    <tr><td align="right"><b> Advanced: </b></td><td align="left">Select this tab to perform Advanced Tasks.</td></tr>
                     </table>
                     ';
             }
@@ -134,7 +134,7 @@ if(check_db())
         /************* Status Page *************/
         if ($_GET['op'] == 'status')		// Status Page
         {
-            echo '<strong> Submit Sessions: </strong>';
+            echo '<b> Submit Sessions: </b>';
             include ("txtDB/txt-db-api.php");
             $db = new Database("mydb");
             $query = "select title, deadline from submit_sessions where active = 'Y' or (active = 'A' and deadline >= ".time().")";
@@ -156,7 +156,7 @@ if(check_db())
             }
             echo '<br><br>';
 
-            echo '<strong> Rendezvous Sessions: </strong>';
+            echo '<b> Rendezvous Sessions: </b>';
             $query = "select title, deadline from ren_sessions where active = 'Y' or (active = 'A' and deadline >= ".time().")";
             $rs = $db->executeQuery($query); 
             if($rs->getRowCount() == 0)
@@ -219,19 +219,19 @@ if(check_db())
                     <form name="login_form" method="POST" action="">
                     <table  border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                    <td align="right"><strong>User Name:&nbsp;</strong></td>
+                    <td align="right"><b>User Name:&nbsp;</b></td>
                     <td align="left"><input name="login" type="text" value="<?php echo "$user_name";?>"></td>
                     <!-- <td><nobr>&nbsp;(enter your university unix login)</td> -->
                     </tr>
                     <tr><td>&nbsp;</td></tr>
                     <tr>
-                    <td align="right"><strong>Password:&nbsp;</strong></td>
+                    <td align="right"><b>Password:&nbsp;</b></td>
                     <td align="left"><input name="passwd" type="password"></td>
                     <td class="version"><nobr>&nbsp;(mail server used for authentication: <?php echo $mailserver; ?>)</td>
                     </tr>
                     <tr><td>&nbsp;</td></tr>
                     <tr>
-                    <td align="right"><strong>Account Type:&nbsp; </strong></td>
+                    <td align="right"><b>Account Type:&nbsp; </b></td>
                     <td align="left"><select name="acc_type">
                     <option value="user">Student</option>
                     <option value="admin">Administrator</option>
@@ -268,7 +268,7 @@ if(check_db())
                     $verified = false;
 
                     //if(false)
-                    //$connection = ssh2_connect('firiki.csd.uoc.gr', 22);
+                    //$connection = ssh2_connect('gate1.csd.uoc.gr', 22);
                     //if (ssh2_auth_password($connection, $login, $passwd))
                     if($mbox=@imap_open("{".$mailserver.":993/imap/ssl/novalidate-cert}", $login, $passwd, OP_HALFOPEN))
                     {
@@ -279,7 +279,7 @@ if(check_db())
                         }
                         if($acc_type == 'admin')		// admin verification
                         {
-                            if (/*!file_exists($admins_file) ||*/ !is_readable($admins_file) || !$fh = fopen($admins_file, 'r')){ 
+                            if ( !is_readable($admins_file) || !$fh = fopen($admins_file, 'r')){ 
                                 echo 'Could not open the file that lists the administrators ("'.$admins_file.'")!<br>
                                     Please specify a valid file in the "conf.php" file ("'.realpath('.').'/conf.php").<br> 
                                     Make sure that this file is readable and has the appropriate permissions.';
@@ -321,7 +321,7 @@ if(check_db())
                         //$_SESSION['name'] = ora_getcolumn($cursor, 1);
                         $url = "index.php"; // target of the redirect
                         $delay = "1"; // 1 second delay
-                        echo "<strong>You have succesfully logged in.</strong><br>";
+                        echo "<b>You have succesfully logged in.</b><br>";
                         echo "Please wait...";
 
                         echo '<meta http-equiv="refresh" content="'.$delay.';url='.$url.'">';
@@ -342,7 +342,7 @@ if(check_db())
         /************* Help for Strangers *************/
         else if ($_GET['op'] == 'help')
         {
-            echo 'Pleast log in first.!';
+            echo 'Please log in first.!';
         }
         else		// Go to Login page
         {
