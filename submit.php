@@ -1,32 +1,32 @@
-<!--
-/* Copyright (c) 2012, Michael K. Papamichael <papamixATgmail.com>
- * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- *     * Redistributions of source code must retain the above copyright notice,
- *     * this list of conditions and the following disclaimer.  Redistributions in
- *     * binary form must reproduce the above copyright notice, this list of
- *     * conditions and the following disclaimer in the documentation and/or other
- *     * materials provided with the distribution.  Any redistribution, use, or
- *     * modification is done solely for personal benefit and not for any
- *     * commercial purpose or for monetary gain
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
--->
+<?php
 
-<?php 
+/*  Copyright (c) 2007-12, Michael K. Papamichael <papamixATgmail.com>
+ *  All rights reserved.
+ *  
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions are met:
+ *  
+ *      * Redistributions of source code must retain the above copyright
+ *        notice, this list of conditions and the following disclaimer.  
+ *      * Redistributions in binary form must reproduce the above copyright
+ *        notice, this list of conditions and the following disclaimer in the
+ *        documentation and/or other materials provided with the distribution.
+ *      * Any redistribution, use, or modification is done solely for personal
+ *        benefit and not for any commercial purpose or for monetary gain.
+ *  
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+ *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+ *  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ *  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+ *  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+ *  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ *  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+ *  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ *  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ *  POSSIBILITY OF SUCH DAMAGE.
+ */
+
 $start_php_time = microtime(true);	// only works in php5
 //$start_php_time = strtok(microtime(), ' ') + strtok('');	// also works with php4
 include("db.php");     // include txtDB
@@ -91,7 +91,7 @@ else	// not logged in
 }
 echo '<br><br>';
 // safe mode check
-if( ini_get('safe_mode') ){echo '<strong>Warning:</strong> PHP is running in SAFE MODE, which is known to cause problems with this site. To disable SAFE MODE contact your web server administrator.<br><br>';}
+if( ini_get('safe_mode') ){echo '<b>Warning:</b> PHP is running in SAFE MODE, which is known to cause problems with this site. To disable SAFE MODE contact your web server administrator.<br><br>';}
 
 
 /*************  REST OF PAGE  *****************/
@@ -107,7 +107,7 @@ if(check_db())
         if ($rs->getRowCount() != 0)
         {
             ?>
-            <strong><?php echo $title ?></strong><br><br>
+            <b><?php echo $title ?></b><br><br>
             <select name="sub_ses_id">
             <?php    
                 while($rs->next())
@@ -132,10 +132,10 @@ if(check_db())
             if ($_GET['op'] == '')		
             {
                 echo 'Welcome '.$_SESSION['login'].'!';
-                echo ' Ymu have the following options:<br><br>
+                echo ' You have the following options:<br><br>
                     <table>
-                    <tr><td align="right"><strong> Submit a File: </strong></td><td align="left">Select this option to submit a file.</td></tr>
-                    <tr><td align="right"><strong> Review: </strong></td><td align="left">Select this option to review a file submission.</td></tr>
+                    <tr><td align="right"><b> Submit a File: </b></td><td align="left">Select this option to submit a file.</td></tr>
+                    <tr><td align="right"><b> Review: </b></td><td align="left">Select this option to review a file submission.</td></tr>
                     </table>
                     ';
             }
@@ -152,7 +152,7 @@ if(check_db())
                     {					
                     ?>
                         <form name="upload_form1" method="POST" action="">
-                            <strong>Select Submit Session: </strong><br><br>
+                            <b>Select Submit Session: </b><br><br>
                             <select name="sub_ses_id">
                             <?php
                             while($rs->next())
@@ -177,7 +177,7 @@ if(check_db())
                 {
                 ?>
                     <form enctype="multipart/form-data" name="upload_form2" method="POST" action="">
-                        <strong>Select a File to Submit: </strong><br><br>
+                        <b>Select a File to Submit: </b><br><br>
 
                         <?php
                         $db = new Database("mydb");
@@ -394,45 +394,45 @@ if(check_db())
                                                                 <td>&nbsp; </td>
                                                                 <td><table border="0" cellspacing="2" cellpadding="0">
                                                                                 <tr>
-                                                                                        <td><div align="right"><strong><nobr>Title:&nbsp;</strong></div></td>
-                                                                                        <td><nobr><strong> <input name="title" type="text" value="<?php echo "$title";?>"></strong>
+                                                                                        <td><div align="right"><b><nobr>Title:&nbsp;</b></div></td>
+                                                                                        <td><nobr><b> <input name="title" type="text" value="<?php echo "$title";?>"></b>
                                                                                                         &nbsp;(set a title - e.g. "HY-225: Exercise 2")</td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                        <td><div align="right"><strong><nobr>Save Directory:&nbsp;</strong></div></td>
-                                                                                        <td><nobr><strong><input name="directory" type="text" value="<?php echo "$directory";?>"></strong>
+                                                                                        <td><div align="right"><b><nobr>Save Directory:&nbsp;</b></div></td>
+                                                                                        <td><nobr><b><input name="directory" type="text" value="<?php echo "$directory";?>"></b>
                                                                                                         &nbsp;(set absolute path* for submitted files - e.g. "/home/lessons/hy225/submit2")</td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                        <td height="23"><div align="right"><strong><nobr>Filename:&nbsp;</strong></div></td>
-                                                                                        <td><nobr><strong><input name="filename" type="text" value="<?php echo "$filename";?>"></strong>
+                                                                                        <td height="23"><div align="right"><b><nobr>Filename:&nbsp;</b></div></td>
+                                                                                        <td><nobr><b><input name="filename" type="text" value="<?php echo "$filename";?>"></b>
                                                                                                         &nbsp;(set required filename, leave blank to allow any filename - e.g. "ask2.tar.gz")</td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                        <td height="23"><div align="right"><strong><nobr>Maximum Filesize:&nbsp;</strong></div></td>
-                                                                                        <td><nobr><strong><input name="filesize" type="text" value="<?php echo "$filesize";?>"></strong>
+                                                                                        <td height="23"><div align="right"><b><nobr>Maximum Filesize:&nbsp;</b></div></td>
+                                                                                        <td><nobr><b><input name="filesize" type="text" value="<?php echo "$filesize";?>"></b>
                                                                                                         &nbsp;(set filesize limit in KB, set to 0 for no limit - e.g. "2500")</td>
                                                                                 </tr>
                                                                                 <tr> <td>&nbsp;</td><td>&nbsp;(Note: maximum upload filesize allowed by php/webserver is: <?php echo ini_get("upload_max_filesize") ?>)</td></tr>
                                                                                 <tr> <td>&nbsp;</td></tr>
                                                                                 <tr>
-                                                                                        <td><div align="right"><nobr><strong>Submission Deadline&nbsp;&nbsp;</strong> </div></td>
+                                                                                        <td><div align="right"><nobr><b>Submission Deadline&nbsp;&nbsp;</b> </div></td>
                                                                                 </tr>
                                                                                 <tr>
                                             <script>
-                                            document.writeln('<td><div align="right"><nobr><strong>Date:&nbsp;</strong></div></td>');
+                                            document.writeln('<td><div align="right"><nobr><b>Date:&nbsp;</b></div></td>');
                                             document.writeln('<td>');DateInput('date', true, 'DD/MM/YYYY'<?php if($d_date!= "") {echo ",'".$d_date."'";} ?>);document.writeln('</td>');
                                             </script>
                                                                                         <noscript>
-                                                                                                <td><div align="right"><nobr><strong>Date</strong> (dd/mm/yyyy)<strong>:&nbsp;</strong></div></td>
-                                                                                                <td><nobr><strong><input name="date" type="text" value="<?php echo "$d_date";?>"></strong>
+                                                                                                <td><div align="right"><nobr><b>Date</b> (dd/mm/yyyy)<b>:&nbsp;</b></div></td>
+                                                                                                <td><nobr><b><input name="date" type="text" value="<?php echo "$d_date";?>"></b>
                                                                                                 &nbsp;(set date for deadline - e.g. "05/07/1983")
                                                                                                 </td>
                                                                                         </noscript>													
                                                                                 </tr>
                                                                                 <tr>
-                                                                                        <td><div align="right"><strong> Time:&nbsp; </strong></div></td>
-                                                                                        <td><table><tr><td><nobr><strong>
+                                                                                        <td><div align="right"><b> Time:&nbsp; </b></div></td>
+                                                                                        <td><table><tr><td><nobr><b>
 
                                                                                         <select name="d_hour" ><?php for($h=0; $h<24; $h++){
                                                                                             if($h == $d_h)
@@ -449,17 +449,17 @@ if(check_db())
                                                                                                         echo '<option value="'.$m.'">'.($m<10?('0'.$m):$m).'</option>';
                                                                                                 }?>
                                                                                                 </select>													
-                                                                                        </strong></td></tr></table></td>
+                                                                                        </b></td></tr></table></td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                        <td><div align="right"><strong><nobr>Automatic Deactivation:&nbsp;</strong></div></td>
+                                                                                        <td><div align="right"><b><nobr>Automatic Deactivation:&nbsp;</b></div></td>
                                                                                         <td><nobr><input type="checkbox" name="auto" value="A" <?php if ($auto == 'A') echo ' checked="checked" ';?>>									
                                                                                                         &nbsp;(if selected, submit session will automatically close after deadline)</td>
                                                                                 </tr>
                                                                                 <tr> <td>&nbsp;</td></tr>
                                                                                 <tr>
                                                                                         <td><div align="right"><input name="login_btn" type="submit" id="login_btn2" value="<?php echo $button_text; ?>"></div></td>
-                                                                                        <td><div align="left"><strong></strong></div></td>
+                                                                                        <td><div align="left"><b></b></div></td>
                                                                                 </tr>										
                                                                         </table>
                                                                 </td>
@@ -477,11 +477,11 @@ if(check_db())
                                             echo 'Welcome '.$_SESSION['login'].'!';
                                             echo ' You have the following options:<br><br>
                                                 <table>
-                                                <tr><td align="right"><strong> Create: </strong></td><td align="left">Create a Submit Session.</td></tr>
-                                                <tr><td align="right"><strong> Edit: </strong></td><td align="left">Edit a Submit Session.</td></tr>
-                                                <tr><td align="right"><strong> Review: </strong></td><td align="left">Get detailed information about a Submit Session.</td></tr>
-                                                <tr><td align="right"><strong> Close: </strong></td><td align="left">Deactivate("close") an active ("open") Submit Session.</td></tr>
-                                                <tr><td align="right"><strong> Delete: </strong></td><td align="left">Delete a Submit Session.</td></tr>
+                                                <tr><td align="right"><b> Create: </b></td><td align="left">Create a Submit Session.</td></tr>
+                                                <tr><td align="right"><b> Edit: </b></td><td align="left">Edit a Submit Session.</td></tr>
+                                                <tr><td align="right"><b> Review: </b></td><td align="left">Get detailed information about a Submit Session.</td></tr>
+                                                <tr><td align="right"><b> Close: </b></td><td align="left">Deactivate("close") an active ("open") Submit Session.</td></tr>
+                                                <tr><td align="right"><b> Delete: </b></td><td align="left">Delete a Submit Session.</td></tr>
                                                 </table>
                                                 ';
                                         }
@@ -677,7 +677,7 @@ if(check_db())
                                     $db = new Database("mydb");
                                     $rs = $db->executeQuery($query); 
                                     if($rs === 1)
-                                        echo '<br> <strong>Submit Session has been succesfully updated and activated!</strong><br>' ;
+                                        echo '<br> <b>Submit Session has been succesfully updated and activated!</b><br>' ;
                                     else
                                         echo '<br> Update failed!';
                                 }
@@ -707,17 +707,17 @@ if(check_db())
                                                 if($rs->next())
                                                 {
                                                     if ($rs->getCurrentValueByNr(6) == 'Y')
-                                                        echo 'This Submit Session is <strong>active</strong> and will have to be <strong>manually closed</strong> (no automatic deactivation).<br>';
+                                                        echo 'This Submit Session is <b>active</b> and will have to be <b>manually closed</b> (no automatic deactivation).<br>';
                                                     else if ($rs->getCurrentValueByNr(6) == 'A')
                                                     {
                                                         if($rs->getCurrentValueByNr(5) > time())
-                                                            echo 'The deadline for this Submit Session is on <strong>'.date("F j, Y, g:i a", $rs->getCurrentValueByNr(5)).'</strong>
-                                                            and it will be <strong>automatically deactivated</strong>.<br>';
+                                                            echo 'The deadline for this Submit Session is on <b>'.date("F j, Y, g:i a", $rs->getCurrentValueByNr(5)).'</b>
+                                                            and it will be <b>automatically deactivated</b>.<br>';
                                                         else
-                                                            echo 'This Submit Session was <strong>automatically closed on '.date("F j, Y, g:i a", $rs->getCurrentValueByNr(5)).'</strong>.<br>';
+                                                            echo 'This Submit Session was <b>automatically closed on '.date("F j, Y, g:i a", $rs->getCurrentValueByNr(5)).'</b>.<br>';
                                                     }
                                                     else
-                                                        echo 'This Submit Session has been <strong>closed</strong>.<br>';
+                                                        echo 'This Submit Session has been <b>closed</b>.<br>';
 
                                                     echo 'Detailed info for this Submit Session:<br><br>';
 
@@ -733,12 +733,12 @@ if(check_db())
                                                     $rs = $db->executeQuery($query); 
                                                     if($rs->getRowCount() == 0)
                                                     {
-                                                        echo 'There are <strong>no</strong> valid file submissions for this Submit Session.<br><br>';
+                                                        echo 'There are <b>no</b> valid file submissions for this Submit Session.<br><br>';
                                                     }
                                                     else
                                                     {
-                                                        echo 'Number of valid file submissions for this Submit Session: <strong>'.$rs->getRowCount().'</strong><br>';
-                                                        echo 'Overdue submissions are marked in <font color="red"><strong> RED </strong></font>.<br><br>';
+                                                        echo 'Number of valid file submissions for this Submit Session: <b>'.$rs->getRowCount().'</b><br>';
+                                                        echo 'Overdue submissions are marked in <font color="red"><b> RED </b></font>.<br><br>';
 
                                                         echo '<table cellpadding="5" cellspacing="0" class="blue">';
                                                         echo '<tr><th><b>User</b></th><th><b>Submission Timestamp</b></th></tr>';
@@ -748,7 +748,7 @@ if(check_db())
                                                             if($rs->getCurrentValueByNr(2) <= $deadline)		
                                                                 echo '<td align="center">'.date("F j, Y, g:i a", $rs->getCurrentValueByNr(2)).'</td></tr>';
                                                             else
-                                                                echo '<td align="center"><font color="red"><strong>'.date("F j, Y, g:i a", $rs->getCurrentValueByNr(2)).'</strong></font></td></tr>';
+                                                                echo '<td align="center"><font color="red"><b>'.date("F j, Y, g:i a", $rs->getCurrentValueByNr(2)).'</b></font></td></tr>';
                                                         }
                                                         echo "</table>";
                                                     }
@@ -772,7 +772,7 @@ if(check_db())
                                                 {
 ?>
                                                         <form name="close_sub_form" method="POST" action="">
-                                                                <strong>Select Submit Session: </strong><br><br>
+                                                                <b>Select Submit Session: </b><br><br>
                                                                 <select name="sub_ses_id">
 <?php
                                                     while($rs->next())
@@ -829,9 +829,9 @@ if(check_db())
                                                 $query = "delete from submits where sub_ses_id = ".$sub_ses_id;
                                                 $rs2 = $db->executeQuery($query); 
                                                 if($rs == 1)
-                                                    echo '<br><strong>Submit Session has been succesfully deleted!</strong><br>Note: '.$rs2.' submission records belonging to this Exam Period were also deleted.' ;
+                                                    echo '<br><b>Submit Session has been succesfully deleted!</b><br>Note: '.$rs2.' submission records belonging to this Exam Period were also deleted.' ;
                                                 else
-                                                    echo '<br><strong>Operation failed!</strong><br>Probably someone else already deleted this Submit Session.';
+                                                    echo '<br><b>Operation failed!</b><br>Probably someone else already deleted this Submit Session.';
                                             }
                                             else
                                             {

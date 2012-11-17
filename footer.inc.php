@@ -1,8 +1,31 @@
-<!-- Start of Google Analytics Code -->
-<script src="https://ssl.google-analytics.com/urchin.js" type="text/javascript"></script>
-<script type="text/javascript">_uacct = "UA-1787131-1";urchinTracker();</script>
-
 <?php
+
+/*  Copyright (c) 2007-12, Michael K. Papamichael <papamixATgmail.com>
+ *  All rights reserved.
+ *  
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions are met:
+ *  
+ *      * Redistributions of source code must retain the above copyright
+ *        notice, this list of conditions and the following disclaimer.  
+ *      * Redistributions in binary form must reproduce the above copyright
+ *        notice, this list of conditions and the following disclaimer in the
+ *        documentation and/or other materials provided with the distribution.
+ *      * Any redistribution, use, or modification is done solely for personal
+ *        benefit and not for any commercial purpose or for monetary gain.
+ *  
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+ *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+ *  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ *  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+ *  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+ *  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ *  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+ *  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ *  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ *  POSSIBILITY OF SUCH DAMAGE.
+ */
 
 	// Count number of unique visitors
 	if(file_exists(DB_DIR."visitors.txt") )
@@ -55,9 +78,9 @@
 	</td></tr>
 	<tr width="100%"><td>
 		<table bgcolor="#006699" style="color:#FFFFFF; font-size: 12px;" width="100%" border="0" cellpadding="1" ><tr>
-			<td align="left"><nobr>&nbsp;&nbsp;<strong>Unique Visitors:</strong> <?php echo $visitors; ?></td>
-			<td align="left"><nobr>&nbsp;&nbsp;<strong>Total Hits:</strong> <?php echo $hits; ?></td>
-			<td align="center" width="99%"><nobr>This page was generated in <strong><?php echo $generation; ?></strong> seconds. </td>
+			<td align="left"><nobr>&nbsp;&nbsp;<b>Unique Visitors:</b> <?php echo $visitors; ?></td>
+			<td align="left"><nobr>&nbsp;&nbsp;<b>Total Hits:</b> <?php echo $hits; ?></td>
+			<td align="center" width="99%"><nobr>This page was generated in <b><?php echo $generation; ?></b> seconds. </td>
 			<td align="right"><a href="http://www.c-worker.ch/txtdbapi/index_eng.php"> <img border="none" src="./theme/txtdb.gif"></a></td>
 		</tr></table>
 	</td></tr>

@@ -1,32 +1,32 @@
-<!--
-/* Copyright (c) 2012, Michael K. Papamichael <papamixATgmail.com>
- * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- *     * Redistributions of source code must retain the above copyright notice,
- *     * this list of conditions and the following disclaimer.  Redistributions in
- *     * binary form must reproduce the above copyright notice, this list of
- *     * conditions and the following disclaimer in the documentation and/or other
- *     * materials provided with the distribution.  Any redistribution, use, or
- *     * modification is done solely for personal benefit and not for any
- *     * commercial purpose or for monetary gain
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
--->
+<?php
 
-<?php 
+/*  Copyright (c) 2007-12, Michael K. Papamichael <papamixATgmail.com>
+ *  All rights reserved.
+ *  
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions are met:
+ *  
+ *      * Redistributions of source code must retain the above copyright
+ *        notice, this list of conditions and the following disclaimer.  
+ *      * Redistributions in binary form must reproduce the above copyright
+ *        notice, this list of conditions and the following disclaimer in the
+ *        documentation and/or other materials provided with the distribution.
+ *      * Any redistribution, use, or modification is done solely for personal
+ *        benefit and not for any commercial purpose or for monetary gain.
+ *  
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+ *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+ *  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ *  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+ *  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+ *  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ *  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+ *  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ *  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ *  POSSIBILITY OF SUCH DAMAGE.
+ */
+
 $start_php_time = microtime(true);	// only works in php5
 //$start_php_time = strtok(microtime(), ' ') + strtok('');	// also works with php4
 include("db.php");     // include txtDB
@@ -90,7 +90,7 @@ else	// not logged in
 
 echo 	'<br><br>';
 // safe mode check
-if( ini_get('safe_mode') ){echo '<strong>Warning:</strong> PHP is running in SAFE MODE, which is known to cause problems with this site. To disable SAFE MODE contact your web server administrator.<br><br>';}
+if( ini_get('safe_mode') ){echo '<b>Warning:</b> PHP is running in SAFE MODE, which is known to cause problems with this site. To disable SAFE MODE contact your web server administrator.<br><br>';}
 
 	
 /*************  REST OF PAGE  *****************/
@@ -108,8 +108,8 @@ if(check_db())
                 echo 'Welcome '.$_SESSION['login'].'!';
                 echo ' You have the following options:<br><br>
                     <table>
-                    <tr><td align="right"><strong> Submit History: </strong></td><td align="left">Select this option to view all of your submissions.</td></tr>
-                    <tr><td align="right"><strong> Rendezvous History: </strong></td><td align="left">Select this option to view all of your previously booked rendezvous.</td></tr>
+                    <tr><td align="right"><b> Submit History: </b></td><td align="left">Select this option to view all of your submissions.</td></tr>
+                    <tr><td align="right"><b> Rendezvous History: </b></td><td align="left">Select this option to view all of your previously booked rendezvous.</td></tr>
                     </table>
                     ';
             }
@@ -117,7 +117,7 @@ if(check_db())
             /************* Submit History *************/
             if ($_GET['op'] == 'sub_hist')		
             {
-                echo '<strong> Submit History: </strong>';
+                echo '<b> Submit History: </b>';
                 include ("txtDB/txt-db-api.php");
                 $db = new Database("mydb");
                 $query = 'select sub_ses_id, sub_time from submits where login = "'.$_SESSION['login'].'"';
@@ -151,7 +151,7 @@ if(check_db())
             if ($_GET['op'] == 'ren_hist')		
             {
 
-                echo '<strong> Rendezvous History: </strong>';
+                echo '<b> Rendezvous History: </b>';
                 include ("txtDB/txt-db-api.php");
                 $db = new Database("mydb");
                 $query = 'select ren_ses_id, ren_time, ren_slot from rendezvous where login = "'.$_SESSION['login'].'"';
@@ -188,11 +188,11 @@ if(check_db())
                 echo 'Welcome '.$_SESSION['login'].'!';
                 echo ' You have the following options:<br><br>
                     <table>
-                    <tr><td align="right"><strong> View Log: </strong></td><td align="left">View System Log.</td></tr>
-                    <tr><td align="right"><strong> Submit History: </strong></td><td align="left">Get detailed information about all available Submit Sessions.</td></tr>
-                    <tr><td align="right"><strong> Rendezvous History: </strong></td><td align="left">Get detailed information about all available Rendezvous Sessions.</td></tr>
-                    <tr><td align="right"><strong> SQL Query: </strong></td><td align="left">Perform direct SQL Queries on the database.</td></tr>
-                    <tr><td align="right"><strong> Reset System: </strong></td><td align="left">Deletes everything and resets the whole system! </td></tr>
+                    <tr><td align="right"><b> View Log: </b></td><td align="left">View System Log.</td></tr>
+                    <tr><td align="right"><b> Submit History: </b></td><td align="left">Get detailed information about all available Submit Sessions.</td></tr>
+                    <tr><td align="right"><b> Rendezvous History: </b></td><td align="left">Get detailed information about all available Rendezvous Sessions.</td></tr>
+                    <tr><td align="right"><b> SQL Query: </b></td><td align="left">Perform direct SQL Queries on the database.</td></tr>
+                    <tr><td align="right"><b> Reset System: </b></td><td align="left">Deletes everything and resets the whole system! </td></tr>
                     </table>
                     ';
             }
@@ -208,7 +208,7 @@ if(check_db())
 
                     if ($fp = fopen(DB_DIR."log.txt", "r"))
                     {
-                        echo '<strong>System Log:</strong>&nbsp;(';
+                        echo '<b>System Log:</b>&nbsp;(';
                         echo exec('wc -l < '.DB_DIR.'log.txt');
                         echo ' entries )<br>';
                         echo '<textarea name="log" cols="80" rows="20" readonly="readonly">';
@@ -233,7 +233,7 @@ if(check_db())
             /************* Submit History *************/
             if ($_GET['op'] == 'sub_hist')		
             {
-                echo '<strong> Submit History: </strong>';
+                echo '<b> Submit History: </b>';
                 $db = new Database("mydb");
                 $query = 'select * from submit_sessions';
                 $rs = $db->executeQuery($query); 
@@ -252,7 +252,7 @@ if(check_db())
             /************* Rendezvous History *************/
             if ($_GET['op'] == 'ren_hist')		
             {
-                echo '<strong> Rendezvous History: </strong>';
+                echo '<b> Rendezvous History: </b>';
                 $db = new Database("mydb");
                 $query = 'select * from ren_sessions';
                 $rs = $db->executeQuery($query); 
@@ -276,7 +276,7 @@ if(check_db())
                 {
                 ?>
                     <form name="form1" method="post" action="">
-                            <strong><font size = "4" >SQL Query : </font></strong><br><br>
+                            <b><font size = "4" >SQL Query : </font></b><br><br>
                             <textarea name="textarea" cols="50" rows="5" wrap="PHYSICAL"><?php echo "$query";?></textarea></td> <br><br>
                             <input type="submit" name="Submit" value="Submit">
                     </form>
@@ -295,7 +295,7 @@ if(check_db())
                         $db = new Database("mydb");
                         $rs = $db->executeQuery($query); 
 
-                        echo "<strong>Your SQL Query returned the following results:</strong><br><br>";
+                        echo "<b>Your SQL Query returned the following results:</b><br><br>";
 
                         //printing simple html
                         include "php/print.php";
@@ -317,7 +317,7 @@ if(check_db())
                 {
                 ?>
                     <form name="reset_form" method="POST" action="">
-                            <strong>Are you sure you want to reset the System?</strong><br>Warning: All database files will be deleted. <br><br>
+                            <b>Are you sure you want to reset the System?</b><br>Warning: All database files will be deleted. <br><br>
                             <input name="yes_btn" type="submit" id="yes_btn" value="Reset">
                     </form>
                 <?php

@@ -1,33 +1,32 @@
-<!--
+<?php
 
- Copyright (c) 2012, Michael K. Papamichael <papamixATgmail.com>
- All rights reserved.
- 
- Redistribution and use in source and binary forms, with or without
- modification, are permitted provided that the following conditions are met:
- 
-     * Redistributions of source code must retain the above copyright notice,
-     * this list of conditions and the following disclaimer.  Redistributions in
-     * binary form must reproduce the above copyright notice, this list of
-     * conditions and the following disclaimer in the documentation and/or other
-     * materials provided with the distribution.  Any redistribution, use, or
-     * modification is done solely for personal benefit and not for any
-     * commercial purpose or for monetary gain
- 
- THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/*  Copyright (c) 2007-12, Michael K. Papamichael <papamixATgmail.com>
+ *  All rights reserved.
+ *  
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions are met:
+ *  
+ *      * Redistributions of source code must retain the above copyright
+ *        notice, this list of conditions and the following disclaimer.  
+ *      * Redistributions in binary form must reproduce the above copyright
+ *        notice, this list of conditions and the following disclaimer in the
+ *        documentation and/or other materials provided with the distribution.
+ *      * Any redistribution, use, or modification is done solely for personal
+ *        benefit and not for any commercial purpose or for monetary gain.
+ *  
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+ *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+ *  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ *  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+ *  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+ *  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ *  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+ *  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ *  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ *  POSSIBILITY OF SUCH DAMAGE.
+ */
 
--->
-
-<?php 
 $start_php_time = microtime(true);	// only works in php5
 //$start_php_time = strtok(microtime(), ' ') + strtok('');	// also works with php4
 include("db.php");     // include txtDB
@@ -111,19 +110,22 @@ if(check_db())
             if ($_SESSION['acc_type'] == 'user')	// simple user
             {
                 echo ' You have the following options:<br><br>
-                    <table>
-                    <tr><td align="right"><b> Submit: </b></td><td align="left">Select this tab to submit a file.</td></tr>
-                    <tr><td align="right"><b> Rendezvous: </b></td><td align="left">Select this tab to book/cancel a rendezvous.</td></tr>
-                    <tr><td align="right"><b> Advanced: </b></td><td align="left">Select this tab for advanced options.</td></tr>
-                    </table>
-                    ';
+                  <table>';
+                  if($submit_enabled)
+                    echo '<tr><td align="right"><b> Submit: </b></td><td align="left">Select this tab to submit a file.</td></tr>';
+                
+                  echo '<tr><td align="right"><b> Rendezvous: </b></td><td align="left">Select this tab to book/cancel a rendezvous.</td></tr>
+                        <tr><td align="right"><b> Advanced: </b></td><td align="left">Select this tab for advanced options.</td></tr>
+                        </table>';
             }
             else	// admin
             {
                 echo '<br><br>You have the following options:<br><br>
-                    <table>
-                    <tr><td align="right"><b> Submit: </b></td><td align="left">Select this tab to manage Submit Sessions.</td></tr>
-                    <tr><td align="right"><b> Rendezvous: </b></td><td align="left">Select this tab to manage Rendezvous Sessions.</td></tr>
+                    <table>';
+                  if($submit_enabled)
+                    echo '<tr><td align="right"><b> Submit: </b></td><td align="left">Select this tab to manage Submit Sessions.</td></tr>';
+                
+                  echo '<tr><td align="right"><b> Rendezvous: </b></td><td align="left">Select this tab to manage Rendezvous Sessions.</td></tr>
                     <tr><td align="right"><b> Advanced: </b></td><td align="left">Select this tab to perform Advanced Tasks.</td></tr>
                     </table>
                     ';
@@ -134,9 +136,10 @@ if(check_db())
         /************* Status Page *************/
         if ($_GET['op'] == 'status')		// Status Page
         {
+          include ("txtDB/txt-db-api.php");
+          $db = new Database("mydb");
+          if($submit_enabled) {
             echo '<b> Submit Sessions: </b>';
-            include ("txtDB/txt-db-api.php");
-            $db = new Database("mydb");
             $query = "select title, deadline from submit_sessions where active = 'Y' or (active = 'A' and deadline >= ".time().")";
             $rs = $db->executeQuery($query); 
             if($rs->getRowCount() == 0)
@@ -155,6 +158,7 @@ if(check_db())
                 echo "</table>";
             }
             echo '<br><br>';
+          }
 
             echo '<b> Rendezvous Sessions: </b>';
             $query = "select title, deadline from ren_sessions where active = 'Y' or (active = 'A' and deadline >= ".time().")";

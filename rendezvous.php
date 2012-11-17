@@ -1,32 +1,32 @@
-<!--
-/* Copyright (c) 2012, Michael K. Papamichael <papamixATgmail.com>
- * All rights reserved.
- * 
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
- * 
- *     * Redistributions of source code must retain the above copyright notice,
- *     * this list of conditions and the following disclaimer.  Redistributions in
- *     * binary form must reproduce the above copyright notice, this list of
- *     * conditions and the following disclaimer in the documentation and/or other
- *     * materials provided with the distribution.  Any redistribution, use, or
- *     * modification is done solely for personal benefit and not for any
- *     * commercial purpose or for monetary gain
- * 
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
--->
+<?php
 
-<?php 
+/*  Copyright (c) 2007-12, Michael K. Papamichael <papamixATgmail.com>
+ *  All rights reserved.
+ *  
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions are met:
+ *  
+ *      * Redistributions of source code must retain the above copyright
+ *        notice, this list of conditions and the following disclaimer.  
+ *      * Redistributions in binary form must reproduce the above copyright
+ *        notice, this list of conditions and the following disclaimer in the
+ *        documentation and/or other materials provided with the distribution.
+ *      * Any redistribution, use, or modification is done solely for personal
+ *        benefit and not for any commercial purpose or for monetary gain.
+ *  
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+ *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+ *  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
+ *  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
+ *  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
+ *  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+ *  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+ *  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+ *  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+ *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ *  POSSIBILITY OF SUCH DAMAGE.
+ */
+
 $start_php_time = microtime(true);	// only works in php5
 //$start_php_time = strtok(microtime(), ' ') + strtok('');	// also works with php4
 include("db.php");     // include txtDB
@@ -99,7 +99,7 @@ else	// not logged in
 
 echo 	'<br><br>';
 // safe mode check
-if( ini_get('safe_mode') ){echo '<strong>Warning:</strong> PHP is running in SAFE MODE, which is known to cause problems with this site. To disable SAFE MODE contact your web server administrator.<br><br>';}
+if( ini_get('safe_mode') ){echo '<b>Warning:</b> PHP is running in SAFE MODE, which is known to cause problems with this site. To disable SAFE MODE contact your web server administrator.<br><br>';}
 
 
 /*************  REST OF PAGE  *****************/
@@ -114,7 +114,7 @@ if(check_db())
         if ($rs->getRowCount() != 0)
         {
               ?>
-              <strong><?php echo $title ?></strong><br><br>
+              <b><?php echo $title ?></b><br><br>
               <select name="ren_ses_id">
               <?php
                 while($rs->next())
@@ -140,9 +140,9 @@ if(check_db())
                 echo 'Welcome '.$_SESSION['login'].'!';
                 echo ' You have the following options:<br><br>
                     <table>
-                    <tr><td align="right"><strong> Book: </strong></td><td align="left">Select this option to book a rendezvous.</td></tr>
-                    <tr><td align="right"><strong> Review: </strong></td><td align="left">Select this option to review a rendezvous.</td></tr>
-                    <tr><td align="right"><strong> Cancel: </strong></td><td align="left">Select this option to cancel a rendezvous.</td></tr>
+                    <tr><td align="right"><b> Book: </b></td><td align="left">Select this option to book a rendezvous.</td></tr>
+                    <tr><td align="right"><b> Review: </b></td><td align="left">Select this option to review a rendezvous.</td></tr>
+                    <tr><td align="right"><b> Cancel: </b></td><td align="left">Select this option to cancel a rendezvous.</td></tr>
                     </table>
                     ';
             }
@@ -159,7 +159,7 @@ if(check_db())
                     {
                     ?>
                     <form name="book_form1" method="POST" action="">
-                        <strong>Select Rendezvous Session: </strong><br><br>
+                        <b>Select Rendezvous Session: </b><br><br>
                         <select name="ren_ses_id">
                     <?php
                         while($rs->next())
@@ -187,7 +187,7 @@ if(check_db())
                     {
                         $looking_for_free_slot = true;
                         echo '<form name="book_form2" method="POST" action="">';
-                        echo '<strong>Select an available slot and click </strong>';
+                        echo '<b>Select an available slot and click </b>';
                         echo '<input name="review_btn" type="submit" id="review_btn" value="Book"><br><br>';
                         echo '<table border="0" cellpadding="0" cellspacing="0"><tr>';
 
@@ -339,7 +339,7 @@ if(check_db())
                                         $rs2 = $db->executeQuery($query); 
                                         if($rs2 == 1)
                                         {
-                                            echo '<strong>Rendezvous succesfully updated!</strong><br>';
+                                            echo '<b>Rendezvous succesfully updated!</b><br>';
                                             if($email_confirmation)
                                             {
                                                 $query = "select title from ren_sessions where ren_ses_id = ".$ren_ses_id;
@@ -366,7 +366,7 @@ if(check_db())
                                         $rs3 = $db->executeQuery($query); 
                                         if($rs3 == 1)
                                         {
-                                            echo '<strong>Rendezvous succesfully booked!</strong><br>';
+                                            echo '<b>Rendezvous succesfully booked!</b><br>';
 
                                             if($email_confirmation)
                                             {
@@ -422,7 +422,7 @@ if(check_db())
                     {
                     ?>
                     <form name="cancel_ren_form" method="POST" action="">
-                            <strong>Select Rendezvous Session: </strong><br><br>
+                            <b>Select Rendezvous Session: </b><br><br>
                             <select name="ren_ses_id">
                     <?php
                         while($rs->next())
@@ -453,7 +453,7 @@ if(check_db())
                         $query = "delete from rendezvous where ren_ses_id = ".$ren_ses_id." and login = '".$_SESSION['login']."'";
                         $rs = $db->executeQuery($query); 
                         if($rs == 1)
-                            echo '<strong>Rendezvous has been succesfully canceled!</strong>' ;
+                            echo '<b>Rendezvous has been succesfully canceled!</b>' ;
                         else
                             echo '<br> No booking found to cancel!<br>You probably did not have a booking for this rendezvous session.';
                     }
@@ -520,30 +520,30 @@ if(check_db())
               <td>&nbsp; </td>
               <td><table border="0" cellspacing="2" cellpadding="0">
                   <tr>
-                    <td><div align="right"><strong><nobr>Title:&nbsp;</strong></div></td>
-                    <td><nobr><strong> <input name="title" type="text" value="<?php echo "$title";?>"></strong>
+                    <td><div align="right"><b><nobr>Title:&nbsp;</b></div></td>
+                    <td><nobr><b> <input name="title" type="text" value="<?php echo "$title";?>"></b>
                         &nbsp;(set a title - e.g. "HY-225: Examination of exercise 3")
                     </td>
                   </tr>
                   <tr> <td>&nbsp;</td></tr>
                   <tr>
-                    <td><div align="right"><nobr><strong>Booking Deadline&nbsp;&nbsp;</strong> </div></td>
+                    <td><div align="right"><nobr><b>Booking Deadline&nbsp;&nbsp;</b> </div></td>
                   </tr>
                   <tr>
                 <script>
-                document.writeln('<td><div align="right"><nobr><strong>Date:&nbsp;</strong></div></td>');
+                document.writeln('<td><div align="right"><nobr><b>Date:&nbsp;</b></div></td>');
                 document.writeln('<td>');DateInput('d_date', true, 'DD/MM/YYYY'<?php if($d_date!= "") {echo ",'".$d_date."'";} ?>);document.writeln('</td>');
                 </script>
                     <noscript>
-                      <td><div align="right"><nobr><strong>Date</strong> (dd/mm/yyyy)<strong>:&nbsp;</strong></div></td>
-                      <td><nobr><strong><input name="d_date" type="text" value="<?php echo "$d_date";?>"></strong>
+                      <td><div align="right"><nobr><b>Date</b> (dd/mm/yyyy)<b>:&nbsp;</b></div></td>
+                      <td><nobr><b><input name="d_date" type="text" value="<?php echo "$d_date";?>"></b>
                       &nbsp;(set date for deadline - e.g. "05/07/1983")
                       </td>
                     </noscript>													
                   </tr>
                   <tr>
-                    <td><div align="right"><strong> Time:&nbsp; </strong></div></td>
-                    <td><table><tr><td><nobr><strong>
+                    <td><div align="right"><b> Time:&nbsp; </b></div></td>
+                    <td><table><tr><td><nobr><b>
 
                     <select name="d_hour" ><?php for($h=0; $h<24; $h++){
                         if($h == $d_hour)
@@ -560,10 +560,10 @@ if(check_db())
                               echo '<option value="'.$m.'">'.($m<10?('0'.$m):$m).'</option>';
                       }?>
                       </select>													
-                    </strong></td></tr></table></td>
+                    </b></td></tr></table></td>
                   </tr>
                   <tr>
-                    <td><div align="right"><strong><nobr>Automatic Deactivation:&nbsp;</strong></div></td>
+                    <td><div align="right"><b><nobr>Automatic Deactivation:&nbsp;</b></div></td>
                     <td><nobr><input type="checkbox" name="active" value="A" <?php if($active == "A")echo 'checked="checked"';?> >
                         &nbsp;(if selected, rendezvous session will automatically close after deadline)
                     </td>
@@ -571,7 +571,7 @@ if(check_db())
                   <tr> <td>&nbsp;</td></tr>
                   <tr>
                     <td><div align="right"><input name="login_btn" type="submit" id="login_btn2" value="<?php echo $button_text ?>"></div></td>
-                    <td><div align="left"><strong></strong></div></td>
+                    <td><div align="left"><b></b></div></td>
                   </tr>										
                 </table>
               </td>
@@ -587,13 +587,13 @@ if(check_db())
                 echo 'Welcome '.$_SESSION['login'].'!';
                 echo ' You have the following options:<br><br>
                     <table>
-                    <tr><td align="right"><strong> Create: </strong></td><td align="left">Create a Rendezvous Session. Don\'t forget to add examination slots afterwards! </td></tr>
-                    <tr><td align="right"><strong> Edit: </strong></td><td align="left">Edit a Rendezvous Session.</td></tr>
-                    <tr><td align="right"><strong> Review: </strong></td><td align="left">Get detailed information about a Rendezvous Session.</td></tr>
-                    <tr><td align="right"><strong> Add Slots: </strong></td><td align="left">Add Examination Slots to a Rendezvous Session.</td></tr>
-                    <tr><td align="right"><strong> Remove Slots: </strong></td><td align="left">Remove Examination Slots from a Rendezvous Session.</td></tr>
-                    <tr><td align="right"><strong> Close: </strong></td><td align="left">Deactivate ("close") an active ("open") Rendezvous Session.</td></tr>
-                    <tr><td align="right"><strong> Delete: </strong></td><td align="left">Delete a Rendezvous Session.</td></tr>
+                    <tr><td align="right"><b> Create: </b></td><td align="left">Create a Rendezvous Session. Don\'t forget to add examination slots afterwards! </td></tr>
+                    <tr><td align="right"><b> Edit: </b></td><td align="left">Edit a Rendezvous Session.</td></tr>
+                    <tr><td align="right"><b> Review: </b></td><td align="left">Get detailed information about a Rendezvous Session.</td></tr>
+                    <tr><td align="right"><b> Add Slots: </b></td><td align="left">Add Examination Slots to a Rendezvous Session.</td></tr>
+                    <tr><td align="right"><b> Remove Slots: </b></td><td align="left">Remove Examination Slots from a Rendezvous Session.</td></tr>
+                    <tr><td align="right"><b> Close: </b></td><td align="left">Deactivate ("close") an active ("open") Rendezvous Session.</td></tr>
+                    <tr><td align="right"><b> Delete: </b></td><td align="left">Delete a Rendezvous Session.</td></tr>
                     </table>
                     ';
             }
@@ -653,7 +653,7 @@ if(check_db())
                         $db = new Database("mydb");
                         $rs = $db->executeQuery($query); 
 
-                        echo '<br><strong> Rendezvous Session has been succesfully created!</strong><br>
+                        echo '<br><b> Rendezvous Session has been succesfully created!</b><br>
                             Do not forget to add Examination Slots to the Rendezvous Session you just created.';
                     }
 
@@ -738,7 +738,7 @@ if(check_db())
                             $db = new Database("mydb");
                             $rs = $db->executeQuery($query); 
                             if($rs === 1)
-                                echo '<br><strong> Rendezvous Session has been succesfully updated and activated!</strong><br>';
+                                echo '<br><b> Rendezvous Session has been succesfully updated and activated!</b><br>';
                             else
                                 echo '<br> Update failed!';
                         }
@@ -770,17 +770,17 @@ if(check_db())
                     if($rs->next())
                     {
                         if ($rs->getCurrentValueByNr(3) == 'Y')
-                            echo 'This rendezvous session is <strong>open</strong> for booking and will have to be <strong>manually closed</strong> (no automatic deactivation).<br>';
+                            echo 'This rendezvous session is <b>open</b> for booking and will have to be <b>manually closed</b> (no automatic deactivation).<br>';
                         else if ($rs->getCurrentValueByNr(3) == 'A')
                         {
                             if($rs->getCurrentValueByNr(2) > time())
-                                echo 'The booking deadline for this rendezvous session is on <strong>'.date("F j, Y, g:i a", $rs->getCurrentValueByNr(2)).'</strong>
-                                and it will be <strong>automatically deactivated</strong>.<br>';
+                                echo 'The booking deadline for this rendezvous session is on <b>'.date("F j, Y, g:i a", $rs->getCurrentValueByNr(2)).'</b>
+                                and it will be <b>automatically deactivated</b>.<br>';
                             else
-                                echo 'This rendezvous session was <strong>automatically closed on '.date("F j, Y, g:i a", $rs->getCurrentValueByNr(2)).'</strong>.<br>';
+                                echo 'This rendezvous session was <b>automatically closed on '.date("F j, Y, g:i a", $rs->getCurrentValueByNr(2)).'</b>.<br>';
                         }
                         else
-                            echo 'This rendezvous session has been <strong>closed</strong>.<br>';
+                            echo 'This rendezvous session has been <b>closed</b>.<br>';
                     }
                     echo 'Detailed info for this Rendezvous Session:<br><br>';
 
@@ -793,9 +793,9 @@ if(check_db())
                     $query = 'select * from rendezvous where ren_ses_id = '.$ren_ses_id;
                     $rs = $db->executeQuery($query); 
                     if($rs->getRowCount() == 0)
-                        echo 'There are <strong>no</strong> bookings for this Rendezvous Session.<br><br>';
+                        echo 'There are <b>no</b> bookings for this Rendezvous Session.<br><br>';
                     else
-                        echo 'Number of bookings for this Rendezvous Session: <strong>'.$rs->getRowCount().'</strong><br><br>';
+                        echo 'Number of bookings for this Rendezvous Session: <b>'.$rs->getRowCount().'</b><br><br>';
 
                     $query = "select * from ren_periods where ren_ses_id = ".$ren_ses_id." order by ren_start";
                     $ren_periods = $db->executeQuery($query); 
@@ -827,7 +827,7 @@ if(check_db())
                             //echo "<table border=\"1\" width=\"80%\">";
                             echo '<table  cellpadding="5" cellspacing="0" class="blue">';
                             //echo '<table border="1" >';
-                            echo '<tr><th><strong><div align = "center"><font size = 4><nobr>&nbsp;'.$date.'&nbsp;</nobr></font></div></strong></th>';
+                            echo '<tr><th><b><div align = "center"><font size = 4><nobr>&nbsp;'.$date.'&nbsp;</nobr></font></div></b></th>';
                             for ($i=1; $i<=$ren_slots; $i++)
                             {
                                 echo '<th><div align = "center"><font size = 4><nobr>&nbsp;Slot&nbsp;'.$i.'&nbsp;</nobr></font></div></th>';
@@ -902,7 +902,7 @@ if(check_db())
                             <td>&nbsp; </td>
                             <td><table border="0" cellspacing="2" cellpadding="0">
                                 <tr>
-                                    <td><div align="right"><strong><nobr>Select Rendezvous:&nbsp;</strong></div></td>
+                                    <td><div align="right"><b><nobr>Select Rendezvous:&nbsp;</b></div></td>
                                     <td><nobr><select name="ren_ses_id">
                     <?php
                     $db = new Database("mydb");
@@ -921,23 +921,23 @@ if(check_db())
                                 </tr>
                             <tr> <td>&nbsp;</td></tr>
                        <tr>
-                            <td><div align="right"><nobr><strong>Examination Date/Time&nbsp;&nbsp;</strong> </div></td>
+                            <td><div align="right"><nobr><b>Examination Date/Time&nbsp;&nbsp;</b> </div></td>
                        </tr>
                        <tr>
                     <script>
-                    document.writeln('<td><div align="right"><nobr><strong>Date:&nbsp;</strong></div></td>');
+                    document.writeln('<td><div align="right"><nobr><b>Date:&nbsp;</b></div></td>');
                     document.writeln('<td>');DateInput('date', true, 'DD/MM/YYYY'<?php if($date!= "") {echo ",'".$date."'";} ?>);document.writeln('</td>');
                     </script>
                                            <noscript>
-                                                   <td><div align="right"><nobr><strong>Date</strong> (dd/mm/yyyy)<strong>:&nbsp;</strong></div></td>
-                                                   <td><nobr><strong><input name="date" type="text" value="<?php echo "$d_date";?>"></strong>
+                                                   <td><div align="right"><nobr><b>Date</b> (dd/mm/yyyy)<b>:&nbsp;</b></div></td>
+                                                   <td><nobr><b><input name="date" type="text" value="<?php echo "$d_date";?>"></b>
                                                    &nbsp;(set examination date  - e.g. "05/07/1983")
                                                    </td>
                                            </noscript>													
                                         </tr>
                                         <tr>
-                                            <td><div align="right"><strong> Start Time:&nbsp; </strong></div></td>
-                                            <td><table><tr><td><nobr><strong>
+                                            <td><div align="right"><b> Start Time:&nbsp; </b></div></td>
+                                            <td><table><tr><td><nobr><b>
                                             <select name="s_h" ><?php for($h=0; $h<24; $h++){
                                                 if($h == $s_h)
                                                     echo '<option value="'.$h.'" selected="selected">'.($h<10?('0'.$h):$h).'</option>';
@@ -953,11 +953,11 @@ if(check_db())
                                                             echo '<option value="'.$m.'">'.($m<10?('0'.$m):$m).'</option>';
                                                     }?>
                                                     </select>													
-                                            </strong></td></tr></table></td>
+                                            </b></td></tr></table></td>
                                         </tr>
                                         <tr>
-                                            <td><div align="right"><strong> End Time:&nbsp; </strong></div></td>
-                                            <td><table><tr><td><nobr><strong>
+                                            <td><div align="right"><b> End Time:&nbsp; </b></div></td>
+                                            <td><table><tr><td><nobr><b>
                                             <select name="e_h" ><?php for($h=0; $h<24; $h++){
                                                 if($h == $e_h)
                                                     echo '<option value="'.$h.'" selected="selected">'.($h<10?('0'.$h):$h).'</option>';
@@ -973,23 +973,23 @@ if(check_db())
                                                             echo '<option value="'.$m.'">'.($m<10?('0'.$m):$m).'</option>';
                                                     }?>
                                                     </select>													
-                                            </strong></td></tr></table></td>
+                                            </b></td></tr></table></td>
                                         </tr>
                                         <tr> <td>&nbsp;</td></tr>
                                         <tr>
-                                                <td><div align="right"><strong> Slot Length:&nbsp; </strong></div></td>
-                                                <td><nobr><strong><input name="length" type="text" value="<?php echo "$length";?>"></strong>
+                                                <td><div align="right"><b> Slot Length:&nbsp; </b></div></td>
+                                                <td><nobr><b><input name="length" type="text" value="<?php echo "$length";?>"></b>
                                                 &nbsp;(set examination slot length in minutes - e.g. "10")</td>
                                         </tr>	
                                         <tr>
-                                                <td><div align="right"><strong> Number of Examiners:&nbsp; </strong></div></td>
-                                                <td><nobr><strong><input name="slots" type="text" value="<?php echo "$slots";?>"></strong>
+                                                <td><div align="right"><b> Number of Examiners:&nbsp; </b></div></td>
+                                                <td><nobr><b><input name="slots" type="text" value="<?php echo "$slots";?>"></b>
                                                 &nbsp;(set number of available examination slots - e.g. "3")</td>
                                         </tr>										
                                         <tr> <td>&nbsp;</td></tr>
                                         <tr>
                                                 <td><div align="right"><input name="login_btn" type="submit" id="login_btn2" value="Add"></div></td>
-                                                <td><div align="left"><strong></strong></div></td>
+                                                <td><div align="left"><b></b></div></td>
                                         </tr>										
                                     </table>
                                 </td>
@@ -1097,7 +1097,7 @@ if(check_db())
                 {
                 ?>
                 <form name="del_exam_form2" method="POST" action="">
-                        <strong>Select Exam Period: </strong><br><br>
+                        <b>Select Exam Period: </b><br><br>
                         <select name="ren_per_id">
                 <?php
                     $db = new Database("mydb");
@@ -1145,9 +1145,9 @@ if(check_db())
                             $query = "delete from rendezvous where ren_per_id = ".$ren_per_id;
                             $rs2 = $db->executeQuery($query); 
                             if($rs == 1 && $rs2 !== false)
-                                echo '<br><strong>Exam Period has been succesfully removed!</strong><br>Note: '.$rs2.' bookings belonging to this Exam Period were also deleted.' ;
+                                echo '<br><b>Exam Period has been succesfully removed!</b><br>Note: '.$rs2.' bookings belonging to this Exam Period were also deleted.' ;
                             else
-                                echo '<br><strong>Operation failed!</strong> <br>Probably someone else already deleted this Exam Period.';
+                                echo '<br><b>Operation failed!</b> <br>Probably someone else already deleted this Exam Period.';
                         }
                     }		
                 }
@@ -1165,7 +1165,7 @@ if(check_db())
                 {
                 ?>
                 <form name="close_ren_form" method="POST" action="">
-                        <strong>Select Rendezvous Session: </strong><br><br>
+                        <b>Select Rendezvous Session: </b><br><br>
                         <select name="ren_ses_id">
                 <?php
                     $db = new Database("mydb");
@@ -1235,10 +1235,10 @@ if(check_db())
                         $rs3 = $db->executeQuery($query); 
 
                         if($rs == 1)
-                            echo '<br><strong>Rendezvous Session has been succesfully deleted!</strong><br>
+                            echo '<br><b>Rendezvous Session has been succesfully deleted!</b><br>
                             Note: '.$rs2.' Exam Periods and '.$rs3.' bookings belonging to this Rendezvous Session were also deleted.';
                         else
-                            echo '<br><strong>Operation failed!</strong><br>Probably someone else already deleted this Rendezvous Session.';
+                            echo '<br><b>Operation failed!</b><br>Probably someone else already deleted this Rendezvous Session.';
                     }
                 }
                 else
