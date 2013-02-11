@@ -37,9 +37,9 @@
 	<!-- <td style="color:#BCBEBC;" valign="bottom"><span class="version"><nobr>version 1.5.00</td> -->
     <td class="title" valign="bottom" align="center" width="99%"><?php echo $title; ?></td>
     <td class="university" align="right" valign="bottom">
-      <div><?php if($affil1_link==""){echo '<nobr>'.$affil1;} else { echo '<a class="links" href="'.$affil1_link.'"<nobr>'.$affil1.'</a>';}?></div>
-      <div><?php if($affil2_link==""){echo '<nobr>'.$affil2;} else { echo '<a class="links" href="'.$affil2_link.'"<nobr>'.$affil2.'</a>';}?></div>
-      <div><?php if($affil3_link==""){echo '<nobr>'.$affil3;} else { echo '<a class="links" href="'.$affil3_link.'"<nobr>'.$affil3.'</a>';}?></div>
+      <div><?php if($affil1_link==""){echo '<nobr>'.$affil1;} else { echo '<a class="links" href="'.$affil1_link.'"><nobr>'.$affil1.'</a>';}?></div>
+      <div><?php if($affil2_link==""){echo '<nobr>'.$affil2;} else { echo '<a class="links" href="'.$affil2_link.'"><nobr>'.$affil2.'</a>';}?></div>
+      <div><?php if($affil3_link==""){echo '<nobr>'.$affil3;} else { echo '<a class="links" href="'.$affil3_link.'"><nobr>'.$affil3.'</a>';}?></div>
     </td>
       <td>&nbsp;&nbsp;</td>
       <div></div>
