@@ -1,29 +1,29 @@
 <?php
 
-/*  Copyright (c) 2007-12, Michael K. Papamichael <papamixATgmail.com>
+/*  Copyright (c) 2007-13, Michael K. Papamichael <papamixATgmail.com>
  *  All rights reserved.
- *  
+ *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions are met:
- *  
+ *
  *      * Redistributions of source code must retain the above copyright
- *        notice, this list of conditions and the following disclaimer.  
+ *        notice, this list of conditions and the following disclaimer.
  *      * Redistributions in binary form must reproduce the above copyright
  *        notice, this list of conditions and the following disclaimer in the
  *        documentation and/or other materials provided with the distribution.
  *      * Any redistribution, use, or modification is done solely for personal
  *        benefit and not for any commercial purpose or for monetary gain.
- *  
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
- *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- *  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- *  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
- *  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- *  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
- *  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
- *  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
- *  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
- *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ *  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ *  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ *  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ *  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ *  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ *  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ *  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
@@ -37,20 +37,20 @@ if( substr(sprintf('%o', fileperms(DB_DIR)), -4) == '1777')		// check permission
 session_save_path(DB_DIR);
 //session_save_path(".");
 session_start();
-?> 
+?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Submit-Rendezvous created by Michael Papamichael &copy; 2007-12</title>
+<title>Submit-Rendezvous</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="SHORTCUT ICON" HREF="<?php echo $favicon_path;?>">
 <link type="text/css" rel="stylesheet" href="theme/style.css">
 <!--[if IE 5]>
 <link rel="stylesheet" type="text/css" href="theme/ie5style.css">
 <![endif]-->
-<script type="text/javascript"> 
+<script type="text/javascript">
 /* Current Server Time script (SSI or PHP)- By JavaScriptKit.com (http://www.javascriptkit.com) For this and over 400+ free scripts, visit JavaScript Kit- http://www.javascriptkit.com/ This notice must stay intact for use. */
 var currenttime = '<?php print date("F d, Y H:i:s", time())?>' //PHP method of getting server date
 var montharray=new Array("January","February","March","April","May","June","July","August","September","October","November","December")
@@ -66,33 +66,33 @@ window.onload=function(){setInterval("displaytime()", 1000)}
 </head>
 <body>
 <div id="container"><div id="content">
-<?php 
+<?php
 include("header.inc.php");
-include "php/show_links.php";		
+include "php/show_links.php";
 if (isset($_SESSION['login']) && $_SESSION['full_path'] == realpath(".") )			// logged in
 {
     if ($_SESSION['acc_type'] == 'admin')	// admin users
     {
-        show_links($left_links=array("View Log", "advanced.php?op=view_log", "Submit History", "advanced.php?op=sub_hist", "Rendezvous History", "advanced.php?op=ren_hist", 
-            "SQL Query", "advanced.php?op=query", "Reset System", "advanced.php?op=reset"), 
-        $right_links=array("Logout ".$_SESSION['login']." (admin)", "index.php?op=logout", "Help", "index.php?op=help"), $_GET['op']);
+        show_links($left_links=array("View Log", "advanced.php?op=view_log", "Submit History", "advanced.php?op=sub_hist", "Rendezvous History", "advanced.php?op=ren_hist",
+            "SQL Query", "advanced.php?op=query", "Reset System", "advanced.php?op=reset"),
+        $right_links=array("Logout ".$_SESSION['login']." (admin)", "index.php?op=logout"), $_GET['op']);
     }
     else			// simple users
     {
-        show_links($left_links=array("Submit History", "advanced.php?op=sub_hist", "Rendezvous History", "advanced.php?op=ren_hist"), 
-        $right_links=array("Logout ".$_SESSION['login'], "index.php?op=logout", "Help", "index.php?op=help"), $_GET['op']);
+        show_links($left_links=array("Submit History", "advanced.php?op=sub_hist", "Rendezvous History", "advanced.php?op=ren_hist"),
+        $right_links=array("Logout ".$_SESSION['login'], "index.php?op=logout"), $_GET['op']);
     }
 }
 else	// not logged in
 {
-    show_links($left_links=array("Login", "index.php?op=login"), $right_links=array("Help", "index.php?op=help"), $_GET['op']);
+    show_links($left_links=array("Login", "index.php?op=login"), $right_links=array(), $_GET['op']);
 }
 
 echo 	'<br><br>';
 // safe mode check
 if( ini_get('safe_mode') ){echo '<b>Warning:</b> PHP is running in SAFE MODE, which is known to cause problems with this site. To disable SAFE MODE contact your web server administrator.<br><br>';}
 
-	
+
 /*************  REST OF PAGE  *****************/
 
 if(check_db())
@@ -103,7 +103,7 @@ if(check_db())
         if ($_SESSION['acc_type'] == 'user')	// simple user
         {
             /************* Normal Advanced Page *************/
-            if ($_GET['op'] == '')		
+            if ($_GET['op'] == '')
             {
                 echo 'Welcome '.$_SESSION['login'].'!';
                 echo ' You have the following options:<br><br>
@@ -115,13 +115,13 @@ if(check_db())
             }
 
             /************* Submit History *************/
-            if ($_GET['op'] == 'sub_hist')		
+            if ($_GET['op'] == 'sub_hist')
             {
                 echo '<b> Submit History: </b>';
                 include ("txtDB/txt-db-api.php");
                 $db = new Database("mydb");
                 $query = 'select sub_ses_id, sub_time from submits where login = "'.$_SESSION['login'].'"';
-                $rs = $db->executeQuery($query); 
+                $rs = $db->executeQuery($query);
                 if($rs->getRowCount() == 0)
                 {
                     echo "You have never submitted any files.<br>";
@@ -135,7 +135,7 @@ if(check_db())
                     {
                         echo '<tr><td align="center">"';
                         $query = 'select title from submit_sessions where sub_ses_id = '.$rs->getCurrentValueByNr(0);
-                        $rs2 = $db->executeQuery($query); 
+                        $rs2 = $db->executeQuery($query);
                         if($rs2->next())		// title found
                             echo $rs2->getCurrentValueByNr(0);
                         else
@@ -148,14 +148,14 @@ if(check_db())
             }
 
             /************* Rendezvous History *************/
-            if ($_GET['op'] == 'ren_hist')		
+            if ($_GET['op'] == 'ren_hist')
             {
 
                 echo '<b> Rendezvous History: </b>';
                 include ("txtDB/txt-db-api.php");
                 $db = new Database("mydb");
                 $query = 'select ren_ses_id, ren_time, ren_slot from rendezvous where login = "'.$_SESSION['login'].'"';
-                $rs = $db->executeQuery($query); 
+                $rs = $db->executeQuery($query);
                 if($rs->getRowCount() == 0)
                 {
                     echo "You have never booked a rendezvous.<br>";
@@ -169,7 +169,7 @@ if(check_db())
                     {
                         echo '<tr><td align="center">"';
                         $query = 'select title from ren_sessions where ren_ses_id = '.$rs->getCurrentValueByNr(0);
-                        $rs2 = $db->executeQuery($query); 
+                        $rs2 = $db->executeQuery($query);
                         if($rs2->next())		// title found
                             echo $rs2->getCurrentValueByNr(0);
                         else
@@ -183,7 +183,7 @@ if(check_db())
         else	// admin
         {
             /************* Normal Submit Page *************/
-            if ($_GET['op'] == '')		
+            if ($_GET['op'] == '')
             {
                 echo 'Welcome '.$_SESSION['login'].'!';
                 echo ' You have the following options:<br><br>
@@ -198,7 +198,7 @@ if(check_db())
             }
 
             /************* Submit History *************/
-            if ($_GET['op'] == 'view_log')		
+            if ($_GET['op'] == 'view_log')
             {
                 if (file_exists(DB_DIR."log.txt"))
                 {
@@ -214,13 +214,13 @@ if(check_db())
                         echo '<textarea name="log" cols="80" rows="20" readonly="readonly">';
 
                         $fp = fopen("/tmp/temp_log.txt", "r");
-                        while (!feof($fp)) 
+                        while (!feof($fp))
                         {
                             echo fgets($fp);
                         }
-                        fclose($fp);	
+                        fclose($fp);
                         echo '</textarea>';
-                    }				
+                    }
 
                 }
                 else
@@ -231,12 +231,12 @@ if(check_db())
             }
 
             /************* Submit History *************/
-            if ($_GET['op'] == 'sub_hist')		
+            if ($_GET['op'] == 'sub_hist')
             {
                 echo '<b> Submit History: </b>';
                 $db = new Database("mydb");
                 $query = 'select * from submit_sessions';
-                $rs = $db->executeQuery($query); 
+                $rs = $db->executeQuery($query);
                 if($rs->getRowCount() == 0)
                 {
                     echo "No Submit Sessions found in the database!.<br>";
@@ -245,17 +245,17 @@ if(check_db())
                 {
                     echo 'Found '.$rs->getRowCount().' Submit Sessions in the database.<br><br>';
                     include "php/print.php";
-                    print_submits($rs);	
+                    print_submits($rs);
                 }
             }
 
             /************* Rendezvous History *************/
-            if ($_GET['op'] == 'ren_hist')		
+            if ($_GET['op'] == 'ren_hist')
             {
                 echo '<b> Rendezvous History: </b>';
                 $db = new Database("mydb");
                 $query = 'select * from ren_sessions';
-                $rs = $db->executeQuery($query); 
+                $rs = $db->executeQuery($query);
                 if($rs->getRowCount() == 0)
                 {
                     echo "No Rendezvous Sessions found in the database!.<br>";
@@ -264,12 +264,12 @@ if(check_db())
                 {
                     echo 'Found '.$rs->getRowCount().' Rendezvous Sessions in the database.<br><br>';
                     include "php/print.php";
-                    print_rendezvous($rs);	
+                    print_rendezvous($rs);
                 }
             }
 
             /************* SQL Query *************/
-            if ($_GET['op'] == 'query')		
+            if ($_GET['op'] == 'query')
             {
 
                 function query_form($query="")
@@ -290,17 +290,17 @@ if(check_db())
                         echo 'No Database Found!<br>Please constact your instructor or teaching assistants.<br>';
                     }
                     else
-                    {								
+                    {
                         $query = stripslashes($_POST['textarea']);
                         $db = new Database("mydb");
-                        $rs = $db->executeQuery($query); 
+                        $rs = $db->executeQuery($query);
 
                         echo "<b>Your SQL Query returned the following results:</b><br><br>";
 
                         //printing simple html
                         include "php/print.php";
-                        print_table($rs);	
-                    }	
+                        print_table($rs);
+                    }
                 }
                 else
                 {
@@ -310,7 +310,7 @@ if(check_db())
             }
 
             /************* Reset Database *************/
-            if ($_GET['op'] == 'reset')		
+            if ($_GET['op'] == 'reset')
             {
 
                 function reset_form()
@@ -357,7 +357,7 @@ if(check_db())
 
 /************* End of page *************/
 echo '</div>';	// content end
-include("footer.inc.php");	
+include("footer.inc.php");
 echo '</div>';	// container end
 echo '</body></html>';
 

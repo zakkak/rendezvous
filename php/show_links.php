@@ -11,13 +11,11 @@ function show_links($left_links=array(""), $right_links=array(""), $highlight=''
 		echo ' href="'.$left_links[$i+1].'"><nobr>'.$left_links[$i].'</a></span></div></td>';
 		// If this is not the last link
 		if ($i+2 < count($left_links) ) {
-      			echo '<td  bgcolor="#006699"> <div align="left"><span class="seperators">&nbsp;&nbsp;<strong>|</strong>&nbsp;&nbsp;</span></div></td>';
+      echo '<td  bgcolor="#006699"> <div align="left"><span class="seperators">&nbsp;&nbsp;<strong>|</strong>&nbsp;&nbsp;</span></div></td>';
 		}
 	}
 	// typwnw dexia links
-	if (count($right_links) > 0) {
-		echo '<td width="99%" bgcolor="#006699"><div align = "center">&nbsp;</div></td>';
-	}
+  echo '<td width="99%" bgcolor="#006699"><div align = "center">&nbsp;</div></td>';
 	for($i=0; $i < count($right_links); $i += 2) {
 		echo	'<td  bgcolor="#006699"><div align = "right"><span id="sublinks"><a ';
 		if ($highlight == substr(strstr($right_links[$i+1], "op="), 3)  )

@@ -1,6 +1,6 @@
 <?php
 
-/*  Copyright (c) 2007-12, Michael K. Papamichael <papamixATgmail.com>
+/*  Copyright (c) 2007-13, Michael K. Papamichael <papamixATgmail.com>
  *  All rights reserved.
  *  
  *  Redistribution and use in source and binary forms, with or without
@@ -43,7 +43,7 @@ session_start();
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Submit-Rendezvous created by Michael Papamichael &copy; 2007-12</title>
+<title>Submit-Rendezvous created by Michael Papamichael &copy; 2007-13</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="SHORTCUT ICON" HREF="<?php echo $favicon_path;?>">
 <link type="text/css" rel="stylesheet" href="theme/style.css">
@@ -77,17 +77,17 @@ if (isset($_SESSION['login']) && $_SESSION['full_path'] == realpath(".") )			// 
     if ($_SESSION['acc_type'] == "admin")	// admin users
     {
         show_links($left_links=array("Create", "submit.php?op=create", "Edit", "submit.php?op=edit", "Review", "submit.php?op=review", "Close", "submit.php?op=close", "Delete", "submit.php?op=delete"), 
-        $right_links=array("Logout ".$_SESSION['login']." (admin)", "index.php?op=logout", "Help", "index.php?op=help"), $_GET['op']);
+        $right_links=array("Logout ".$_SESSION['login']." (admin)", "index.php?op=logout"), $_GET['op']);
     }
     else			// simple users
     {
         show_links($left_links=array("Submit a File", "submit.php?op=submit", "Review", "submit.php?op=review"), 
-        $right_links=array("Logout ".$_SESSION['login'], "index.php?op=logout", "Help", "index.php?op=help"), $_GET['op']);
+        $right_links=array("Logout ".$_SESSION['login'], "index.php?op=logout"), $_GET['op']);
     }
 }
 else	// not logged in
 {
-    show_links($left_links=array("Login", "index.php?op=login"), $right_links=array("Help", "index.php?op=help"), $_GET['op']);
+    show_links($left_links=array("Login", "index.php?op=login"), $right_links=array(), $_GET['op']);
 }
 echo '<br><br>';
 // safe mode check

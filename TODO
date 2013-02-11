@@ -1,8 +1,0 @@
-* Add an extra tab About with the github link and the copyright and stuff, so we
-  can remove the created by and the copyright from here and there. Also include
-  contact info there instead of the bottom right
-
-* permissions 777 are bad for the DB fix it 
-
-* I would like admins to login through a different "hidden" page (i.e.
-  admin.php)

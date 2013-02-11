@@ -1,6 +1,6 @@
 <?php
 
-/*  Copyright (c) 2007-12, Michael K. Papamichael <papamixATgmail.com>
+/*  Copyright (c) 2007-13, Michael K. Papamichael <papamixATgmail.com>
  *  All rights reserved.
  *  
  *  Redistribution and use in source and binary forms, with or without

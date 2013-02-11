@@ -1,29 +1,29 @@
 <?php
 
-/*  Copyright (c) 2007-12, Michael K. Papamichael <papamixATgmail.com>
+/*  Copyright (c) 2007-13, Michael K. Papamichael <papamixATgmail.com>
  *  All rights reserved.
- *  
+ *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions are met:
- *  
+ *
  *      * Redistributions of source code must retain the above copyright
- *        notice, this list of conditions and the following disclaimer.  
+ *        notice, this list of conditions and the following disclaimer.
  *      * Redistributions in binary form must reproduce the above copyright
  *        notice, this list of conditions and the following disclaimer in the
  *        documentation and/or other materials provided with the distribution.
  *      * Any redistribution, use, or modification is done solely for personal
  *        benefit and not for any commercial purpose or for monetary gain.
- *  
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
- *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- *  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- *  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
- *  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- *  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
- *  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
- *  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
- *  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
- *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+ *
+ *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ *  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ *  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ *  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ *  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ *  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ *  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ *  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
@@ -37,20 +37,20 @@ if( substr(sprintf('%o', fileperms(DB_DIR)), -4) == '1777')		// check permission
 session_save_path(DB_DIR);
 //session_save_path(".");
 session_start();
-?> 
+?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Submit-Rendezvous created by Michael Papamichael &copy; 2007-12</title>
+<title>Submit-Rendezvous created by Michael Papamichael &copy; 2007-13</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="SHORTCUT ICON" HREF="<?php echo $favicon_path;?>">
 <link type="text/css" rel="stylesheet" href="theme/style.css">
 <!--[if IE 5]>
 <link rel="stylesheet" type="text/css" href="theme/ie5style.css">
 <![endif]-->
-<script type="text/javascript"> 
+<script type="text/javascript">
 /* Current Server Time script (SSI or PHP)- By JavaScriptKit.com (http://www.javascriptkit.com) For this and over 400+ free scripts, visit JavaScript Kit- http://www.javascriptkit.com/ This notice must stay intact for use. */
 var currenttime = '<?php print date("F d, Y H:i:s", time())?>' //PHP method of getting server date
 var montharray=new Array("January","February","March","April","May","June","July","August","September","October","November","December")
@@ -67,27 +67,27 @@ window.onload=function(){setInterval("displaytime()", 1000)}
 
 <body>
 <div id="container"><div id="content">
-<?php 
-include("header.inc.php"); 
-include "php/show_links.php";		
+<?php
+include("header.inc.php");
+include "php/show_links.php";
 
 // Show menu depending on user status
 if (isset($_SESSION['login']) && $_SESSION['full_path'] == realpath(".") )			// logged in
 {
   if ($_SESSION['acc_type'] == 'admin')	// admin users
   {
-    show_links($left_links=array("Status", "index.php?op=status"), 
-        $right_links=array("Logout ".$_SESSION['login']." (admin)", "index.php?op=logout", "Help", "index.php?op=help"), $_GET['op']);
+    show_links($left_links=array("Status", "index.php?op=status"),
+        $right_links=array("Logout ".$_SESSION['login']." (admin)", "index.php?op=logout"), $_GET['op']);
   }
   else			// simple users
   {
-    show_links($left_links=array("Status", "index.php?op=status"), 
-        $right_links=array("Logout ".$_SESSION['login'], "index.php?op=logout", "Help", "index.php?op=help"), $_GET['op']);
+    show_links($left_links=array("Status", "index.php?op=status"),
+        $right_links=array("Logout ".$_SESSION['login'], "index.php?op=logout"), $_GET['op']);
   }
 }
 else	// not logged in
 {
-  show_links($left_links=array("Login", "index.php?op=login"), $right_links=array("Help", "index.php?op=help"), $_GET['op']);
+  show_links($left_links=array("Login", "index.php?op=login"), $right_links=array(), $_GET['op']);
 }
 echo '<br><br>';
 // safe mode check
@@ -104,8 +104,8 @@ if(check_db())
         /************* Normal Home Page *************/
         if ($_GET['op'] == '')		// Normal Index Page
         {
-            echo 'Welcome '.$_SESSION['login'].'!';	
-            //echo exec('gfinger '.$_SESSION['login'].' | line');	
+            echo 'Welcome '.$_SESSION['login'].'!';
+            //echo exec('gfinger '.$_SESSION['login'].' | line');
 
             if ($_SESSION['acc_type'] == 'user')	// simple user
             {
@@ -113,7 +113,7 @@ if(check_db())
                   <table>';
                   if($submit_enabled)
                     echo '<tr><td align="right"><b> Submit: </b></td><td align="left">Select this tab to submit a file.</td></tr>';
-                
+
                   echo '<tr><td align="right"><b> Rendezvous: </b></td><td align="left">Select this tab to book/cancel a rendezvous.</td></tr>
                         <tr><td align="right"><b> Advanced: </b></td><td align="left">Select this tab for advanced options.</td></tr>
                         </table>';
@@ -124,7 +124,7 @@ if(check_db())
                     <table>';
                   if($submit_enabled)
                     echo '<tr><td align="right"><b> Submit: </b></td><td align="left">Select this tab to manage Submit Sessions.</td></tr>';
-                
+
                   echo '<tr><td align="right"><b> Rendezvous: </b></td><td align="left">Select this tab to manage Rendezvous Sessions.</td></tr>
                     <tr><td align="right"><b> Advanced: </b></td><td align="left">Select this tab to perform Advanced Tasks.</td></tr>
                     </table>
@@ -141,7 +141,7 @@ if(check_db())
           if($submit_enabled) {
             echo '<b> Submit Sessions: </b>';
             $query = "select title, deadline from submit_sessions where active = 'Y' or (active = 'A' and deadline >= ".time().")";
-            $rs = $db->executeQuery($query); 
+            $rs = $db->executeQuery($query);
             if($rs->getRowCount() == 0)
             {
                 echo "No available active submit sessions.<br>";
@@ -162,7 +162,7 @@ if(check_db())
 
             echo '<b> Rendezvous Sessions: </b>';
             $query = "select title, deadline from ren_sessions where active = 'Y' or (active = 'A' and deadline >= ".time().")";
-            $rs = $db->executeQuery($query); 
+            $rs = $db->executeQuery($query);
             if($rs->getRowCount() == 0)
             {
                 echo "No available active rendezvous sessions.<br>";
@@ -205,10 +205,10 @@ if(check_db())
         }
 
         /************* Help for Users *************/
-        if ($_GET['op'] == 'help')
-        {
-            echo 'Log in and select a tab to see more options about each tab.';
-        }
+        //if ($_GET['op'] == 'help')
+        //{
+            //echo 'Log in and select a tab to see more options about each tab.';
+        //}
 
     }
     else		// not logged in
@@ -250,7 +250,7 @@ if(check_db())
                     <?php
             }	//show form
 
-            if($_SERVER['REQUEST_METHOD'] == 'POST') 	
+            if($_SERVER['REQUEST_METHOD'] == 'POST')
             {
                 //getting posted variables
                 $login = $_POST['login'];
@@ -283,9 +283,9 @@ if(check_db())
                         }
                         if($acc_type == 'admin')		// admin verification
                         {
-                            if ( !is_readable($admins_file) || !$fh = fopen($admins_file, 'r')){ 
+                            if ( !is_readable($admins_file) || !$fh = fopen($admins_file, 'r')){
                                 echo 'Could not open the file that lists the administrators ("'.$admins_file.'")!<br>
-                                    Please specify a valid file in the "conf.php" file ("'.realpath('.').'/conf.php").<br> 
+                                    Please specify a valid file in the "conf.php" file ("'.realpath('.').'/conf.php").<br>
                                     Make sure that this file is readable and has the appropriate permissions.';
                                 exit;
                             }
@@ -311,12 +311,12 @@ if(check_db())
                                 exit;
                             }
 
-                        }		
+                        }
                     }
                     if ($verified)		// user verified
                     {
                         $_SESSION['login'] = $login;
-                        $_SESSION['acc_type'] = $acc_type;	
+                        $_SESSION['acc_type'] = $acc_type;
                         $_SESSION['full_path'] = realpath(".");
                         // I could add a lock for exclusive access, but I don't really care if a few entries of the log become corrupt.
                         $fp = fopen(DB_DIR."log.txt", "a+");
@@ -340,14 +340,14 @@ if(check_db())
             else
             {
                 show_form("", $mailserver);
-            } 
+            }
         }
 
         /************* Help for Strangers *************/
-        else if ($_GET['op'] == 'help')
-        {
-            echo 'Please log in first.!';
-        }
+        //else if ($_GET['op'] == 'help')
+        //{
+            //echo 'Please log in first.!';
+        //}
         else		// Go to Login page
         {
             echo 'Welcome! Please wait...';
@@ -355,11 +355,11 @@ if(check_db())
             echo '<meta http-equiv="refresh" content="'.$delay.';url=index.php?op=login">';
         }
 
-    }	
+    }
     /************* End of page *************/
 }
 echo '</div>';	// content end
-include("footer.inc.php");	
+include("footer.inc.php");
 echo '</div>';	// container end
 echo '</body></html>';
 
