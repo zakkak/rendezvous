@@ -1,4 +1,12 @@
-table.blue, table.blue td, table.blue th { border: 2px solid #006699 }
+table.blue, table.blue td, table.blue th {
+    text-align: center;
+    border: 2px solid #006699;
+}
+
+.table a:hover {
+    color:#000000;
+}
+
 .huge {text-decoration:none; color:#000000; font-size: 48px}
 .title {font-size: 24px;}
 .copyright {font-size: 36px; font-weight: bold;}
@@ -10,7 +18,7 @@ table.blue, table.blue td, table.blue th { border: 2px solid #006699 }
 .time {font-size: 14px;}
 .version {font-size: 10px; color:#BCBEBC;}
 .seperators {color: #FFFFFF; font-size: 16px;}
-/*.links {text-decoration:none; color: #FFFFFF; font: bold 12px Verdana, sans-serif;}	
+/*.links {text-decoration:none; color: #FFFFFF; font: bold 12px Verdana, sans-serif;}
 .links a:hover{color:#DCDC00;}
 .sel_links {color: #DCDC00}*/
 
@@ -31,7 +39,7 @@ table.blue, table.blue td, table.blue th { border: 2px solid #006699 }
         display: inline;
 }
 
-#navlist li a {			
+#navlist li a {
 				/*vertical-align:bottom;*/
 				margin:5px 0px;
         padding: 4px 5px 5px 5px;
@@ -39,7 +47,7 @@ table.blue, table.blue td, table.blue th { border: 2px solid #006699 }
         border: 1px solid #778;
         border-bottom: none;
         background: #EEEECC;
-        text-decoration: none;		
+        text-decoration: none;
 				color:#606060;
 }
 
@@ -61,7 +69,7 @@ table.blue, table.blue td, table.blue th { border: 2px solid #006699 }
 }
 
 #sublinks {}
-#sublinks a{text-decoration:none; color: #FFFFFF; font: bold 12px Verdana, sans-serif;}	
+#sublinks a{text-decoration:none; color: #FFFFFF; font: bold 12px Verdana, sans-serif;}
 #sublinks a:hover{color:#DCDC00;}
 #sublinks a#current{color:#DCDC00;}
 
@@ -85,22 +93,13 @@ html>body #container {
 	padding-bottom: 48px;
 }
 #footer {
-	font-size: 12px; 
-	font-weight:normal;	
+	font-size: 12px;
+	font-weight:normal;
 	text-align:center;
 	position: absolute;
-	bottom: 0;
+	bottom: 5px;
 	padding: 0px;
 	padding-top:0px;
 	padding-bottom:0px;
 	width: 100%;
-	
-	/* solid footer */
-	background: #FFFFFF;
-	color: #000000;
 }
-
-
-
-
-

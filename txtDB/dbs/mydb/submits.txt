@@ -1,3 +1,0 @@
-sub_ses_id#login#sub_time
-int#str#int
-##

@@ -1,34 +1,5 @@
 <?php
 
-/*  Copyright (c) 2007-13, Michael K. Papamichael <papamixATgmail.com>
- *  All rights reserved.
- *  
- *  Redistribution and use in source and binary forms, with or without
- *  modification, are permitted provided that the following conditions are met:
- *  
- *      * Redistributions of source code must retain the above copyright
- *        notice, this list of conditions and the following disclaimer.  
- *      * Redistributions in binary form must reproduce the above copyright
- *        notice, this list of conditions and the following disclaimer in the
- *        documentation and/or other materials provided with the distribution.
- *      * Any redistribution, use, or modification is done solely for personal
- *        benefit and not for any commercial purpose or for monetary gain.
- *  
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
- *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
- *  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
- *  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE 
- *  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- *  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
- *  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
- *  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
- *  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
- *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
- *  POSSIBILITY OF SUCH DAMAGE.
- */
-
-$start_php_time = microtime(true);	// only works in php5
-//$start_php_time = strtok(microtime(), ' ') + strtok('');	// also works with php4
 include("db.php");     // include txtDB
 include("conf.php");   // settings
 include("https_check.inc.php");  // check for https and redirect if necessary
@@ -37,58 +8,22 @@ if( substr(sprintf('%o', fileperms(DB_DIR)), -4) == '1777')		// check permission
 session_save_path(DB_DIR);
 //session_save_path(".");
 session_start();
-?> 
+?>
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<title>Submit-Rendezvous created by Michael Papamichael &copy; 2007-13</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link rel="SHORTCUT ICON" HREF="<?php echo $favicon_path;?>">
-<link type="text/css" rel="stylesheet" href="theme/style.css">
-<!--[if IE 5]>
-<link rel="stylesheet" type="text/css" href="theme/ie5style.css">
-<![endif]-->
-<script type="text/javascript" src="js/calendarDateInput.js">
-
-/***********************************************
-* Jason's Date Input Calendar- By Jason Moon http://calendar.moonscript.com/dateinput.cfm
-* Script featured on and available at http://www.dynamicdrive.com
-* Keep this notice intact for use.
-***********************************************/
-
-</script>
-<script type="text/javascript"> 
-/* Current Server Time script (SSI or PHP)- By JavaScriptKit.com (http://www.javascriptkit.com) For this and over 400+ free scripts, visit JavaScript Kit- http://www.javascriptkit.com/ This notice must stay intact for use. */
-var currenttime = '<?php print date("F d, Y H:i:s", time())?>' //PHP method of getting server date
-var montharray=new Array("January","February","March","April","May","June","July","August","September","October","November","December")
-var serverdate=new Date(currenttime)
-function padlength(what){var output=(what.toString().length==1)? "0"+what : what; return output}
-function displaytime(){
-serverdate.setSeconds(serverdate.getSeconds()+1)
-var datestring=montharray[serverdate.getMonth()]+" "+padlength(serverdate.getDate())+", "+serverdate.getFullYear()
-var timestring=padlength(serverdate.getHours())+":"+padlength(serverdate.getMinutes())+":"+padlength(serverdate.getSeconds())
-document.getElementById("servertime").innerHTML=datestring+" "+timestring}
-window.onload=function(){setInterval("displaytime()", 1000)}
-</script>
-</head>
-<body>
-<div id="container"><div id="content">
-<?php 
+<?php
 include("header.inc.php");
-include "php/show_links.php";		
+include "php/show_links.php";
 if (isset($_SESSION['login']) && $_SESSION['full_path'] == realpath(".") )			// logged in
 {
     if ($_SESSION['acc_type'] == 'admin')	// admin users
     {
         show_links($left_links=array("Create", "rendezvous.php?op=create", "Edit", "rendezvous.php?op=edit", "Review", "rendezvous.php?op=review", "Add Slots",
-            "rendezvous.php?op=add_exam", "Remove Slots", "rendezvous.php?op=rem_exam", "Close", "rendezvous.php?op=close", "Delete", "rendezvous.php?op=delete"), 
+            "rendezvous.php?op=add_exam", "Remove Slots", "rendezvous.php?op=rem_exam", "Close", "rendezvous.php?op=close", "Delete", "rendezvous.php?op=delete"),
         $right_links=array("Logout ".$_SESSION['login']." (admin)", "index.php?op=logout"), $_GET['op']);
     }
     else			// simple users
     {
-        show_links($left_links=array("Book", "rendezvous.php?op=book", "Cancel", "rendezvous.php?op=cancel", "Review", "rendezvous.php?op=review"), 
+        show_links($left_links=array("Book", "rendezvous.php?op=book", "Cancel", "rendezvous.php?op=cancel", "Review", "rendezvous.php?op=review"),
         $right_links=array("Logout ".$_SESSION['login'], "index.php?op=logout"), $_GET['op']);
     }
 }
@@ -110,7 +45,7 @@ if(check_db())
     {
         $db = new Database("mydb");
         $query = "select ren_ses_id, title from ren_sessions order by ren_ses_id desc";
-        $rs = $db->executeQuery($query); 
+        $rs = $db->executeQuery($query);
         if ($rs->getRowCount() != 0)
         {
               ?>
@@ -135,7 +70,7 @@ if(check_db())
         if ($_SESSION['acc_type'] == 'user')	// simple user
         {
             /************* Normal Submit Page *************/
-            if ($_GET['op'] == '')		
+            if ($_GET['op'] == '')
             {
                 echo 'Welcome '.$_SESSION['login'].'!';
                 echo ' You have the following options:<br><br>
@@ -148,13 +83,13 @@ if(check_db())
             }
 
             /************* Book a Rendezvous *************/
-            if ($_GET['op'] == 'book')		
-            {	
+            if ($_GET['op'] == 'book')
+            {
                 function book_form1()
                 {
                     $db = new Database("mydb");
                     $query = "select ren_ses_id, title from ren_sessions where active = 'Y' or (active = 'A' and deadline >= ".time().") order by ren_ses_id desc";
-                    $rs = $db->executeQuery($query); 
+                    $rs = $db->executeQuery($query);
                     if ($rs->getRowCount() != 0)
                     {
                     ?>
@@ -168,20 +103,20 @@ if(check_db())
                         </select><br><br><br>
                         <input name="review_btn" type="submit" id="review_btn" value="Continue">
                         <input type="hidden" value = "1" name="state">
-                    </form>	
+                    </form>
                     <?php
                     }
                     else
                     {
                         echo "There are no available active Rendezvous Sessions!<br><br>";
                     }
-                }		//book_form1		
+                }		//book_form1
 
                 function book_form2($ren_ses_id)
                 {
                     $db = new Database("mydb");
                     $query = "select * from ren_periods where ren_ses_id = ".$ren_ses_id." order by ren_start";
-                    $ren_periods = $db->executeQuery($query); 
+                    $ren_periods = $db->executeQuery($query);
 
                     if($ren_periods->getRowCount() > 0)		// There are slots
                     {
@@ -224,7 +159,7 @@ if(check_db())
                             $booked = array();
                             $logins = array();
                             $query = "select ren_time, ren_slot, login from rendezvous where ren_per_id = ".$ren_per_id;
-                            $b_rs = $db->executeQuery($query); 
+                            $b_rs = $db->executeQuery($query);
                             while($b_rs->next())
                             {
                                 array_push($booked, array($b_rs->getCurrentValueByNr(0), $b_rs->getCurrentValueByNr(1)) );
@@ -244,23 +179,21 @@ if(check_db())
                                     $found = array_search( array($time, $i), $booked );
                                     if($found !== false)		// Slot is reserved
                                     {
-                                        //echo '<td align = "center"> RESERVED </td>';			
-                                        echo '<td align = "center"><nobr>&nbsp;'. $logins[$found] .'&nbsp;</nobr></td>';			
+                                        echo '<td align = "center"> RESERVED </td>';
+                                        //echo '<td align = "center"><nobr>&nbsp;'. $logins[$found] .'&nbsp;</nobr></td>';
                                     }
                                     else		// Slot is free
                                     {
-                                        /*echo '<td align = "center"><input name="rendezvous" type="radio" 
-                                        value="'.$ren_ses_id.'|'.$ren_per_id.'|'.$time.'|'.$i.'|" checked = "checked"></td>';*/			
-                                        echo '<td align = "center"><input name="rendezvous" type="radio" value="'.$ren_ses_id.'|'.$ren_per_id.'|'.$time.'|'.$i.'|"';
+                                        echo '<label><td align = "center"><input name="rendezvous" type="radio" value="'.$ren_ses_id.'|'.$ren_per_id.'|'.$time.'|'.$i.'|"';
                                         if($looking_for_free_slot)
                                         {
                                             echo ' checked="checked" ';
                                             $looking_for_free_slot = false;
                                         }
-                                        echo '></td>';	
+                                        echo '></td></label>';
                                     }
                                 }
-                                echo '</tr>';					
+                                echo '</tr>';
                             }
                             echo '</table><br><br>';
                             echo '</td><td>&nbsp;&nbsp;&nbsp;</td>';
@@ -269,27 +202,27 @@ if(check_db())
                         ?>
                             </tr></table>
                             <input type="hidden" value = "2" name="state">
-                            </form>	
+                            </form>
                         <?php
                     }
                     else		// There are exam periods
                     {
-                        echo "No Exam Periods found for this Rendezvous Session! <br> 
+                        echo "No Exam Periods found for this Rendezvous Session! <br>
                             Please ask your instructor or teaching assistants to add Exam Periods for this Rendezvous Session.<br><br>";
                         exit;
                     }
-                }		//book_form2		
+                }		//book_form2
 
 
-                if($_SERVER['REQUEST_METHOD'] == 'POST') 
-                {	
+                if($_SERVER['REQUEST_METHOD'] == 'POST')
+                {
                     if ($_POST['state'] == 1){
                         $ren_ses_id = $_POST['ren_ses_id'];
                         if (empty($ren_ses_id))
                         {
                             echo "Invalid Rendezvous Session!<br>Please create a rendezvous first. <br><br>";
                             book_form1();
-                        }		
+                        }
                         else{
                             book_form2($_POST['ren_ses_id']);
                         }
@@ -300,9 +233,9 @@ if(check_db())
                         {
                             echo "Invalid Selection!<br>Please contact your instructor or teaching assistants. <br><br>";
                             //book_form1(	);
-                        }		
+                        }
                         else
-                        {		
+                        {
                             $ren_ses_id = strtok($_POST['rendezvous'], "|");
                             $ren_per_id = strtok("|");
                             $time = strtok("|");
@@ -311,32 +244,32 @@ if(check_db())
                             $db = new Database("mydb");
                             $query = "select ren_per_id from rendezvous where
                                 ren_ses_id = ".$ren_ses_id."
-                                AND login = '".$_SESSION['login']."'"; 		
-                            $rs = $db->executeQuery($query); 
+                                AND login = '".$_SESSION['login']."'";
+                            $rs = $db->executeQuery($query);
                             $update = $rs->next();
 
                             //lock
                             $fp = fopen(DB_DIR."lock.txt", "w");
 
-                            if (flock($fp, LOCK_EX)) 
-                            { // do an exclusive lock								
+                            if (flock($fp, LOCK_EX))
+                            { // do an exclusive lock
                                 $query = "select login from rendezvous where
                                     ren_ses_id = ".$ren_ses_id."
-                                    AND ren_per_id = ".$ren_per_id." 		
-                                    AND ren_time = ".$time." 
-                                    AND ren_slot = ".$slot; 		
+                                    AND ren_per_id = ".$ren_per_id."
+                                    AND ren_time = ".$time."
+                                    AND ren_slot = ".$slot;
                                 $rs = $db->executeQuery($query);
                                 if($rs->next())		// somebody was faster
-                                { 
+                                {
                                     echo '<br> Please try again! Someone already booked the slot you selected.' ;
                                     book_form2($ren_ses_id);
                                 }
                                 else			// you booked it!
                                 {
-                                    if($update)		
+                                    if($update)
                                     {
                                         $query = "update rendezvous set ren_time = ".$time.", ren_per_id = ".$ren_per_id.", ren_slot = ".$slot." where ren_ses_id = ".$ren_ses_id." and login = '".$_SESSION['login']."'";
-                                        $rs2 = $db->executeQuery($query); 
+                                        $rs2 = $db->executeQuery($query);
                                         if($rs2 == 1)
                                         {
                                             echo '<b>Rendezvous succesfully updated!</b><br>';
@@ -349,7 +282,7 @@ if(check_db())
                                                 $email = $_SESSION['login'].'@csd.uoc.gr';
                                                 $subject = "Rendezvous Confirmation for ".$title;
                                                 $message = "You have succesfully updated your rendezvous with the following details:\n\nRendezvous Session: ".$title."\nDate: ".date("F j, Y", $time)."\nTime: ".date("H:i", $time)."\nSlot: ".$slot."\n\n\nPlease do not reply to this message";
-                                                if( mail($email, $subject, $message, "From: Submit-Rendezvous <donotreply>\r\nContent-Type: text/plain;charset=iso-8859-7") )
+                                                if( mail($email, $subject, $message, "From: Rendezvous <donotreply>\r\nContent-Type: text/plain;charset=utf-8") )
                                                     echo 'A confirmation e-mail has been sent to '.$email ;
                                             }
                                         }
@@ -363,7 +296,7 @@ if(check_db())
                                         $query = "insert into rendezvous
                                             (ren_ses_id, ren_per_id, login, ren_time, ren_slot)
                                             values ( '".$ren_ses_id."', '".$ren_per_id."', '".$_SESSION['login']."', ".$time.", ".$slot.")";
-                                        $rs3 = $db->executeQuery($query); 
+                                        $rs3 = $db->executeQuery($query);
                                         if($rs3 == 1)
                                         {
                                             echo '<b>Rendezvous succesfully booked!</b><br>';
@@ -377,7 +310,7 @@ if(check_db())
                                                 $email = $_SESSION['login'].'@csd.uoc.gr';
                                                 $subject = "Rendezvous Confirmation for ".$title;
                                                 $message = "You have succesfully booked a rendezvous with the following details:\n\nRendezvous Session: ".$title."\nDate: ".date("F j, Y", $time)."\nTime: ".date("H:i", $time)."\nSlot: ".$slot."\n\n\nPlease do not reply to this message";
-                                                if( mail($email, $subject, $message, "From: Submit-Rendezvous <donotreply>\r\nContent-Type: text/plain;charset=iso-8859-7") )
+                                                if( mail($email, $subject, $message, "From: Rendezvous <donotreply>\r\nContent-Type: text/plain;charset=utf-8") )
                                                     echo 'A confirmation e-mail has been sent to '.$email ;
                                             }
                                         }
@@ -388,18 +321,18 @@ if(check_db())
 
                                     }
                                 }
-                                flock($fp, LOCK_UN); // release the lock							
-                            } 
-                            else 
+                                flock($fp, LOCK_UN); // release the lock
+                            }
+                            else
                             {
                                 echo "Couldn't lock the file!";
                             }
-                            
+
                             // unlock
                             fclose($fp);
 
                         }
-                    }	
+                    }
 
                 }
                 else
@@ -411,13 +344,13 @@ if(check_db())
 
 
             /************* Cancel a Rendezvous *************/
-            if ($_GET['op'] == 'cancel')		
-            {			
+            if ($_GET['op'] == 'cancel')
+            {
                 function cancel_ren_form()
                 {
                     $db = new Database("mydb");
                     $query = "select ren_ses_id, title from ren_sessions where active = 'Y' or (active = 'A' and deadline >= ".time().") order by ren_ses_id desc";
-                    $rs = $db->executeQuery($query); 
+                    $rs = $db->executeQuery($query);
                     if ($rs->getRowCount() != 0)
                     {
                     ?>
@@ -431,7 +364,7 @@ if(check_db())
                             </select><br><br><br>
                             <input name="review_btn" type="submit" id="review_btn" value="Cancel">
                             <input type="hidden" value = "1" name="state">
-                    </form>	
+                    </form>
                     <?php
                     }
                     else
@@ -440,18 +373,18 @@ if(check_db())
                     }
                 }		//cancel_ren_form
 
-                if($_SERVER['REQUEST_METHOD'] == 'POST') 
+                if($_SERVER['REQUEST_METHOD'] == 'POST')
                 {
                     $ren_ses_id = $_POST['ren_ses_id'];
                     if (empty($ren_ses_id))
                     {
                         echo "Invalid Rendezvous Session!<br>Please create a rendezvous first. <br><br>";
                         close_ren_form(	);
-                    }		
+                    }
                     else{
                         $db = new Database("mydb");
                         $query = "delete from rendezvous where ren_ses_id = ".$ren_ses_id." and login = '".$_SESSION['login']."'";
-                        $rs = $db->executeQuery($query); 
+                        $rs = $db->executeQuery($query);
                         if($rs == 1)
                             echo '<b>Rendezvous has been succesfully canceled!</b>' ;
                         else
@@ -461,12 +394,12 @@ if(check_db())
                 else
                 {
                     cancel_ren_form();
-                }	
+                }
 
             }
 
             /************* Review a Rendezvous *************/
-            if ($_GET['op'] == 'review')		
+            if ($_GET['op'] == 'review')
             {
 
                 function review_form()
@@ -476,14 +409,14 @@ if(check_db())
                     echo '</form>';
                 }	// review_form
 
-                if($_SERVER['REQUEST_METHOD'] == 'POST') 
+                if($_SERVER['REQUEST_METHOD'] == 'POST')
                 {
 
-                    $ren_ses_id = $_POST['ren_ses_id'];
+                    $ren_ses_id = mysql_real_escape_string($_POST['ren_ses_id']);
                     $db = new Database("mydb");
                     $query = "select * from rendezvous where ren_ses_id = ".$ren_ses_id.
-                        " and login = '".$_SESSION['login']."'";
-                    $rs = $db->executeQuery($query); 
+                        " and login = '".mysql_real_escape_string($_SESSION['login'])."'";
+                    $rs = $db->executeQuery($query);
                     if($rs->next())
                     {
                         $time = $rs->getCurrentValueByNr(3);
@@ -515,31 +448,30 @@ if(check_db())
             function ren_fields($title="", $d_date="", $d_hour=12, $d_min=0, $active="A", $button_text='OK')
             {
 ?>
-          <table    border="0" cellpadding="0" cellspacing="0">
-            <tr>
-              <td>&nbsp; </td>
-              <td><table border="0" cellspacing="2" cellpadding="0">
+          <div align="center"><br><br><br>
+              <table border="0" cellspacing="2" cellpadding="0">
                   <tr>
                     <td><div align="right"><b><nobr>Title:&nbsp;</b></div></td>
-                    <td><nobr><b> <input name="title" type="text" value="<?php echo "$title";?>"></b>
+                    <td><nobr><b> <input name="title" type="text" value="<?php echo "$title";?>" placeholder="<?php echo "$title";?>" required></b>
                         &nbsp;(set a title - e.g. "HY-225: Examination of exercise 3")
                     </td>
                   </tr>
                   <tr> <td>&nbsp;</td></tr>
                   <tr>
-                    <td><div align="right"><nobr><b>Booking Deadline&nbsp;&nbsp;</b> </div></td>
+                    <td><div align="right"><nobr><h4>Booking Deadline&nbsp;&nbsp;</h4> </div></td>
                   </tr>
                   <tr>
-                <script>
-                document.writeln('<td><div align="right"><nobr><b>Date:&nbsp;</b></div></td>');
-                document.writeln('<td>');DateInput('d_date', true, 'DD/MM/YYYY'<?php if($d_date!= "") {echo ",'".$d_date."'";} ?>);document.writeln('</td>');
-                </script>
-                    <noscript>
-                      <td><div align="right"><nobr><b>Date</b> (dd/mm/yyyy)<b>:&nbsp;</b></div></td>
-                      <td><nobr><b><input name="d_date" type="text" value="<?php echo "$d_date";?>"></b>
-                      &nbsp;(set date for deadline - e.g. "05/07/1983")
-                      </td>
-                    </noscript>													
+
+                       <script>
+                       document.writeln('<td><div align="right"><nobr><b>Date:&nbsp;</b></div></td>');
+                       document.writeln('<td>');DateInput('d_date', true, 'DD/MM/YYYY'<?php if($d_date!= "") {echo ",'".$d_date."'";} ?>);document.writeln('</td>');
+                       </script>
+                        <noscript>
+                        <td><nobr><b><input name="d_date" type="text" value="<?php echo "$d_date";?>"></b>
+                        &nbsp;(set date for deadline - e.g. "05/07/1983")
+	                              </td>
+                        </noscript>
+
                   </tr>
                   <tr>
                     <td><div align="right"><b> Time:&nbsp; </b></div></td>
@@ -559,7 +491,7 @@ if(check_db())
                           else
                               echo '<option value="'.$m.'">'.($m<10?('0'.$m):$m).'</option>';
                       }?>
-                      </select>													
+                      </select>
                     </b></td></tr></table></td>
                   </tr>
                   <tr>
@@ -572,17 +504,14 @@ if(check_db())
                   <tr>
                     <td><div align="right"><input name="login_btn" type="submit" id="login_btn2" value="<?php echo $button_text ?>"></div></td>
                     <td><div align="left"><b></b></div></td>
-                  </tr>										
+                  </tr>
                 </table>
-              </td>
-              <td width="99%"> </td>
-            </tr>
-          </table>
+          </div>
 <?php
             }
 
             /************* Normal Rendezvous Page *************/
-            if ($_GET['op'] == '')		
+            if ($_GET['op'] == '')
             {
                 echo 'Welcome '.$_SESSION['login'].'!';
                 echo ' You have the following options:<br><br>
@@ -599,17 +528,18 @@ if(check_db())
             }
 
             /************* Crate a rendezvous session *************/
-            if ($_GET['op'] == 'create')		
+            if ($_GET['op'] == 'create')
             {
 
                 function create_ren_form($title="", $d_date="", $d_hour=12, $d_min=0, $active="A")
                 {
+                    echo '<h2> New session </h2>';
                     echo '<form name="create_ren_form" method="POST" action="">';
-                    ren_fields($title, $d_date, $d_hour, $d_min, $active, $button_text='Create');				
+                    ren_fields($title, $d_date, $d_hour, $d_min, $active, $button_text='Create');
                     echo '</form>';
                 }		//create_ren_form
 
-                if($_SERVER['REQUEST_METHOD'] == 'POST') 
+                if($_SERVER['REQUEST_METHOD'] == 'POST')
                 {
                     //include "php/date_check.php";
                     $title = $_POST['title'];
@@ -646,12 +576,12 @@ if(check_db())
                         create_ren_form($title, "", $h, $m, $active);
                     }
                     else
-                    {														
-                        $query = "insert into ren_sessions (title, deadline, active) 
+                    {
+                        $query = "insert into ren_sessions (title, deadline, active)
                             values ('".$title."', ".strtotime($month."/".$day."/".$year." ".$h.":".$m).", '".$active."')";
                         //echo $query;
                         $db = new Database("mydb");
-                        $rs = $db->executeQuery($query); 
+                        $rs = $db->executeQuery($query);
 
                         echo '<br><b> Rendezvous Session has been succesfully created!</b><br>
                             Do not forget to add Examination Slots to the Rendezvous Session you just created.';
@@ -665,7 +595,7 @@ if(check_db())
             }
 
             /************* Edit a rendezvous session *************/
-            if ($_GET['op'] == 'edit')		
+            if ($_GET['op'] == 'edit')
             {
                 function select_ren_form()
                 {
@@ -678,26 +608,26 @@ if(check_db())
                 function edit_ren_form($ren_ses_id, $title="", $d_date="", $d_hour=12, $d_min=0, $active="A")
                 {
                     echo '<form name="create_ren_form" method="POST" action="">';
-                    ren_fields($title, $d_date, $d_hour, $d_min, $active, $button_text='Update');	
+                    ren_fields($title, $d_date, $d_hour, $d_min, $active, $button_text='Update');
                     echo '<input type="hidden" value = "2" name="state">';
                     echo '<input type="hidden" value = "'.$ren_ses_id.'" name="ren_ses_id">';
                     echo '</form>';
                 }		//create_ren_form
 
-                if($_SERVER['REQUEST_METHOD'] == 'POST') 
+                if($_SERVER['REQUEST_METHOD'] == 'POST')
                 {
                     if($_POST['state'] == 1)
                     {
                         $ren_ses_id = $_POST['ren_ses_id'];
-                        $query = 'select * from ren_sessions where ren_ses_id = '.$ren_ses_id; // (title, sub_dir, filename, filesize, deadline, active) 
+                        $query = 'select * from ren_sessions where ren_ses_id = '.$ren_ses_id; // (title, sub_dir, filename, filesize, deadline, active)
                         $db = new Database("mydb");
-                        $rs = $db->executeQuery($query); 
+                        $rs = $db->executeQuery($query);
                         $rs->next();
-                        edit_ren_form($ren_ses_id, $rs->getCurrentValueByNr(1), date("d/m/Y", $rs->getCurrentValueByNr(2)), date("G", $rs->getCurrentValueByNr(2)), 
+                        edit_ren_form($ren_ses_id, $rs->getCurrentValueByNr(1), date("d/m/Y", $rs->getCurrentValueByNr(2)), date("G", $rs->getCurrentValueByNr(2)),
                         date("i", $rs->getCurrentValueByNr(2)), $rs->getCurrentValueByNr(3));
                     }
                     else if ($_POST['state'] == 2)
-                    {		
+                    {
                         $ren_ses_id = $_POST['ren_ses_id'];
                         $title = $_POST['title'];
                         $d_date = $_POST['d_date'];
@@ -733,10 +663,10 @@ if(check_db())
                             edit_ren_form($ren_ses_id, $title, "", $h, $m, $active);
                         }
                         else
-                        {														
+                        {
                             $query = "update ren_sessions set title = '".$title."', deadline = ".strtotime($month."/".$day."/".$year." ".$h.":".$m).", active = '".$active."' where ren_ses_id = ".$ren_ses_id;
                             $db = new Database("mydb");
-                            $rs = $db->executeQuery($query); 
+                            $rs = $db->executeQuery($query);
                             if($rs === 1)
                                 echo '<br><b> Rendezvous Session has been succesfully updated and activated!</b><br>';
                             else
@@ -748,11 +678,11 @@ if(check_db())
                 {
                     select_ren_form();
                 }
-            }				
+            }
 
             /************* Review a rendezvous session *************/
-            if ($_GET['op'] == 'review')		
-            {			
+            if ($_GET['op'] == 'review')
+            {
 
                 function review_form()
                 {
@@ -761,12 +691,12 @@ if(check_db())
                     echo '</form>';
                 }	// review_form
 
-                if($_SERVER['REQUEST_METHOD'] == 'POST') 
+                if($_SERVER['REQUEST_METHOD'] == 'POST')
                 {
                     $ren_ses_id = $_POST['ren_ses_id'];
                     $db = new Database("mydb");
                     $query = "select * from ren_sessions where ren_ses_id = ".$ren_ses_id;
-                    $rs = $db->executeQuery($query); 
+                    $rs = $db->executeQuery($query);
                     if($rs->next())
                     {
                         if ($rs->getCurrentValueByNr(3) == 'Y')
@@ -786,19 +716,19 @@ if(check_db())
 
                     $rs->reset();
                     include "php/print.php";
-                    print_rendezvous($rs);	
+                    print_rendezvous($rs);
 
                     echo '<br><br>';
 
                     $query = 'select * from rendezvous where ren_ses_id = '.$ren_ses_id;
-                    $rs = $db->executeQuery($query); 
+                    $rs = $db->executeQuery($query);
                     if($rs->getRowCount() == 0)
                         echo 'There are <b>no</b> bookings for this Rendezvous Session.<br><br>';
                     else
                         echo 'Number of bookings for this Rendezvous Session: <b>'.$rs->getRowCount().'</b><br><br>';
 
                     $query = "select * from ren_periods where ren_ses_id = ".$ren_ses_id." order by ren_start";
-                    $ren_periods = $db->executeQuery($query); 
+                    $ren_periods = $db->executeQuery($query);
 
                     if($ren_periods->getRowCount() > 0)		// There are slots
                     {
@@ -837,7 +767,7 @@ if(check_db())
                             $booked = array();
                             $logins = array();
                             $query = "select ren_time, ren_slot, login from rendezvous where ren_per_id = ".$ren_per_id;
-                            $b_rs = $db->executeQuery($query); 
+                            $b_rs = $db->executeQuery($query);
                             while($b_rs->next())
                             {
                                 array_push($booked, array($b_rs->getCurrentValueByNr(0), $b_rs->getCurrentValueByNr(1)) );
@@ -857,14 +787,14 @@ if(check_db())
                                     $found = array_search( array($time, $i), $booked );
                                     if($found !== false)		// Slot is reserved
                                     {
-                                        echo '<td><div align = "center"><font size = 3><nobr>&nbsp;'. $logins[$found] .'&nbsp;</nobr></font></div></td>';			
+                                        echo '<td><div align = "center"><font size = 3><nobr>&nbsp;'. $logins[$found] .'&nbsp;</nobr></font></div></td>';
                                     }
                                     else		// Slot is free
                                     {
                                         echo '<td align="center">&nbsp;</td>';
                                     }
                                 }
-                                echo '</tr>';					
+                                echo '</tr>';
                             }
                             echo '</table><br><br>';
                             echo '</td><td>&nbsp;&nbsp;&nbsp;</td>';
@@ -874,7 +804,7 @@ if(check_db())
                     }
                     else		// There are exam periods!
                     {
-                        echo "No Examination Slots found for this Rendezvous Session! <br> 
+                        echo "No Examination Slots found for this Rendezvous Session! <br>
                             Please Add Exam Slots for this Rendezvous Session.<br><br>";
                         exit;
                     }
@@ -890,24 +820,21 @@ if(check_db())
 
 
             /************* Add Exam Period *************/
-            if ($_GET['op'] == 'add_exam')		
+            if ($_GET['op'] == 'add_exam')
             {
 
                 function add_exam_form($ren_ses_id="", $date="", $s_h=12, $s_m=0, $e_h=12, $e_m=0, $length="", $slots="")
                 {
                 ?>
                 <form name="add_exam_form" method="POST" action="">
-                    <table    border="0" cellpadding="0" cellspacing="0">
-                        <tr>
-                            <td>&nbsp; </td>
-                            <td><table border="0" cellspacing="2" cellpadding="0">
+                            <table border="0" cellspacing="2" cellpadding="0">
                                 <tr>
                                     <td><div align="right"><b><nobr>Select Rendezvous:&nbsp;</b></div></td>
                                     <td><nobr><select name="ren_ses_id">
                     <?php
                     $db = new Database("mydb");
                     $query = "select ren_ses_id, title from ren_sessions order by ren_ses_id desc";
-                    $rs = $db->executeQuery($query); 
+                    $rs = $db->executeQuery($query);
                     while($rs->next())
                     {
                         echo '<option ';
@@ -921,19 +848,21 @@ if(check_db())
                                 </tr>
                             <tr> <td>&nbsp;</td></tr>
                        <tr>
-                            <td><div align="right"><nobr><b>Examination Date/Time&nbsp;&nbsp;</b> </div></td>
+                            <td><div align="right"><nobr><h4>Examination Date/Time&nbsp;&nbsp;</h4> </div></td>
                        </tr>
+
                        <tr>
-                    <script>
-                    document.writeln('<td><div align="right"><nobr><b>Date:&nbsp;</b></div></td>');
-                    document.writeln('<td>');DateInput('date', true, 'DD/MM/YYYY'<?php if($date!= "") {echo ",'".$date."'";} ?>);document.writeln('</td>');
-                    </script>
+                       <script>
+                       document.writeln('<td><div align="right"><nobr><b>Date:&nbsp;</b></div></td>');
+                       document.writeln('<td>');DateInput('d_date', true, 'DD/MM/YYYY'<?php if($d_date!= "") {echo ",'".$d_date."'";} ?>);document.writeln('</td>');
+                       </script>
+
                                            <noscript>
                                                    <td><div align="right"><nobr><b>Date</b> (dd/mm/yyyy)<b>:&nbsp;</b></div></td>
                                                    <td><nobr><b><input name="date" type="text" value="<?php echo "$d_date";?>"></b>
                                                    &nbsp;(set examination date  - e.g. "05/07/1983")
                                                    </td>
-                                           </noscript>													
+                                           </noscript>
                                         </tr>
                                         <tr>
                                             <td><div align="right"><b> Start Time:&nbsp; </b></div></td>
@@ -952,7 +881,7 @@ if(check_db())
                                                         else
                                                             echo '<option value="'.$m.'">'.($m<10?('0'.$m):$m).'</option>';
                                                     }?>
-                                                    </select>													
+                                                    </select>
                                             </b></td></tr></table></td>
                                         </tr>
                                         <tr>
@@ -972,7 +901,7 @@ if(check_db())
                                                         else
                                                             echo '<option value="'.$m.'">'.($m<10?('0'.$m):$m).'</option>';
                                                     }?>
-                                                    </select>													
+                                                    </select>
                                             </b></td></tr></table></td>
                                         </tr>
                                         <tr> <td>&nbsp;</td></tr>
@@ -980,28 +909,24 @@ if(check_db())
                                                 <td><div align="right"><b> Slot Length:&nbsp; </b></div></td>
                                                 <td><nobr><b><input name="length" type="text" value="<?php echo "$length";?>"></b>
                                                 &nbsp;(set examination slot length in minutes - e.g. "10")</td>
-                                        </tr>	
+                                        </tr>
                                         <tr>
                                                 <td><div align="right"><b> Number of Examiners:&nbsp; </b></div></td>
                                                 <td><nobr><b><input name="slots" type="text" value="<?php echo "$slots";?>"></b>
                                                 &nbsp;(set number of available examination slots - e.g. "3")</td>
-                                        </tr>										
+                                        </tr>
                                         <tr> <td>&nbsp;</td></tr>
                                         <tr>
                                                 <td><div align="right"><input name="login_btn" type="submit" id="login_btn2" value="Add"></div></td>
                                                 <td><div align="left"><b></b></div></td>
-                                        </tr>										
+                                        </tr>
                                     </table>
-                                </td>
-                                <td width="99%"> </td>
-                            </tr>
-                        </table>
                     </form>
 
                 <?php
                 }		//add_exam_form
 
-                if($_SERVER['REQUEST_METHOD'] == 'POST') 
+                if($_SERVER['REQUEST_METHOD'] == 'POST')
                 {
                     //include "php/date_check.php";
                     $ren_ses_id = $_POST['ren_ses_id'];
@@ -1023,7 +948,7 @@ if(check_db())
                     {
                         echo "Invalid Rendezvous Session!<br>Please create a rendezvous first. <br><br>";
                         add_exam_form($ren_ses_id, $date, $s_h, $s_m, $e_h, $e_m, $length, $slots);
-                    }		
+                    }
                     else if ( empty($date) || empty($length) || empty($slots) )
                     {
                         echo "All Fields have to be completed! <br><br>";
@@ -1064,11 +989,11 @@ if(check_db())
                         }
                         $ren_start = strtotime($month."/".$day."/".$year." ".$s_h.":".$s_m);
                         $ren_end = strtotime($month."/".$day."/".$year." ".$e_h.":".$e_m);
-                        $query = "insert into ren_periods (ren_ses_id, ren_start, ren_end, ren_length, ren_slots) 
+                        $query = "insert into ren_periods (ren_ses_id, ren_start, ren_end, ren_length, ren_slots)
                             values (".$ren_ses_id.", ".$ren_start.", ".$ren_end.", ".$length.", ".$slots." )";
                         //echo $query;
                         $db = new Database("mydb");
-                        $rs = $db->executeQuery($query); 
+                        $rs = $db->executeQuery($query);
 
                         echo '<br> Rendezvous Session has been succesfully created!' ;
                     }
@@ -1077,13 +1002,13 @@ if(check_db())
                 else
                 {
                     add_exam_form();
-                }	
+                }
             }
 
 
             /************* Remove Exam Period *************/
-            if ($_GET['op'] == 'rem_exam')		
-            {				
+            if ($_GET['op'] == 'rem_exam')
+            {
 
                 function del_exam_form1()
                 {
@@ -1102,7 +1027,7 @@ if(check_db())
                 <?php
                     $db = new Database("mydb");
                     $query = "select ren_per_id, ren_start, ren_end from ren_periods where ren_ses_id = ".$ren_ses_id;
-                    $rs = $db->executeQuery($query); 
+                    $rs = $db->executeQuery($query);
                     while($rs->next()){
                         //$date = date("D, j/n/Y", $rs->getCurrentValueByNr(1));
                         $date = date("j/n/Y", $rs->getCurrentValueByNr(1));
@@ -1118,7 +1043,7 @@ if(check_db())
                 <?php
                 }		//del_exam_form2
 
-                if($_SERVER['REQUEST_METHOD'] == 'POST') 
+                if($_SERVER['REQUEST_METHOD'] == 'POST')
                 {
                     if ($_POST['state'] == 1){
                         $ren_ses_id = $_POST['ren_ses_id'];
@@ -1126,7 +1051,7 @@ if(check_db())
                         {
                             echo "Invalid Rendezvous Session!<br>Please create a rendezvous first. <br><br>";
                             del_exam_form1();
-                        }		
+                        }
                         else{
                             del_exam_form2($_POST['ren_ses_id']);
                         }
@@ -1137,28 +1062,28 @@ if(check_db())
                         {
                             echo "Invalid Exam Period!<br>There are no exam periods for this rendezvous. <br><br>";
                             //del_exam_form2(0);
-                        }		
+                        }
                         else{
                             $db = new Database("mydb");
                             $query = "delete from ren_periods where ren_per_id = ".$ren_per_id;
-                            $rs = $db->executeQuery($query); 
+                            $rs = $db->executeQuery($query);
                             $query = "delete from rendezvous where ren_per_id = ".$ren_per_id;
-                            $rs2 = $db->executeQuery($query); 
+                            $rs2 = $db->executeQuery($query);
                             if($rs == 1 && $rs2 !== false)
                                 echo '<br><b>Exam Period has been succesfully removed!</b><br>Note: '.$rs2.' bookings belonging to this Exam Period were also deleted.' ;
                             else
                                 echo '<br><b>Operation failed!</b> <br>Probably someone else already deleted this Exam Period.';
                         }
-                    }		
+                    }
                 }
                 else
                 {
                     del_exam_form1();
-                }			
+                }
             }
 
             /************* Close a submission *************/
-            if ($_GET['op'] == 'close')		
+            if ($_GET['op'] == 'close')
             {
 
                 function close_ren_form()
@@ -1170,30 +1095,30 @@ if(check_db())
                 <?php
                     $db = new Database("mydb");
                     $query = "select ren_ses_id, title from ren_sessions where active = 'A' or active = 'Y' order by ren_ses_id desc";
-                    $rs = $db->executeQuery($query); 
+                    $rs = $db->executeQuery($query);
                     while($rs->next())
                         echo '<option value = "'.$rs->getCurrentValueByNr(0).'">'.$rs->getCurrentValueByNr(0).':&nbsp;'.$rs->getCurrentValueByNr(1).' </option>';
                 ?>
                         </select><br><br><br>
                         <input name="review_btn" type="submit" id="review_btn" value="Close">
-                </form>	
+                </form>
                 <?php
-                }		//review_form		
+                }		//review_form
 
-                if($_SERVER['REQUEST_METHOD'] == 'POST') 
+                if($_SERVER['REQUEST_METHOD'] == 'POST')
                 {
                     $ren_ses_id = $_POST['ren_ses_id'];
                     if (empty($ren_ses_id))
                     {
                         echo "Invalid Rendezvous Session!<br>Please create a rendezvous first. <br><br>";
                         close_ren_form(	);
-                    }		
+                    }
                     else{
                         $db = new Database("mydb");
-                        $query = "update ren_sessions 
+                        $query = "update ren_sessions
                             set active = 'N'
                             where ren_ses_id = ".$ren_ses_id;
-                        $rs = $db->executeQuery($query); 
+                        $rs = $db->executeQuery($query);
                         if($rs == 1)
                             echo '<br> Rendezvous Session has been succesfully closed!' ;
                         else
@@ -1208,8 +1133,8 @@ if(check_db())
             }
 
             /************* Delete a Rendezvous Session *************/
-            if ($_GET['op'] == 'delete')		
-            {			
+            if ($_GET['op'] == 'delete')
+            {
                 function del_ren_form()
                 {
                     echo '<form name="del_ren_form" method="POST" action="">';
@@ -1217,22 +1142,22 @@ if(check_db())
                     echo '</form>';
                 }	// review_form
 
-                if($_SERVER['REQUEST_METHOD'] == 'POST') 
+                if($_SERVER['REQUEST_METHOD'] == 'POST')
                 {
                     $ren_ses_id = $_POST['ren_ses_id'];
                     if (empty($ren_ses_id))
                     {
                         echo "Invalid Rendezvous Session!<br>Please create a rendezvous first. <br><br>";
                         del_ren_form(	);
-                    }		
-                    else{					
+                    }
+                    else{
                         $db = new Database("mydb");
                         $query = "delete from ren_sessions where ren_ses_id = ".$ren_ses_id;
-                        $rs = $db->executeQuery($query); 
+                        $rs = $db->executeQuery($query);
                         $query = "delete from ren_periods where ren_ses_id = ".$ren_ses_id;
-                        $rs2 = $db->executeQuery($query); 
+                        $rs2 = $db->executeQuery($query);
                         $query = "delete from rendezvous where ren_ses_id = ".$ren_ses_id;
-                        $rs3 = $db->executeQuery($query); 
+                        $rs3 = $db->executeQuery($query);
 
                         if($rs == 1)
                             echo '<br><b>Rendezvous Session has been succesfully deleted!</b><br>
@@ -1254,12 +1179,12 @@ if(check_db())
         echo 'Not logged in! Please wait...';
         $delay=1;
         echo '<meta http-equiv="refresh" content="'.$delay.';url=index.php?op=login">';
-    }		
+    }
 }
 
 /************* End of page *************/
 echo '</div>';	// content end
-include("footer.inc.php");	
+include("footer.inc.html");
 echo '</div>';	// container end
 echo '</body></html>';
 
