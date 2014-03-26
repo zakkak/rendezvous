@@ -4,6 +4,8 @@
 <title>Rendezvous</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="SHORTCUT ICON" HREF="<?php echo $favicon_path;?>">
+<link href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/spacelab/bootstrap.min.css" rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 <link type="text/css" rel="stylesheet" href="theme/style.css">
 <script type="text/javascript" src="js/calendarDateInput.js">
 /***********************************************
@@ -12,11 +14,6 @@
 * Keep this notice intact for use.
 ***********************************************/
 </script>
-<link href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/spacelab/bootstrap.min.css" rel="stylesheet">
-<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-<script src="//code.jquery.com/jquery-1.9.1.js"></script>
-<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -26,7 +23,7 @@
 <table border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td valign="middle"><b><a class="huge" href="index.php"><nobr>Rendezvous</nobr></a></b></td>
-	<td style="color:#BCBEBC;" valign="bottom"><span class="version"><nobr>version 1.8.0</td>
+	<td style="color:#BCBEBC;" valign="bottom"><span class="version"><nobr>version 2.0.0</td>
     <td class="title" valign="center" align="center" width="99%"><?php echo $title; ?></td>
     <td class="university" align="right" valign="bottom">
       <div><?php if($affil1_link==""){echo '<nobr>'.$affil1;}

@@ -5,24 +5,24 @@
 						  http://www.c-worker.ch
 ***********************************************************************/
 /**********************************************************************
-Redistribution and use in source and binary forms, with or without 
-modification, are permitted provided that the following conditions are met: 
-Redistributions of source code must retain the above copyright notice, this 
-list of conditions and the following disclaimer. 
-Redistributions in binary form must reproduce the above copyright notice, 
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.
+Redistributions in binary form must reproduce the above copyright notice,
 this list of conditions and the following disclaimer in the documentation
-and/or other materials provided with the distribution. 
+and/or other materials provided with the distribution.
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE 
-ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE 
-LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
-INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
-CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
-ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
-THE POSSIBILITY OF SUCH DAMAGE. 
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+THE POSSIBILITY OF SUCH DAMAGE.
 ***********************************************************************/
 
 /***********************************
@@ -32,7 +32,7 @@ THE POSSIBILITY OF SUCH DAMAGE.
 $DEBUG=0;				    // 0=Debug disabled, 1=Debug enabled
 $LIKE_CASE_SENSITIVE=0;     // 0=LIKE is case insensitive, 1=LIKE is case sensitive
 $ORDER_CASE_SENSITIVE=0;	// 0=ORDER BY is case insensitive, 1=ORDER BY is case sensitive
-$ASSUMED_RECORD_SIZE=30;    // Set this to the average size of one record, if in doubt 
+$ASSUMED_RECORD_SIZE=30;    // Set this to the average size of one record, if in doubt
                             // leave the default value. DON'T set it to <1! int's only!
 $PRINT_ERRORS=1;			// 0 = Errors are NOT displayed, 1 = Errors are displayed
 $PRINT_WARNINGS=0;			// 0 = Warnings are NOT displayed, 1 = Warnings are displayed
@@ -40,7 +40,7 @@ $PRINT_WARNINGS=0;			// 0 = Warnings are NOT displayed, 1 = Warnings are display
 
 
 /***********************************
-		 	Constants 
+		 	Constants
 ************************************/
 // Don't change them, expect you know
 // what you do!
@@ -53,9 +53,9 @@ define("TXTDBAPI_DEBUG",$DEBUG);
 // Even more Debug Infos ?
 define("TXTDBAPI_VERBOSE_DEBUG",0);
 
-// This constant doesn't limit the max size of a record it's only the assmued size 
+// This constant doesn't limit the max size of a record it's only the assmued size
 // of a record when a table is read for appending. If not a whole record is
-// contained in ASSUMED_RECORD_SIZE bytes, the the number of bytes read 
+// contained in ASSUMED_RECORD_SIZE bytes, the the number of bytes read
 // is increased until a whole record was read. Choosing this value wisely may
 // result in a better INSERT performance
 define("ASSUMED_RECORD_SIZE",$ASSUMED_RECORD_SIZE);

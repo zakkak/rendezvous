@@ -49,14 +49,14 @@ if(check_db())
         if ($rs->getRowCount() != 0)
         {
               ?>
-              <b><?php echo $title ?></b><br><br>
+              <?php echo $title ?><br>
               <select name="ren_ses_id">
               <?php
                 while($rs->next())
                     echo '<option value = "'.$rs->getCurrentValueByNr(0).'">'.$rs->getCurrentValueByNr(0).':&nbsp;'.$rs->getCurrentValueByNr(1).' </option>';
               ?>
-              </select><br><br><br>
-              <input name="review_btn" type="submit" id="review_btn" value="<?php echo $button_text ?>">
+              </select><br><br>
+              <input class="btn btn-primary" name="review_btn" type="submit" id="review_btn" value="<?php echo $button_text ?>">
               <?php
         }
         else
@@ -147,7 +147,7 @@ if(check_db())
 
                             //echo $date.'&nbsp;('.$s_h.':'.$s_m.' - '.$e_h.':'.$e_m.')';
                             //echo "<table border=\"1\" width=\"80%\">";
-                            echo '<table  cellpadding="5" cellspacing="0" class="blue">';
+                            echo '<table class="blue">';
                             //echo '<table border="1" >';
                             echo '<tr><th align = "center"><font size = 4><nobr>'.$date.'</nobr></font></th>';
                             for ($i=1; $i<=$ren_slots; $i++)
@@ -448,35 +448,25 @@ if(check_db())
             function ren_fields($title="", $d_date="", $d_hour=12, $d_min=0, $active="A", $button_text='OK')
             {
 ?>
-          <div align="center"><br><br><br>
-              <table border="0" cellspacing="2" cellpadding="0">
-                  <tr>
-                    <td><div align="right"><b><nobr>Title:&nbsp;</b></div></td>
-                    <td><nobr><b> <input name="title" type="text" value="<?php echo "$title";?>" placeholder="<?php echo "$title";?>" required></b>
-                        &nbsp;(set a title - e.g. "HY-225: Examination of exercise 3")
-                    </td>
-                  </tr>
-                  <tr> <td>&nbsp;</td></tr>
-                  <tr>
-                    <td><div align="right"><nobr><h4>Booking Deadline&nbsp;&nbsp;</h4> </div></td>
-                  </tr>
-                  <tr>
-
+          <div align="center"><br>
+                    <b>Title:</b>
+                    <input name="title" type="text" value="<?php echo "$title";?>" placeholder="<?php echo "$title";?>" size="30" autofocus required>
+	            <br>
+	            <br>
+                   <h4>Booking Deadline (optional)</h4>
+	            <table width="300">
+	            <tr><td>
+                    <b>Date:</b>
                        <script>
-                       document.writeln('<td><div align="right"><nobr><b>Date:&nbsp;</b></div></td>');
-                       document.writeln('<td>');DateInput('d_date', true, 'DD/MM/YYYY'<?php if($d_date!= "") {echo ",'".$d_date."'";} ?>);document.writeln('</td>');
+                       DateInput('d_date', true, 'DD/MM/YYYY'<?php if($d_date!= "") {echo ",'".$d_date."'";} ?>);
                        </script>
                         <noscript>
-                        <td><nobr><b><input name="d_date" type="text" value="<?php echo "$d_date";?>"></b>
+                        <input name="d_date" type="text" value="<?php echo "$d_date";?>">
                         &nbsp;(set date for deadline - e.g. "05/07/1983")
-	                              </td>
                         </noscript>
 
-                  </tr>
-                  <tr>
-                    <td><div align="right"><b> Time:&nbsp; </b></div></td>
-                    <td><table><tr><td><nobr><b>
-
+                        </td><td>
+                    <b>Time:</b><br>
                     <select name="d_hour" ><?php for($h=0; $h<24; $h++){
                         if($h == $d_hour)
                             echo '<option value="'.$h.'" selected="selected">'.($h<10?('0'.$h):$h).'</option>';
@@ -492,20 +482,11 @@ if(check_db())
                               echo '<option value="'.$m.'">'.($m<10?('0'.$m):$m).'</option>';
                       }?>
                       </select>
-                    </b></td></tr></table></td>
-                  </tr>
-                  <tr>
-                    <td><div align="right"><b><nobr>Automatic Deactivation:&nbsp;</b></div></td>
-                    <td><nobr><input type="checkbox" name="active" value="A" <?php if($active == "A")echo 'checked="checked"';?> >
-                        &nbsp;(if selected, rendezvous session will automatically close after deadline)
-                    </td>
-                  </tr>
-                  <tr> <td>&nbsp;</td></tr>
-                  <tr>
-                    <td><div align="right"><input name="login_btn" type="submit" id="login_btn2" value="<?php echo $button_text ?>"></div></td>
-                    <td><div align="left"><b></b></div></td>
-                  </tr>
-                </table>
+                    </td></tr></table>
+                        <br>
+                    <b>Automatic deactivation at the deadline:&nbsp;</b>
+                    <nobr><input type="checkbox" name="active" value="A" <?php if($active == "A")echo 'checked="checked"';?> >
+                    <br><br><input class="btn btn-success" name="login_btn" type="submit" id="login_btn2" value="<?php echo $button_text ?>">
           </div>
 <?php
             }
@@ -531,7 +512,8 @@ if(check_db())
             if ($_GET['op'] == 'create')
             {
 
-                function create_ren_form($title="", $d_date="", $d_hour=12, $d_min=0, $active="A")
+                function create_ren_form($title="",
+                                         $d_date="", $d_hour=12, $d_min=0, $active="A")
                 {
                     echo '<h2> New session </h2>';
                     echo '<form name="create_ren_form" method="POST" action="">';
@@ -590,7 +572,7 @@ if(check_db())
                 }
                 else
                 {
-                    create_ren_form("", "", 12, 0, "");
+                    create_ren_form("HY-255: Examination of exercise 3", "", 12, 0, "");
                 }
             }
 
@@ -712,13 +694,13 @@ if(check_db())
                         else
                             echo 'This rendezvous session has been <b>closed</b>.<br>';
                     }
-                    echo 'Detailed info for this Rendezvous Session:<br><br>';
-
-                    $rs->reset();
-                    include "php/print.php";
-                    print_rendezvous($rs);
-
-                    echo '<br><br>';
+                    /* echo 'Detailed info for this Rendezvous Session:<br><br>';
+                     *
+                     * $rs->reset();
+                     * include "php/print.php";
+                     * print_rendezvous($rs);
+                     *
+                     * echo '<br><br>'; */
 
                     $query = 'select * from rendezvous where ren_ses_id = '.$ren_ses_id;
                     $rs = $db->executeQuery($query);
@@ -755,12 +737,12 @@ if(check_db())
 
                             //echo $date.'&nbsp;('.$s_h.':'.$s_m.' - '.$e_h.':'.$e_m.')';
                             //echo "<table border=\"1\" width=\"80%\">";
-                            echo '<table  cellpadding="5" cellspacing="0" class="blue">';
+                            echo '<table class="blue">';
                             //echo '<table border="1" >';
-                            echo '<tr><th><b><div align = "center"><font size = 4><nobr>&nbsp;'.$date.'&nbsp;</nobr></font></div></b></th>';
+                            echo '<tr><th><b>'.$date.'</b></th>';
                             for ($i=1; $i<=$ren_slots; $i++)
                             {
-                                echo '<th><div align = "center"><font size = 4><nobr>&nbsp;Slot&nbsp;'.$i.'&nbsp;</nobr></font></div></th>';
+                                echo '<th>Slot&nbsp;'.$i.'</th>';
                             }
                             echo '</tr>';
 
@@ -780,7 +762,7 @@ if(check_db())
                             {
                                 $slot_start = date("H:i", $time);
                                 $slot_end = date("H:i", $time+($ren_length*60));
-                                echo '<tr><th><b><div align = "center"><font size = 3><nobr>&nbsp;'.$slot_start.' - '.$slot_end.'&nbsp;</nobr></font></div></b></th>';
+                                echo '<tr><td><b>'.$slot_start.' - '.$slot_end.'</b></td>';
 
                                 for ($i=1; $i<=$ren_slots; $i++)
                                 {
@@ -827,10 +809,8 @@ if(check_db())
                 {
                 ?>
                 <form name="add_exam_form" method="POST" action="">
-                            <table border="0" cellspacing="2" cellpadding="0">
-                                <tr>
-                                    <td><div align="right"><b><nobr>Select Rendezvous:&nbsp;</b></div></td>
-                                    <td><nobr><select name="ren_ses_id">
+                                    <b><nobr>Select Rendezvous Session:&nbsp;</b>
+                                    <nobr><select name="ren_ses_id">
                     <?php
                     $db = new Database("mydb");
                     $query = "select ren_ses_id, title from ren_sessions order by ren_ses_id desc";
@@ -843,30 +823,18 @@ if(check_db())
                         echo 'value = "'.$rs->getCurrentValueByNr(0).'">'.$rs->getCurrentValueByNr(0).':&nbsp;'.$rs->getCurrentValueByNr(1).' </option>';
                     }
                     ?>
-                                   </select>
-                                   &nbsp;(select the rendezvous that this exam period belongs to)</td>
-                                </tr>
-                            <tr> <td>&nbsp;</td></tr>
-                       <tr>
-                            <td><div align="right"><nobr><h4>Examination Date/Time&nbsp;&nbsp;</h4> </div></td>
-                       </tr>
-
-                       <tr>
+                                   </select><br><br>
+                            <h4>Examination Date/Time</h4>
+                    <b>Date:</b>
                        <script>
-                       document.writeln('<td><div align="right"><nobr><b>Date:&nbsp;</b></div></td>');
-                       document.writeln('<td>');DateInput('d_date', true, 'DD/MM/YYYY'<?php if($d_date!= "") {echo ",'".$d_date."'";} ?>);document.writeln('</td>');
+                       DateInput('date', true, 'DD/MM/YYYY'<?php if($date!= "") {echo ",'".$date."'";} ?>);
                        </script>
-
                                            <noscript>
-                                                   <td><div align="right"><nobr><b>Date</b> (dd/mm/yyyy)<b>:&nbsp;</b></div></td>
-                                                   <td><nobr><b><input name="date" type="text" value="<?php echo "$d_date";?>"></b>
+                                                   <b><input name="date" type="text" value="<?php echo "$d_date";?>"></b>
                                                    &nbsp;(set examination date  - e.g. "05/07/1983")
-                                                   </td>
                                            </noscript>
-                                        </tr>
-                                        <tr>
-                                            <td><div align="right"><b> Start Time:&nbsp; </b></div></td>
-                                            <td><table><tr><td><nobr><b>
+                                                   <br>
+                                            <b> Start Time:
                                             <select name="s_h" ><?php for($h=0; $h<24; $h++){
                                                 if($h == $s_h)
                                                     echo '<option value="'.$h.'" selected="selected">'.($h<10?('0'.$h):$h).'</option>';
@@ -882,11 +850,7 @@ if(check_db())
                                                             echo '<option value="'.$m.'">'.($m<10?('0'.$m):$m).'</option>';
                                                     }?>
                                                     </select>
-                                            </b></td></tr></table></td>
-                                        </tr>
-                                        <tr>
-                                            <td><div align="right"><b> End Time:&nbsp; </b></div></td>
-                                            <td><table><tr><td><nobr><b>
+                                                   <br><b>&nbsp;&nbsp;End Time:
                                             <select name="e_h" ><?php for($h=0; $h<24; $h++){
                                                 if($h == $e_h)
                                                     echo '<option value="'.$h.'" selected="selected">'.($h<10?('0'.$h):$h).'</option>';
@@ -901,26 +865,12 @@ if(check_db())
                                                         else
                                                             echo '<option value="'.$m.'">'.($m<10?('0'.$m):$m).'</option>';
                                                     }?>
-                                                    </select>
-                                            </b></td></tr></table></td>
-                                        </tr>
-                                        <tr> <td>&nbsp;</td></tr>
-                                        <tr>
-                                                <td><div align="right"><b> Slot Length:&nbsp; </b></div></td>
-                                                <td><nobr><b><input name="length" type="text" value="<?php echo "$length";?>"></b>
-                                                &nbsp;(set examination slot length in minutes - e.g. "10")</td>
-                                        </tr>
-                                        <tr>
-                                                <td><div align="right"><b> Number of Examiners:&nbsp; </b></div></td>
-                                                <td><nobr><b><input name="slots" type="text" value="<?php echo "$slots";?>"></b>
-                                                &nbsp;(set number of available examination slots - e.g. "3")</td>
-                                        </tr>
-                                        <tr> <td>&nbsp;</td></tr>
-                                        <tr>
-                                                <td><div align="right"><input name="login_btn" type="submit" id="login_btn2" value="Add"></div></td>
-                                                <td><div align="left"><b></b></div></td>
-                                        </tr>
-                                    </table>
+                                                    </select><br><br>
+                                                   <b> &nbsp;Slot Length (minutes): </b>
+                                                <b><input name="length" type="text" value="<?php echo "$length";?>" required></b><br>
+                                                <b> Number of Examiners: </b>
+                                                <b><input name="slots" type="text" value="<?php echo "$slots";?>" required></b><br><br>
+                                                <input class="btn btn-success" name="login_btn" type="submit" id="login_btn2" value="Add">
                     </form>
 
                 <?php
@@ -1037,7 +987,7 @@ if(check_db())
                     }
                 ?>
                         </select><br><br><br>
-                        <input name="review_btn" type="submit" id="review_btn" value="Remove">
+                        <input class="btn btn-danger" name="review_btn" type="submit" id="review_btn" value="Remove">
                         <input type="hidden" value = "2" name="state">
                 </form>
                 <?php
@@ -1088,22 +1038,10 @@ if(check_db())
 
                 function close_ren_form()
                 {
-                ?>
-                <form name="close_ren_form" method="POST" action="">
-                        <b>Select Rendezvous Session: </b><br><br>
-                        <select name="ren_ses_id">
-                <?php
-                    $db = new Database("mydb");
-                    $query = "select ren_ses_id, title from ren_sessions where active = 'A' or active = 'Y' order by ren_ses_id desc";
-                    $rs = $db->executeQuery($query);
-                    while($rs->next())
-                        echo '<option value = "'.$rs->getCurrentValueByNr(0).'">'.$rs->getCurrentValueByNr(0).':&nbsp;'.$rs->getCurrentValueByNr(1).' </option>';
-                ?>
-                        </select><br><br><br>
-                        <input name="review_btn" type="submit" id="review_btn" value="Close">
-                </form>
-                <?php
-                }		//review_form
+                    echo '<form name="close_ren_form" method="POST" action="">';
+                    select_ren_fields($title="Select Rendezvous Session:", $button_text='Close');
+                    echo '</form>';
+                }		//close_form
 
                 if($_SERVER['REQUEST_METHOD'] == 'POST')
                 {
@@ -1177,7 +1115,7 @@ if(check_db())
     else		// not logged in
     {
         echo 'Not logged in! Please wait...';
-        $delay=1;
+        $delay=0;
         echo '<meta http-equiv="refresh" content="'.$delay.';url=index.php?op=login">';
     }
 }

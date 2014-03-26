@@ -88,13 +88,13 @@ if(check_db())
             else
             {
                 echo $rs->getRowCount()." available active rendezvous sessions.<br><br>";
-                echo '<table cellpadding="5" cellspacing="0" class="blue">';
-                echo '<tr><th><b> Title </b></th><th><b> Deadline </b></th></tr>';
+                echo '<table class="blue">';
+                echo '<tr><th>Title</th><th>Deadline</th></tr><tbody>';
                 while($rs->next())
                 {
                     echo '<tr><td>"'.$rs->getCurrentValueByNr(0).'" </td><td>'.date("F j, Y, g:i a", $rs->getCurrentValueByNr(1)).'</td></tr>';
                 }
-                echo "</table>";
+                echo "</tbody></table>";
             }
         }
 
@@ -143,7 +143,7 @@ if(check_db())
                 <form name="login_form" method="POST" action="">
                 <div class="input-group margin-bottom-sm">
                 <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                <input name=login class="form-control" type="text" placeholder="login" required>
+                <input name=login class="form-control" type="text" placeholder="login" autofocus required>
                 </div>
 
                 <div class="input-group">

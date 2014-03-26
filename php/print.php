@@ -4,7 +4,7 @@ function print_table($rs)
 {
 	if($rs instanceof ResultSet)
 		{
-			echo '<table cellpadding="5" cellspacing="0" class="blue"><tr>';
+			echo '<table class="blue"><tr>';
 			//echo "<table border=\"1\" width=\"80%\"><tr>";
 			$ColumnNames = $rs->getColumnNames();
 			for($col = 0; $col < $rs->getRowSize(); $col++)
@@ -36,8 +36,8 @@ function print_table($rs)
 
 function print_rendezvous($rs)
 {
-	echo '<table  cellpadding="5" cellspacing="0" class="blue" width="500">';
-	echo '<thread><tr><th><b>Title</b></th><th><b>Deadline</b></th><th><b>State</b></th><th><b>Deactivation</b></th></tr></thread><tbody>';
+	echo '<table class="blue">';
+	echo '<tr><th>Title</th><th>Deadline</th><th>State</th><th>Deactivation</th></tr>';
 	while($rs->next())
 		{
 			echo '<tr>';
@@ -55,7 +55,7 @@ function print_rendezvous($rs)
 				echo '<td align="center">Manual</td>';
 			echo '</tr>';
 		}
-	echo "</tbody></table>";
+	echo "</table>";
 }
 
 ?>

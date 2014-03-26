@@ -73,8 +73,8 @@ if(check_db())
                 else
                 {
                     echo 'You have booked '.$rs->getRowCount().' rendezvous.<br><br>';
-                    echo '<table cellpadding="5" cellspacing="0" class="blue">';
-                    echo '<tr><th><b> Rendezvous Session </b></th><th><b> Time </b></th><th><b> Slot </b></th></tr>';
+                    echo '<table class="blue">';
+                    echo '<tr><th>Rendezvous Session</th><th>Time</th><th>Slot</th></tr>';
                     while($rs->next())
                     {
                         echo '<tr><td align="center">"';
@@ -208,7 +208,7 @@ if(check_db())
                 ?>
                     <form name="reset_form" method="POST" action="">
                             <b>Are you sure you want to reset the System?</b><br>Warning: All database files will be deleted. <br><br>
-                            <input name="yes_btn" type="submit" id="yes_btn" value="Reset">
+                            <input class="btn btn-danger" name="yes_btn" type="submit" id="yes_btn" value="Reset">
                     </form>
                 <?php
                 }		//reset_form
@@ -239,7 +239,7 @@ if(check_db())
     else		// not logged in
     {
         echo 'Not logged in! Please wait...';
-        $delay=1;
+        $delay=0;
         echo '<meta http-equiv="refresh" content="'.$delay.';url=index.php?op=login">';
     }
 
