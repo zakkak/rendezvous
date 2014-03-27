@@ -124,11 +124,11 @@ if(check_db())
                         echo '<form name="book_form2" method="POST" action="">';
                         echo '<b>Select an available slot and click </b>';
                         echo '<input name="review_btn" type="submit" id="review_btn" value="Book"><br><br>';
-                        echo '<table border="0" cellpadding="0" cellspacing="0"><tr>';
+                        echo '<table border="0" cellpadding="0" cellspacing="0">';
 
                         while($ren_periods->next())		// for each rendezvous period shot table with slots
                         {
-                            echo '<td valign="top">';
+                            echo '<tr><td align="center" valign="top">';
                             $ren_per_id = $ren_periods->getCurrentValueByNr(0);
                             $ren_ses_id = $ren_periods->getCurrentValueByNr(1);
                             $ren_start = $ren_periods->getCurrentValueByNr(2);
@@ -147,12 +147,11 @@ if(check_db())
 
                             //echo $date.'&nbsp;('.$s_h.':'.$s_m.' - '.$e_h.':'.$e_m.')';
                             //echo "<table border=\"1\" width=\"80%\">";
-                            echo '<table class="blue">';
-                            //echo '<table border="1" >';
-                            echo '<tr><th align = "center"><font size = 4><nobr>'.$date.'</nobr></font></th>';
+                            echo '<table class="blue bluec">';
+                            echo '<tr><th>'.$date.'</th>';
                             for ($i=1; $i<=$ren_slots; $i++)
                             {
-                                echo '<th align = "center"><font size = 4><nobr>&nbsp;Slot&nbsp;'.$i.'&nbsp;</nobr></font></th>';
+                                echo '<th>Slot&nbsp;'.$i.'</th>';
                             }
                             echo '</tr>';
 
@@ -172,7 +171,7 @@ if(check_db())
                             {
                                 $slot_start = date("H:i", $time);
                                 $slot_end = date("H:i", $time+($ren_length*60));
-                                echo '<tr><th align = "center"><nobr>&nbsp;'.$slot_start.' - '.$slot_end.'&nbsp;</nobr></th>';
+                                echo '<tr><th>'.$slot_start.'-'.$slot_end.'</th>';
 
                                 for ($i=1; $i<=$ren_slots; $i++)
                                 {
@@ -196,11 +195,11 @@ if(check_db())
                                 echo '</tr>';
                             }
                             echo '</table><br><br>';
-                            echo '</td><td>&nbsp;&nbsp;&nbsp;</td>';
+                            echo '</td><td>&nbsp;&nbsp;&nbsp;</td></tr>';
                         }
 
                         ?>
-                            </tr></table>
+                            </table>
                             <input type="hidden" value = "2" name="state">
                             </form>
                         <?php
@@ -714,11 +713,11 @@ if(check_db())
 
                     if($ren_periods->getRowCount() > 0)		// There are slots
                     {
-                        echo '<table border="0" cellpadding="0" cellspacing="0"><tr>';
+                        echo '<table border="0" cellpadding="0" cellspacing="0">';
 
                         while($ren_periods->next())		// for each rendezvous period show table with slots
                         {
-                            echo '<td valign="top">';
+                            echo '<tr><td align="center" valign="top">';
                             $ren_per_id = $ren_periods->getCurrentValueByNr(0);
                             $ren_ses_id = $ren_periods->getCurrentValueByNr(1);
                             $ren_start = $ren_periods->getCurrentValueByNr(2);
@@ -737,9 +736,8 @@ if(check_db())
 
                             //echo $date.'&nbsp;('.$s_h.':'.$s_m.' - '.$e_h.':'.$e_m.')';
                             //echo "<table border=\"1\" width=\"80%\">";
-                            echo '<table class="blue">';
-                            //echo '<table border="1" >';
-                            echo '<tr><th><b>'.$date.'</b></th>';
+                            echo '<table class="blue bluec">';
+                            echo '<tr><th>'.$date.'</th>';
                             for ($i=1; $i<=$ren_slots; $i++)
                             {
                                 echo '<th>Slot&nbsp;'.$i.'</th>';
@@ -762,7 +760,7 @@ if(check_db())
                             {
                                 $slot_start = date("H:i", $time);
                                 $slot_end = date("H:i", $time+($ren_length*60));
-                                echo '<tr><td><b>'.$slot_start.' - '.$slot_end.'</b></td>';
+                                echo '<tr><td><b>'.$slot_start.'-'.$slot_end.'</b></td>';
 
                                 for ($i=1; $i<=$ren_slots; $i++)
                                 {
@@ -779,9 +777,9 @@ if(check_db())
                                 echo '</tr>';
                             }
                             echo '</table><br><br>';
-                            echo '</td><td>&nbsp;&nbsp;&nbsp;</td>';
+                            echo '</td></tr>';
                         }
-                        echo '</tr></table>';
+                        echo '</table>';
 
                     }
                     else		// There are exam periods!
