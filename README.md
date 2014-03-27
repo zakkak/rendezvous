@@ -1,14 +1,14 @@
 Rendezvous
 ==========
 
-This is an extension of the project
-[https://github.com/papamix/submit_rendezvous Submit-Rendezvous] by
-Michael Papamichael
-
-It implements a web-based system for booking appointments for
+Rendezvous implements a web-based system for booking appointments for
 examination.  The appointment booking portion (Rendezvous) has been
 used extensively in multiple courses at the University of Crete over
 the course of the last few years.
+
+This is a derivative work of the
+[Submit-Rendezvous](https://github.com/papamix/submit_rendezvous)
+project.
 
 For licensing information please see the LICENSE file.
 
