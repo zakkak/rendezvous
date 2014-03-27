@@ -411,10 +411,10 @@ if(check_db())
                 if($_SERVER['REQUEST_METHOD'] == 'POST')
                 {
 
-                    $ren_ses_id = mysql_real_escape_string($_POST['ren_ses_id']);
+                    $ren_ses_id = $_POST['ren_ses_id'];
                     $db = new Database("mydb");
                     $query = "select * from rendezvous where ren_ses_id = ".$ren_ses_id.
-                        " and login = '".mysql_real_escape_string($_SESSION['login'])."'";
+                        " and login = '".$_SESSION['login']."'";
                     $rs = $db->executeQuery($query);
                     if($rs->next())
                     {
