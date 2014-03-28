@@ -50,9 +50,9 @@
 /*                                                                           */
 /*****************************************************************************/
 	// Error reporting
-	error_reporting(0); // Turn off all error reporting
+	//error_reporting(0); // Turn off all error reporting
 	//error_reporting(E_ALL); // Report all errors
-	//error_reporting(E_ERROR | E_WARNING | E_PARSE); // Report simple running errors
+	error_reporting(E_ERROR | E_WARNING | E_PARSE); // Report simple running errors
 	//error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE); // Also report notices
 
 ?>

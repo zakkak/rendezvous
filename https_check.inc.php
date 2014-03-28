@@ -12,12 +12,14 @@ if($_SERVER['HTTPS'] != "on"){ // if there was no secure connection, redirect to
 
   //echo $_SERVER['FULL_URL'];
 
-  $delay = "5"; // 5 second delay
+  $delay = "3"; // 3 second delay
   echo "For security reasons encryption needs to be enabled! Make sure to accept any security alerts.<br>";
-  echo "You will be redirected in 5 seconds. Please wait...<br><br>";
+  echo "You will be redirected in ".$delay." seconds. Please wait...<br><br>";
   echo "If redirection does not work please click <a href=".$_SERVER['FULL_URL'].">here</a>.";
 
   echo '<meta http-equiv="refresh" content="'.$delay.';url='.$_SERVER['FULL_URL'].'">';
 
   exit();
 }
+
+?>
