@@ -1,10 +1,9 @@
 <?php
+session_start();
+session_save_path(DB_DIR);
 
 include("db.php");     // include txtDB
 include("conf.php");   // settings
-
-session_save_path(DB_DIR);
-session_start();
 
 include("header.inc.php");
 include "php/show_links.php";
