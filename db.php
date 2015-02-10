@@ -7,7 +7,7 @@ function create_db()
   echo '<br>Please wait...<br> Creating Database:<br>';
   if (!file_exists(DB_DIR)) 		// no database directory found. Create it.
   {
-    $rc=mkdir (realpath('.').'/'.DB_DIR , 0711);
+    $rc=mkdir (realpath('.').'/'.DB_DIR , 0700);
     if(!$rc)
     {
       print_error_msg("Cannot create Database " . DB_DIR);
@@ -33,18 +33,6 @@ function check_db()
   //echo substr(sprintf('%o', fileperms(API_HOME_DIR)), -4);
   if (!file_exists(DB_DIR . "mydb"))        // no database file found. Create the database.
   {         //Database exists
-    if( substr(sprintf('%o', fileperms(API_HOME_DIR)), -4) != '1777')
-    {       // check permissions of txtDB directory
-      echo '<br> Please set the permissions of the database directory ';
-      echo '( "'.API_HOME_DIR.'" ) to 1777!<br>';
-      echo 'This is done by executing the following command: ';
-      echo '<pre>chmod 1777 '.API_HOME_DIR.'</pre><br>';
-      echo 'This is needed only for the first setup of the system,';
-      echo ' later you will be asked to change them to 0711.';
-      echo '</body>';
-      echo '</html>';
-      return false;
-    }
     create_db();
     $delay = "3"; // 3 second delay
     $url = "index.php"; // target of the redirect
@@ -53,7 +41,7 @@ function check_db()
     echo '</html>';
     return false;
   }
-  if( substr(sprintf('%o', fileperms(API_HOME_DIR)), -4) != '0711')
+  if( substr(sprintf('%o', fileperms(API_HOME_DIR)), -4) != '0700')
   {         // check permissions of txtDB directory
     echo '<br> Please set permissions of database directory ';
     echo '( "'.API_HOME_DIR.'" ) to 0711!<br>';
