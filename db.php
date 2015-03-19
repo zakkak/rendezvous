@@ -44,7 +44,7 @@ function check_db()
   if( substr(sprintf('%o', fileperms(API_HOME_DIR)), -4) != '0700')
   {         // check permissions of txtDB directory
     echo '<br> Please set permissions of database directory ';
-    echo '( "'.API_HOME_DIR.'" ) to 0711!<br>';
+    echo '( "'.API_HOME_DIR.'" ) to 0700!<br>';
     echo 'This is done by executing the following command: ';
     echo '<pre>chmod 0711 '.API_HOME_DIR.'</pre>';
     echo '</body>';
