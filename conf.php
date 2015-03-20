@@ -18,21 +18,24 @@
    * (e.g. $admins_file = "home/lessons/hy120/.rhosts";)
    */
   //$admins_file = "../../.rhosts";
-  $admins_file = "./admins";
+  $admins_file = "/home/users/hy999/rendezvous/admins";
 
   /* This string will appear on the top of the webpage right next to the main
    * title "Rendezvous".
   */
-  $title = "Place Holder (edit conf.php to change)";
-  //$title = "HY-225 Computer Organization;
-  //$title = "HY-225 Οργάνωση Υπολογιστών";
+  $title = "RV v2.0";
+  
+  /*
+   * This string is the room where the exams take place
+   */
+  $examRoom = "B210";
 
   /* These strings appear at the top right of the page next to the logo */
   $affil1      = "Computer Science Department";
   $affil1_link = "http://www.csd.uoc.gr"; // enter URL or leave blank for no link
   $affil2      = "University of Crete";
   $affil2_link = "http://www.uoc.gr";     // enter URL or leave blank for no link
-  $affil3      = "Edit conf.php to change affiliation and logo";
+  $affil3      = "Hello world";
   $affil3_link = "";                      // enter URL or leave blank for no link
   $logo_path   = "theme/csd_logo.jpg";    // specify path to logo
   $logo_link   = "http://www.uoc.gr";     // enter URL or leave blank for no link

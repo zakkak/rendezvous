@@ -301,8 +301,11 @@ if(check_db())
                   $rs4->next();
                   $title = $rs4->getCurrentValueByNr(0);
                   $email = $_SESSION['login'].'@csd.uoc.gr';
+
+				  $icalLink = "https://" . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/')) . "/ical.php?summary=" . urlencode($title) . "&datestart=$time&dateend=" . ($time + 900) . "&address=" . urlencode($examRoom)  . "&uri=" . urlencode("https://" . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/'))) . "&filename=RV.ics" ;
+
                   $subject = "Rendezvous Confirmation for ".$title;
-                  $message = "You have succesfully updated your rendezvous with the following details:\n\nRendezvous Session: ".$title."\nDate: ".date("F j, Y", $time)."\nTime: ".date("H:i", $time)."\nSlot: ".$slot."\n\n\nPlease do not reply to this message";
+                  $message = "You have succesfully updated your rendezvous with the following details:\n\nRendezvous Session: ".$title."\nDate: ".date("F j, Y", $time)."\nTime: ".date("H:i", $time)."\nSlot: ".$slot."\n" . "iCal: $icalLink" . "\n\n\nPlease do not reply to this message";
                   if( mail($email, $subject, $message, "From: Rendezvous <donotreply>\r\nContent-Type: text/plain;charset=utf-8") )
                     echo 'A confirmation e-mail has been sent to '.$email ;
                 }
@@ -330,8 +333,11 @@ if(check_db())
                   $rs4->next();
                   $title = $rs4->getCurrentValueByNr(0);
                   $email = $_SESSION['login'].'@csd.uoc.gr';
+				  
+				  $icalLink = "https://" . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/')) . "/ical.php?summary=" . urlencode($title) . "&datestart=$time&dateend=" . ($time + 900) . "&address=" . urlencode($examRoom)  . "&uri=" . urlencode("https://" . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/'))) . "&filename=RV.ics" ;
+				  
                   $subject = "Rendezvous Confirmation for ".$title;
-                  $message = "You have succesfully booked a rendezvous with the following details:\n\nRendezvous Session: ".$title."\nDate: ".date("F j, Y", $time)."\nTime: ".date("H:i", $time)."\nSlot: ".$slot."\n\n\nPlease do not reply to this message";
+                  $message = "You have succesfully booked a rendezvous with the following details:\n\nRendezvous Session: ".$title."\nDate: ".date("F j, Y", $time)."\nTime: ".date("H:i", $time)."\nSlot: ".$slot."\niCal: $icalLink\n\n\nPlease do not reply to this message";
                   if( mail($email, $subject, $message, "From: Rendezvous <donotreply>\r\nContent-Type: text/plain;charset=utf-8") )
                     echo 'A confirmation e-mail has been sent to '.$email ;
                 }
