@@ -25,7 +25,7 @@ else    // not logged in
 ?>
 
 <br/>
-<h4>Rendezvous v. 2.0.0</h4>
+<h4>Rendezvous v. 2.1.0</h4>
 To get a copy or contribute to the development of the project visit
 <a href="https://github.com/DaKnOb/rendezvous">
   https://github.com/DaKnOb/rendezvous
