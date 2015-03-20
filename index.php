@@ -222,7 +222,6 @@ if(check_db())
 		  $adminDatabase = explode("\n", $adminFileRead);
 		  
 		  foreach($adminDatabase as $admin){
-			  echo $admin . " <--> " . $login . "<br/>";
 			  if($admin == $login){
 				  $verified = true;
 			  }
