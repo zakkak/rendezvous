@@ -302,7 +302,7 @@ if(check_db())
                   $title = $rs4->getCurrentValueByNr(0);
                   $email = $_SESSION['login'].'@csd.uoc.gr';
 
-				  $icalLink = "https://" . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/')) . "/ical.php?summary=" . urlencode($title) . "&datestart=$time&dateend=" . ($time + $RVduration * 60) . "&address=" . urlencode($examRoom)  . "&uri=" . urlencode("https://" . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/'))) . "&filename=RV.ics" ;
+				  $icalLink = "https://" . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/')) . "/ical.php?summary=" . urlencode($title) . "&datestart=" . ($time - 3600 * 2) . "&dateend=" . (($time - 3600 * 2) + $RVduration * 60) . "&address=" . urlencode($examRoom)  . "&uri=" . urlencode("https://" . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/'))) . "&filename=RV.ics" ;
 
                   $subject = "Rendezvous Confirmation for ".$title;
                   $message = "<style>th{text-align:left;}</style>You have successfully updated your rendezvous with the following details:<br/><br/><table><tr><th>Rendezvous Session:</th><td>" . $title . "</td></tr><tr><th>Date:</th><td>" . date("F j, Y", $time) . "</td></tr><tr><th>Time:</th><td>" . date("H:i", $time) . "</td></tr><tr><th>Slot:</th><td>".$slot."</td></tr><tr><th>iCal:</th><td><a href=\"" . $icalLink . "\">Download</a></td></tr></table><br/><br/><hr/>The Rendezvous System<br/>You have not been added to any mailing lists.<br/>Please do not reply to this message.";
@@ -334,7 +334,8 @@ if(check_db())
                   $title = $rs4->getCurrentValueByNr(0);
                   $email = $_SESSION['login'].'@csd.uoc.gr';
 				  
-				  $icalLink = "https://" . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/')) . "/ical.php?summary=" . urlencode($title) . "&datestart=$time&dateend=" . ($time + $RVduration * 60) . "&address=" . urlencode($examRoom)  . "&uri=" . urlencode("https://" . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/'))) . "&filename=RV.ics" ;
+				  $icalLink = "https://" . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/')) . "/ical.php?summary=" . urlencode($title) . "&datestart=" . ($time - 3600 * 2) . "&dateend=" . (($time - 3600 * 2) + $RVduration * 60) . "&address=" . urlencode($examRoom)  . "&uri=" . urlencode("https://" . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/'))) . "&filename=RV.ics" ;
+
 				  
                   $subject = "Rendezvous Confirmation for ".$title;
                   $message = "<style>th{text-align:left;}</style>You have successfully booked a rendezvous with the following details:<br/><br/><table><tr><th>Rendezvous Session:</th><td>" . $title . "</td></tr><tr><th>Date:</th><td>" . date("F j, Y", $time) . "</td></tr><tr><th>Time:</th><td>" . date("H:i", $time) . "</td></tr><tr><th>Slot:</th><td>".$slot."</td></tr><tr><th>iCal:</th><td><a href=\"" . $icalLink . "\">Download</a></td></tr></table><br/><br/><hr/>The Rendezvous System<br/>You have not been added to any mailing lists.<br/>Please do not reply to this message.";
