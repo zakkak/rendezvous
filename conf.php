@@ -29,6 +29,12 @@
    * This string is the room where the exams take place
    */
   $examRoom = "B210";
+  
+  /*
+   * This is the duration (in minutes) of each RV.
+   * Currently it does not read this value from the database
+   */
+  $RVduration = 15;
 
   /* These strings appear at the top right of the page next to the logo */
   $affil1      = "Computer Science Department";
