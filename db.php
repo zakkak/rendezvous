@@ -46,7 +46,7 @@ function check_db()
     echo '<br> Please set permissions of database directory ';
     echo '( "'.API_HOME_DIR.'" ) to 0700!<br>';
     echo 'This is done by executing the following command: ';
-    echo '<pre>chmod 0711 '.API_HOME_DIR.'</pre>';
+    echo '<pre>chmod 0700 '.API_HOME_DIR.'</pre>';
     echo '</body>';
     echo '</html>';
     return false;

@@ -728,7 +728,7 @@ class Database  {
 			return false;
 
 		$directory=$this->dbFolder . $sqlQuery->colNames[0];
-		$rc=mkdir ($directory , 0711);
+		$rc=mkdir ($directory , 0700);
 		if(!$rc) {
 			print_error_msg("Cannot create Database " . $sqlQuery->colNames[0]);
 			return false;
