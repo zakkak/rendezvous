@@ -114,11 +114,11 @@ if(check_db())
       echo 'Welcome '.$_SESSION['login'].'!';
       //echo exec('gfinger '.$_SESSION['login'].' | line');
 
+      echo 'You have the following options:<br><br><table><tr>';
+      echo '<td align="right"><b> Rendezvous: </b></td>';
+
       if ($_SESSION['acc_type'] == 'user')    // simple user
       {
-        echo ' You have the following options:<br><br><table><tr>';
-
-        echo '<td align="right"><b> Rendezvous: </b></td>';
         echo '<td align="left">Select this tab to book/cancel a rendezvous.</td>';
         echo '</tr><tr>';
         echo '<td align="right"><b> Advanced: </b></td>';
@@ -127,10 +127,6 @@ if(check_db())
       }
       else    // admin
       {
-        echo '<br><br>You have the following options:<br><br>';
-        echo '<table><tr>';
-
-        echo '<td align="right"><b> Rendezvous: </b></td>';
         echo '<td align="left">Select this tab to manage Rendezvous Sessions.</td>';
         echo '</tr><tr>';
         echo '<td align="right"><b> Advanced: </b></td>';
