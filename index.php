@@ -55,24 +55,29 @@ function show_form($msg="")
 <?php echo $msg; ?>
     <br><br>
 
-    <form name="login_form" method="POST" action="">
+    <form name="login_form" method="POST" action="" role="form">
       <div class="input-group margin-bottom-sm">
         <span class="input-group-addon"><i class="fa fa-at fa-fw"></i></span>
-        <input name=login class="form-control" type="text" placeholder="e-mail" autofocus required>
+        <input name=login class="form-control" type="text"
+               placeholder="e-mail" autofocus required>
       </div>
 
       <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-        <input name="passwd" class="form-control" type="password" placeholder="password" required>
+        <input name="passwd" class="form-control" type="password"
+               placeholder="password" required>
       </div>
 
       <b>Account Type:&nbsp;</b>
-      <select class="selectpicker" data-style="btn-info" name="acc_type">
-        <option value="user">Student</option>
-        <option value="admin">Administrator</option>
-      </select>
+      <label class="radio-inline">
+        <input type="radio" name="acc_type" value="user" checked="checked">Student
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="acc_type" value="admin">Administrator
+      </label>
 
-      <input name="login_btn" type="submit" id="Login" value="Login">
+      <input class="btn btn-primary btn-sm" name="login_btn" type="submit" 
+             id="Login" value="Login">
     </form>
   </div>
   <?php
