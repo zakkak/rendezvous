@@ -9,6 +9,75 @@ include("header.inc.php");
 include "php/show_links.php";
 include("https_check.inc.php");  // check for https and redirect if necessary
 
+function ldaplogin($mail, $pass) {
+    // Establish link with LDAP server
+    global $ldap_server, $ldap_port, $ldap_bdn;
+    $con = ldap_connect($ldap_server, $ldap_port)
+        or die ("Could not connect to $ldap_server.");
+    if (!is_resource($con)) {
+        trigger_error("Unable to connect to $ldap_server.", E_USER_WARNING);
+        return false;
+    }
+    ldap_set_option($con, LDAP_OPT_PROTOCOL_VERSION, 3);
+    ldap_set_option($con, LDAP_OPT_REFERRALS, 0);
+    
+    $bind=false;
+    
+    // First bind anonymously
+    $bind = ldap_bind($con, "", "");
+    if (!$bind) {
+        trigger_error("Unable to anonymously bind to $ldap_server.", E_USER_WARNING);
+        return false;
+    }
+    
+    // Search for the user
+    $search=@ldap_search($con, $ldap_bdn, "(mail=$mail)", array('dn', 'mail'));
+    $entry =@ldap_first_entry($con, $search);
+    
+    if (!$entry)
+        return false;
+    
+    $bind = false;
+
+    $dn   = @ldap_get_dn($con, $entry);
+    $bind = ldap_bind($con, $dn, $pass);
+
+    $lastError = ldap_errno($con);
+    ldap_close($con);
+
+    return $bind;
+}
+
+function show_form($msg="")
+{
+?>
+  <div style="width:300px">
+<?php echo $msg; ?>
+    <br><br>
+
+    <form name="login_form" method="POST" action="">
+      <div class="input-group margin-bottom-sm">
+        <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+        <input name=login class="form-control" type="text" placeholder="login" autofocus required>
+      </div>
+
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+        <input name="passwd" class="form-control" type="password" placeholder="password" required>
+      </div>
+
+      <b>Account Type:&nbsp;</b>
+      <select class="selectpicker" data-style="btn-info" name="acc_type">
+        <option value="user">Student</option>
+        <option value="admin">Administrator</option>
+      </select>
+
+      <input name="login_btn" type="submit" id="Login" value="Login">
+    </form>
+  </div>
+  <?php
+}   //show form
+
 // Show menu depending on user status
 if (isset($_SESSION['login']) && $_SESSION['full_path'] == realpath(".") )
 {          // logged in
@@ -142,36 +211,6 @@ if(check_db())
     /************* Login *************/
     if ($_GET['op'] == 'login')
     {
-      function show_form($user_name="", $mailserver="")
-      {
-?>
-  <div style="width:300px">
-    Welcome! Please log in to continue.<br><br>
-
-    <form name="login_form" method="POST" action="">
-      <div class="input-group margin-bottom-sm">
-        <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-        <input name=login class="form-control" type="text" placeholder="login" autofocus required>
-      </div>
-
-      <div class="input-group">
-        <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-        <input name="passwd" class="form-control" type="password" placeholder="password" required>
-      </div>
-      (mail server used for authentication: <?php echo $mailserver; ?>)
-      <br>
-
-      <b>Account Type:&nbsp;</b>
-      <select class="selectpicker" data-style="btn-info" name="acc_type">
-        <option value="user">Student</option>
-        <option value="admin">Administrator</option>
-      </select>
-
-      <input name="login_btn" type="submit" id="Login" value="Login">
-    </form>
-  </div>
-  <?php
-  }   //show form
 
   if($_SERVER['REQUEST_METHOD'] == 'POST')
   {
@@ -182,24 +221,20 @@ if(check_db())
 
     if ( empty($login))
     {
-      echo "<p>User Name cannot be empty! <br></p>";
-      show_form($login, $mailserver);
+      show_form("User Name cannot be empty!");
     }
     else if( empty($passwd))
     {
-      echo "<p>Password cannot be empty! <br></p>";
-      show_form($login, $mailserver);
+      show_form("Password cannot be empty!");
     }
     else    // verify password
     {
       $verified = false;
 
-      //if(false)
-      //$connection = ssh2_connect('gate1.csd.uoc.gr', 22);
-      //if (ssh2_auth_password($connection, $login, $passwd))
-      if($mbox=@imap_open("{".$mailserver.":993/imap/ssl/novalidate-cert}", $login, $passwd, OP_HALFOPEN))
+      $bind = ldaplogin($login, $passwd);
+
+      if ($bind)
       {
-        imap_close($mbox);
 
         if($acc_type == 'user'){        // simple user verification
           $verified = true;
@@ -257,16 +292,15 @@ if(check_db())
       }
       else
       {
-        echo "<p>Password incorrect! Please try again! <br></p>";
-        show_form("", $mailserver);
+        show_form("E-mail or Password incorrect! Please try again!");
       }
     }
   }
   else
   {
-    show_form("", $mailserver);
+    show_form("Welcome! Please log in to continue.");
   }
-  }
+    }
 
   /************* Help for Strangers *************/
   //else if ($_GET['op'] == 'help')

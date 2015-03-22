@@ -6,10 +6,12 @@
 /*                                                                           */
 /*****************************************************************************/
 
-  /* The mailserver specified below is used to authenticate all users (students
-   * and administrators). Needs to support imap.
-   */
-  $mailserver = "mailhost.csd.uoc.gr";
+  /* The LDAP server URI */
+  $ldap_server = "ldap://ds.uoc.gr";
+  /* The LDAP server port to connect to */
+  $ldap_port   = "389";
+  /* The LDAP base DN */
+  $ldap_bdn    = "dc=uoc,dc=gr";
 
   /* The admins_file specified below contains the logins of the instructors
    * and the teaching assistants. (syntax: one login per line)
@@ -40,7 +42,8 @@
   /* Change favicon */
   $favicon_path = "theme/logo.ico";         // specify path to favicon
 
-  /* Set this to true to automatically send e-mail confirmations for file rendezvous bookings */
+  /* Set this to true to automatically send e-mail confirmations for
+   * file rendezvous bookings */
   $email_confirmation = true;
 
 
