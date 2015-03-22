@@ -4,7 +4,7 @@
     <title>Rendezvous</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="SHORTCUT ICON" HREF="<?php echo $favicon_path;?>">
-    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/simplex/bootstrap.min.css"
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/cosmo/bootstrap.min.css"
           rel="stylesheet">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
           rel="stylesheet">
@@ -67,7 +67,7 @@
       ?>
 
 <?php if (isset($_SESSION['login'])) { ?>
-      <nav class="navbar navbar-default">
+      <nav class="navbar navbar-inverse">
         <div class="container-fluid">
           <!--<div class="navbar-header">
           <a class="navbar-brand" href="#">Rendezvous</a>
@@ -89,8 +89,8 @@
               <li><a href="rendezvous.php?op=delete">Delete</a></li>
 <?php } else { ?>
               <li><a href="rendezvous.php?op=book">Book</a></li>
-              <li><a href="rendezvous.php?op=cancel">Cancel</a></li>
               <li><a href="rendezvous.php?op=review">Review</a></li>
+              <li><a href="rendezvous.php?op=cancel">Cancel</a></li>
 <?php } ?>
             </ul>
           </li>
