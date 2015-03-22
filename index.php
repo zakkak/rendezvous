@@ -242,9 +242,9 @@ if(check_db())
         if($acc_type == 'admin')        // admin verification
         {
           if ( !is_readable($admins_file) || !$fh = fopen($admins_file, 'r')){
-            echo 'Could not open the file that lists the administrators ("'.$admins_file.'")!<br>
-                                    Please specify a valid file in the "conf.php" file ("'.realpath('.').'/conf.php").<br>
-                                    Make sure that this file is readable and has the appropriate permissions.';
+            echo 'Could not open the file that lists the administrators ("'.$admins_file.'")!<br>';
+            echo 'Please specify a valid file in the "conf.php" file ("'.realpath('.').'/conf.php").<br>';
+            echo 'Make sure that this file is readable and has the appropriate permissions.';
             exit;
           }
           //echo $fh;
