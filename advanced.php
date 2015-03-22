@@ -93,9 +93,9 @@ if(check_db())
       {
         if (file_exists(DB_DIR."log.txt"))
         {
-          $temp_log = 'temp_log.txt';
-          $command = 'tac '.DB_DIR.'log.txt > /tmp/temp_log.txt';
-          passthru($command);
+          /* $temp_log = 'temp_log.txt'; */
+          /* $command = 'tac '.DB_DIR.'log.txt > /tmp/temp_log.txt'; */
+          /* passthru($command); */
 
           if ($fp = fopen(DB_DIR."log.txt", "r"))
           {
@@ -104,7 +104,7 @@ if(check_db())
             echo ' entries )<br>';
             echo '<textarea name="log" cols="80" rows="20" readonly="readonly">';
 
-            $fp = fopen("/tmp/temp_log.txt", "r");
+            /* $fp = fopen("/tmp/temp_log.txt", "r"); */
             while (!feof($fp))
             {
               echo fgets($fp);
