@@ -4,9 +4,9 @@
     <title>Rendezvous</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="SHORTCUT ICON" HREF="<?php echo $favicon_path;?>">
-    <link href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/spacelab/bootstrap.min.css"
+    <link href="//netdna.bootstrapcdn.com/bootswatch/3.3.4/spacelab/bootstrap.min.css"
           rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css"
           rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="theme/style.css">
     <script type="text/javascript" src="js/calendarDateInput.js">

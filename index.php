@@ -57,8 +57,8 @@ function show_form($msg="")
 
     <form name="login_form" method="POST" action="">
       <div class="input-group margin-bottom-sm">
-        <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-        <input name=login class="form-control" type="text" placeholder="login" autofocus required>
+        <span class="input-group-addon"><i class="fa fa-at fa-fw"></i></span>
+        <input name=login class="form-control" type="text" placeholder="e-mail" autofocus required>
       </div>
 
       <div class="input-group">
