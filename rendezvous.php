@@ -7,39 +7,7 @@ include("conf.php");   // settings
 include("https_check.inc.php");  // check for https and redirect if necessary
 
 include("header.inc.php");
-include "php/show_links.php";
 
-// if logged in
-if (isset($_SESSION['login']) && $_SESSION['full_path'] == realpath(".") )
-{
-  if ($_SESSION['acc_type'] == 'admin')     // admin users
-  {
-    show_links($left_links=array("Create", "rendezvous.php?op=create",
-                                 "Edit", "rendezvous.php?op=edit",
-                                 "Review", "rendezvous.php?op=review",
-                                 "Add Slots", "rendezvous.php?op=add_exam",
-                                 "Remove Slots", "rendezvous.php?op=rem_exam",
-                                 "Close", "rendezvous.php?op=close",
-                                 "Delete", "rendezvous.php?op=delete"),
-               $right_links=array("Logout ".$_SESSION['login']." (admin)",
-                                  "index.php?op=logout"), $_GET['op']);
-  }
-  else          // simple users
-  {
-    show_links($left_links=array("Book", "rendezvous.php?op=book",
-                                 "Cancel", "rendezvous.php?op=cancel",
-                                 "Review", "rendezvous.php?op=review"),
-               $right_links=array("Logout ".$_SESSION['login'],
-                                  "index.php?op=logout"), $_GET['op']);
-  }
-}
-else    // not logged in
-{
-  show_links($left_links=array("Login", "index.php?op=login"),
-             $right_links=array(), $_GET['op']);
-}
-
-echo    '<br><br>';
 // safe mode check
 if( ini_get('safe_mode') )
 {

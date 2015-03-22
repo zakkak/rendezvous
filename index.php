@@ -78,20 +78,6 @@ function show_form($msg="")
   <?php
 }   //show form
 
-// Show menu depending on user status
-if (isset($_SESSION['login']) && $_SESSION['full_path'] == realpath(".") )
-{          // logged in
-    show_links($left_links=array("Status", "index.php?op=status"),
-               $right_links=array("Logout ".$_SESSION['login'],
-                                  "index.php?op=logout"),
-               $_GET['op']);
-}
-else                            // not logged in
-{
-  show_links($left_links=array("Login", "index.php?op=login"),
-             $right_links=array(), $_GET['op']);
-}
-echo '<br><br>';
 // safe mode check
 if( ini_get('safe_mode') )
 {
@@ -111,34 +97,34 @@ if(check_db())
     /************* Normal Home Page *************/
     if ($_GET['op'] == '')      // Normal Index Page
     {
-      echo 'Welcome '.$_SESSION['login'].'!';
-      //echo exec('gfinger '.$_SESSION['login'].' | line');
+    /*   echo 'Welcome '.$_SESSION['login'].'!'; */
+    /*   //echo exec('gfinger '.$_SESSION['login'].' | line'); */
 
-      echo 'You have the following options:<br><br><table><tr>';
-      echo '<td align="right"><b> Rendezvous: </b></td>';
+    /*   echo 'You have the following options:<br><br><table><tr>'; */
+    /*   echo '<td align="right"><b> Rendezvous: </b></td>'; */
 
-      if ($_SESSION['acc_type'] == 'user')    // simple user
-      {
-        echo '<td align="left">Select this tab to book/cancel a rendezvous.</td>';
-        echo '</tr><tr>';
-        echo '<td align="right"><b> Advanced: </b></td>';
-        echo '<td align="left">Select this tab for advanced options.</td>';
-        echo '</tr></table>';
-      }
-      else    // admin
-      {
-        echo '<td align="left">Select this tab to manage Rendezvous Sessions.</td>';
-        echo '</tr><tr>';
-        echo '<td align="right"><b> Advanced: </b></td>';
-        echo '<td align="left">Select this tab to perform Advanced Tasks.</td>';
-        echo '</tr></table>';
-      }
+    /*   if ($_SESSION['acc_type'] == 'user')    // simple user */
+    /*   { */
+    /*     echo '<td align="left">Select this tab to book/cancel a rendezvous.</td>'; */
+    /*     echo '</tr><tr>'; */
+    /*     echo '<td align="right"><b> Advanced: </b></td>'; */
+    /*     echo '<td align="left">Select this tab for advanced options.</td>'; */
+    /*     echo '</tr></table>'; */
+    /*   } */
+    /*   else    // admin */
+    /*   { */
+    /*     echo '<td align="left">Select this tab to manage Rendezvous Sessions.</td>'; */
+    /*     echo '</tr><tr>'; */
+    /*     echo '<td align="right"><b> Advanced: </b></td>'; */
+    /*     echo '<td align="left">Select this tab to perform Advanced Tasks.</td>'; */
+    /*     echo '</tr></table>'; */
+    /*   } */
 
-    }
+    /* } */
 
-    /************* Status Page *************/
-    if ($_GET['op'] == 'status')        // Status Page
-    {
+    /* /\************* Status Page *************\/ */
+    /* if ($_GET['op'] == 'status')        // Status Page */
+    /* { */
       include ("txtDB/txt-db-api.php");
       $db = new Database("mydb");
 
@@ -185,12 +171,6 @@ if(check_db())
         echo '<meta http-equiv="refresh" content="'.$delay.';url='.$url.'">';
       }
     }
-
-    /************* Help for Users *************/
-    //if ($_GET['op'] == 'help')
-    //{
-    //echo 'Log in and select a tab to see more options about each tab.';
-    //}
 
   }
   else        // not logged in
@@ -289,11 +269,6 @@ if(check_db())
   }
     }
 
-  /************* Help for Strangers *************/
-  //else if ($_GET['op'] == 'help')
-  //{
-  //echo 'Please log in first.!';
-  //}
   else        // Go to Login page
   {
     echo 'Welcome! Please wait...';

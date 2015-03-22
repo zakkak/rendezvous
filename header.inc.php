@@ -4,10 +4,12 @@
     <title>Rendezvous</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="SHORTCUT ICON" HREF="<?php echo $favicon_path;?>">
-    <link href="//netdna.bootstrapcdn.com/bootswatch/3.3.4/spacelab/bootstrap.min.css"
+    <link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.4/simplex/bootstrap.min.css"
           rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.css"
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
           rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link type="text/css" rel="stylesheet" href="theme/style.css">
     <script type="text/javascript" src="js/calendarDateInput.js">
      /***********************************************
@@ -64,25 +66,55 @@
       $currentFile = $parts[count($parts) - 1];
       ?>
 
-      <table width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
-        <td width="280"><nobr>
-          <ul id="navlist">
-            <!-- CSS Tabs -->
-            <li><a <?php if($currentFile=='index.php')
-              echo 'id="current"'?> href="index.php">Home</a></li>
-            <li><a <?php if($currentFile=='rendezvous.php')
-              echo 'id="current"'?> href="rendezvous.php">Rendezvous</a></li>
-            <li><a <?php if($currentFile=='advanced.php')
-              echo 'id="current"'?> href="advanced.php">Advanced</a></li>
+<?php if (isset($_SESSION['login'])) { ?>
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <!--<div class="navbar-header">
+          <a class="navbar-brand" href="#">Rendezvous</a>
+          </div>-->
+          <div id="navbar">
+          <ul class="nav navbar-nav">
+          <li <?php if($currentFile=='index.php') echo 'class="active"'?>>
+          <a href="index.php">Home</a></li>
+          <li class="dropdown <?php if($currentFile=='rendezvous.php') echo 'active'?>">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Rendezvous<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+<?php if (isset($_SESSION['acc_type']) && $_SESSION['acc_type'] == 'admin') { ?>
+              <li><a href="rendezvous.php?op=create">Create</a></li>
+              <li><a href="rendezvous.php?op=edit">Edit</a></li>
+              <li><a href="rendezvous.php?op=review">Review</a></li>
+              <li><a href="rendezvous.php?op=add_exam">Add Slots</a></li>
+              <li><a href="rendezvous.php?op=rem_exam">Remove Slots</a></li>
+              <li><a href="rendezvous.php?op=close">Close</a></li>
+              <li><a href="rendezvous.php?op=delete">Delete</a></li>
+<?php } else { ?>
+              <li><a href="rendezvous.php?op=book">Book</a></li>
+              <li><a href="rendezvous.php?op=cancel">Cancel</a></li>
+              <li><a href="rendezvous.php?op=review">Review</a></li>
+<?php } ?>
+            </ul>
+          </li>
+          <li class="dropdown <?php if($currentFile=='advanced.php') echo 'active'?>">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Advanced<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+<?php if (isset($_SESSION['acc_type']) && $_SESSION['acc_type'] == 'admin') { ?>
+              <li><a href="advanced.php?op=view_log">View Log</a></li>
+              <li><a href="advanced.php?op=ren_hist">Rendezvous History</a></li>
+              <li><a href="advanced.php?op=query">SQL Query</a></li>
+              <li><a href="advanced.php?op=reset">Reset System</a></li>
+<?php } else { ?>
+              <li><a href="advanced.php?op=ren_hist">Rendezvous History</a></li>
+<?php } ?>
+            </ul>
+          </li>
           </ul>
-        </td>
-
-        <td align="right" valign="bottom" bgcolor="#FFFFFF"></td>
-        <td width="60" align="right">
-          <ul id="navlist">
-            <!-- CSS Tabs -->
-            <li><a <?php if($currentFile=='about.php')
-              echo 'id="current"'?> href="about.php">About</a></li>
+          <ul class="nav navbar-nav navbar-right">
+          <li <?php if($currentFile=='about.php') echo 'class="active"'?>>
+          <a href="about.php">About</a></li>
+          <li>
+          <a href="index.php?op=logout">Logout</a></li>
           </ul>
-        </td>
-      </tr></table>
+          </div>
+        </div>
+      </nav>
+<?php } ?>

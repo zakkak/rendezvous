@@ -8,40 +8,12 @@ include("https_check.inc.php");  // check for https and redirect if necessary
 
 include("header.inc.php");
 include "php/show_links.php";
-if (isset($_SESSION['login']) && $_SESSION['full_path'] == realpath(".") )			// logged in
-{
-  if ($_SESSION['acc_type'] == 'admin')	// admin users
-  {
-    show_links($left_links=array("View Log", "advanced.php?op=view_log",
-                                 "Rendezvous History", "advanced.php?op=ren_hist",
-                                 "SQL Query", "advanced.php?op=query",
-                                 "Reset System", "advanced.php?op=reset"),
-               $right_links=array("Logout ".$_SESSION['login']." (admin)",
-                                  "index.php?op=logout"),
-               $_GET['op']);
-  }
-  else			// simple users
-  {
-    show_links($left_links=array("Rendezvous History",
-                                 "advanced.php?op=ren_hist"),
-               $right_links=array("Logout ".$_SESSION['login'],
-                                  "index.php?op=logout"),
-               $_GET['op']);
-  }
-}
-else	// not logged in
-{
-  show_links($left_links=array("Login", "index.php?op=login"),
-             $right_links=array(), $_GET['op']);
-}
 
-echo 	'<br><br>';
 // safe mode check
 if( ini_get('safe_mode') )
 {
   echo '<b>Warning:</b> PHP is running in SAFE MODE, which is known to cause problems with this site. To disable SAFE MODE contact your web server administrator.<br><br>';
 }
-
 
 /*************  REST OF PAGE  *****************/
 
