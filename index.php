@@ -252,25 +252,25 @@ if(check_db())
           // check if specified username is present in admin file
           while (!feof($fh)) {
             $line = fgets($fh);
-            $words = str_word_count($line, 1);
-            if (str_word_count($line) == 1 || strstr($words[0], "csdhosts"))
+            if (str_word_count($line) == 1)
             {
-              $cur_login = $words[str_word_count($line)-1];
+              $cur_login = $line;
               //echo $cur_login."<br>";
               if ($login == $cur_login){      // admin login found in file
                 $verified = true;
               }
             }
           }
-          if (!$verified)                                         // You were not found in the administrators list
+          if (!$verified) // You were not found in the administrators list
           {
-            echo 'Your login was not found in the list of administrators ("'.$admins_file.'")!<br>
-                                    Please check the admins_file specified by the "conf.php" file ("'.realpath('.').'/conf.php"). ';
+            echo 'Your login was not found in the list of administrators ("'.$admins_file.'")!<br>';
+            echo 'Please check the admins_file specified by the "conf.php" file ("'.realpath('.').'/conf.php").';
             exit;
           }
 
         }
       }
+
       if ($verified)      // user verified
       {
         $_SESSION['login'] = $login;
