@@ -134,13 +134,13 @@ if(check_db())
 
         //echo $date.'&nbsp;('.$s_h.':'.$s_m.' - '.$e_h.':'.$e_m.')';
         //echo "<table border=\"1\" width=\"80%\">";
-        echo '<table class="blue bluec">';
-        echo '<tr><th>'.$date.'</th>';
+        echo '<table class="table table-striped">';
+        echo '<thread><th>'.$date.'</th>';
         for ($i=1; $i<=$ren_slots; $i++)
         {
           echo '<th>Slot&nbsp;'.$i.'</th>';
         }
-        echo '</tr>';
+        echo '</thread>';
 
         $booked = array();
         $logins = array();
@@ -758,13 +758,13 @@ if(check_db())
 
               //echo $date.'&nbsp;('.$s_h.':'.$s_m.' - '.$e_h.':'.$e_m.')';
               //echo "<table border=\"1\" width=\"80%\">";
-              echo '<table class="blue bluec">';
-              echo '<tr><th>'.$date.'</th>';
+              echo '<table class="table table-striped">';
+              echo '<thread><th>'.$date.'</th>';
               for ($i=1; $i<=$ren_slots; $i++)
               {
                 echo '<th>Slot&nbsp;'.$i.'</th>';
               }
-              echo '</tr>';
+              echo '</thread>';
 
               $booked = array();
               $logins = array();

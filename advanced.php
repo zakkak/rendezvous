@@ -51,11 +51,11 @@ if(check_db())
         else
         {
           echo 'You have booked '.$rs->getRowCount().' rendezvous.<br><br>';
-          echo '<table class="blue">';
+          echo '<table class="table table-striped">';
           echo '<tr><th>Rendezvous Session</th><th>Time</th><th>Slot</th></tr>';
           while($rs->next())
           {
-            echo '<tr><td align="center">"';
+            echo '<tr><td>"';
             $query = 'select title from ren_sessions where ren_ses_id = '.
                      $rs->getCurrentValueByNr(0);
             $rs2 = $db->executeQuery($query);
@@ -63,9 +63,9 @@ if(check_db())
               echo $rs2->getCurrentValueByNr(0);
             else
               echo "unknown";
-            echo '" </td><td align="center">'.
+            echo '" </td><td>'.
                  date("F j, Y, g:i a", $rs->getCurrentValueByNr(1)).
-                 '</td><td align="center">'.
+                 '</td><td>'.
                  $rs->getCurrentValueByNr(2).'</td></tr>';
           }
           echo "</table>";

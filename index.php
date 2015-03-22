@@ -138,7 +138,7 @@ if(check_db())
       else
       {
         echo $rs->getRowCount()." available active rendezvous sessions.<br><br>";
-        echo '<table class="blue">';
+        echo '<table class="table table-striped">';
         echo '<tr><th>Title</th><th>Deadline</th></tr><tbody>';
         while($rs->next())
         {
