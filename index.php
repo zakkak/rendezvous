@@ -81,19 +81,10 @@ function show_form($msg="")
 // Show menu depending on user status
 if (isset($_SESSION['login']) && $_SESSION['full_path'] == realpath(".") )
 {          // logged in
-  if ($_SESSION['acc_type'] == 'admin') // admin users
-  {
-    show_links($left_links=array("Status", "index.php?op=status"),
-               $right_links=array("Logout ".$_SESSION['login']." (admin)",
-                                  "index.php?op=logout"), $_GET['op']);
-  }
-  else                          // simple users
-  {
     show_links($left_links=array("Status", "index.php?op=status"),
                $right_links=array("Logout ".$_SESSION['login'],
                                   "index.php?op=logout"),
                $_GET['op']);
-  }
 }
 else                            // not logged in
 {
