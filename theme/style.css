@@ -25,57 +25,6 @@ a.huge, a.huge:hover, a.huge:focus {
 .links a:hover{color:#DCDC00;}
 .sel_links {color: #DCDC00}*/
 
-#navlist {
-		/*vertical-align:bottom;*/
-		padding:0px 0px;
-		margin:5px 0px;		/* prepei na einai idio me to margin kai to padding-bottom tou li a */
-		border:none;
-    font: bold 12px Verdana, sans-serif;
-}
-
-#navlist li {
-        list-style: none;
-				overflow:hidden;
-        margin: 0px 0px;		/* apostash anamesa se links */
-				padding:0px 0px;
-				border:none;
-        display: inline;
-}
-
-#navlist li a {
-				/*vertical-align:bottom;*/
-				margin:5px 0px;
-        padding: 4px 5px 5px 5px;
-				margin-right: 3px;	/* apostash metaxy twn tabs */
-        border: 1px solid #778;
-        border-bottom: none;
-        background: #EEEECC;
-        text-decoration: none;
-				color:#606060;
-}
-
-/*#navlist li a:visited { color: #667; }*/
-
-#navlist li a:hover {
-        border: 1px solid #778;
-        border-bottom: none;
-				/*background: #DCDC00;*/
-        background:#CDCD6E;
-				color:#000000;
-}
-
-#navlist li a#current {
-        border: 1px solid #778;
-        border-bottom: none;
-        background: #006699;
-				color:#DCDC00;
-}
-
-#sublinks {}
-#sublinks a{text-decoration:none; color: #FFFFFF; font: bold 12px Verdana, sans-serif;}
-#sublinks a:hover{color:#DCDC00;}
-#sublinks a#current{color:#DCDC00;}
-
 html, body {height: 100%;}
 body {margin: 0;padding: 0;}
 #container {
