@@ -14,4 +14,4 @@ For licensing information please see the LICENSE file.
 
 ## Setup
 
-Before accessing the web interface for the first time please edit `config.php`.
+Before accessing the web interface for the first time please edit `conf.php`.
