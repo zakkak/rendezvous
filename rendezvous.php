@@ -262,6 +262,7 @@ if(check_db())
               $rs2 = $db->executeQuery($query);
               if($rs2 == 1)
               {
+                echo '<div class="alert alert-dismissible alert-success">';
                 echo '<b>Rendezvous succesfully updated!</b><br>';
                 if($email_confirmation)
                 {
@@ -275,10 +276,13 @@ if(check_db())
                   if( mail($email, $subject, $message, "From: Rendezvous <donotreply>\r\nContent-Type: text/plain;charset=utf-8") )
                     echo 'A confirmation e-mail has been sent to '.$email ;
                 }
+                echo '</div>';
               }
               else
               {
+                echo '<div class="alert alert-dismissible alert-danger">';
                 echo '<br> Operation failed! Please try again.';
+                echo '</div>';
               }
             }
             else                    // user had no rendezvous before
@@ -290,6 +294,7 @@ if(check_db())
               $rs3 = $db->executeQuery($query);
               if($rs3 == 1)
               {
+                echo '<div class="alert alert-dismissible alert-success">';
                 echo '<b>Rendezvous succesfully booked!</b><br>';
 
                 if($email_confirmation)
@@ -304,10 +309,13 @@ if(check_db())
                   if( mail($email, $subject, $message, "From: Rendezvous <donotreply>\r\nContent-Type: text/plain;charset=utf-8") )
                     echo 'A confirmation e-mail has been sent to '.$email ;
                 }
+                echo '</div>';
               }
               else
               {
+                echo '<div class="alert alert-dismissible alert-danger">';
                 echo '<br> Operation failed! Please try again.';
+                echo '</div>';
               }
 
             }
