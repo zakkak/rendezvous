@@ -269,7 +269,7 @@ if(check_db())
                   $rs4 = $db->executeQuery($query);
                   $rs4->next();
                   $title = $rs4->getCurrentValueByNr(0);
-                  $email = $_SESSION['login'];
+                  $email = $_SESSION['email'];
                   $subject = "Rendezvous Confirmation for ".$title;
                   $message = "You have succesfully updated your rendezvous with the following details:\n\nRendezvous Session: ".$title."\nDate: ".date("F j, Y", $time)."\nTime: ".date("H:i", $time)."\nSlot: ".$slot."\n\n\nPlease do not reply to this message";
                   if( mail($email, $subject, $message, "From: Rendezvous <donotreply>\r\nContent-Type: text/plain;charset=utf-8") )
@@ -298,7 +298,7 @@ if(check_db())
                   $rs4 = $db->executeQuery($query);
                   $rs4->next();
                   $title = $rs4->getCurrentValueByNr(0);
-                  $email = $_SESSION['login'];
+                  $email = $_SESSION['email'];
                   $subject = "Rendezvous Confirmation for ".$title;
                   $message = "You have succesfully booked a rendezvous with the following details:\n\nRendezvous Session: ".$title."\nDate: ".date("F j, Y", $time)."\nTime: ".date("H:i", $time)."\nSlot: ".$slot."\n\n\nPlease do not reply to this message";
                   if( mail($email, $subject, $message, "From: Rendezvous <donotreply>\r\nContent-Type: text/plain;charset=utf-8") )

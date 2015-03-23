@@ -206,6 +206,7 @@ if(check_db())
 
       // log the user out!
       unset($_SESSION['login']);
+      unset($_SESSION['email']);
       unset($_SESSION['name']);
       unset($_SESSION['acc_type']);
 

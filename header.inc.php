@@ -112,7 +112,7 @@
           <li <?php if($currentFile=='about.php') echo 'class="active"'?>>
           <a href="about.php">About</a></li>
           <li>
-          <a href="index.php?op=logout">Logout</a></li>
+            <a href="index.php?op=logout">Logout:&nbsp <?php echo $_SESSION['login'];?></a></li>
           </ul>
           </div>
         </div>

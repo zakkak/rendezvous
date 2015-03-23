@@ -166,6 +166,7 @@ if(check_db())
       else
       {
         unset($_SESSION['login']);
+        unset($_SESSION['email']);
         //unset($_SESSION['name']);
         unset($_SESSION['acc_type']);
         unset($_SESSION['full_path']);
@@ -243,14 +244,17 @@ if(check_db())
 
       if ($verified)      // user verified
       {
-        $_SESSION['login'] = $login;
+        $email = $login;
+        $login = explode("@", $email);
+        $_SESSION['login'] = $login[0];
+        $_SESSION['email'] = $email;
         $_SESSION['acc_type'] = $acc_type;
         $_SESSION['full_path'] = realpath(".");
         // I could add a lock for exclusive access,
         // but I don't really care if a few entries of
         // the log become corrupt.
         $fp = fopen(DB_DIR."log.txt", "a+");
-        fwrite($fp, $_SESSION['login'].' logged in at '.date("F j, Y, G:i:s", time()).' as '.$_SESSION['acc_type']."\r\n");
+        fwrite($fp, $email.' logged in at '.date("F j, Y, G:i:s", time()).' as '.$acc_type."\r\n");
         fclose($fp);
         //$_SESSION['name'] = ora_getcolumn($cursor, 1);
         $url = "index.php"; // target of the redirect
