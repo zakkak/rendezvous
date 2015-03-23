@@ -21,8 +21,9 @@ if( ini_get('safe_mode') )
 
 if(check_db())
 {
-  function select_ren_fields($title="Select Rendezvous Session:",
-                             $button_text='Continue')
+    function select_ren_fields($title="Select Rendezvous Session:", 
+                               $button_type='btn-primary',
+                               $button_text='Continue')
   {
     $db = new Database("mydb");
     $query = "select ren_ses_id, title from ren_sessions order by ren_ses_id desc";
@@ -36,7 +37,7 @@ if(check_db())
              $rs->getCurrentValueByNr(1).'</option>';
       }
       echo '</select><br><br>';
-      echo '<input class="btn btn-primary" name="review_btn" type="submit"'.
+      echo '<input class="btn '.$button_type.'" name="review_btn" type="submit"'.
            '       id="review_btn" value="'.$button_text.'">';
     }
     else
@@ -87,8 +88,8 @@ if(check_db())
              $rs->getCurrentValueByNr(0).':&nbsp;'.
              $rs->getCurrentValueByNr(1).' </option>';
       ?>
-    </select><br><br><br>
-    <input name="review_btn" type="submit" id="review_btn" value="Continue">
+    </select><br><br>
+    <input class="btn btn-sm btn-primary" name="review_btn" type="submit" id="review_btn" value="Continue">
     <input type="hidden" value = "1" name="state">
   </form>
   <?php
@@ -110,7 +111,7 @@ if(check_db())
       $looking_for_free_slot = true;
       echo '<form name="book_form2" method="POST" action="">';
       echo '<b>Select an available slot and click </b>';
-      echo '<input name="review_btn" type="submit" id="review_btn" value="Book"><br><br>';
+      echo '<input class="btn btn-primary btn-xs" name="review_btn" type="submit" id="review_btn" value="Book"><br><br>';
       echo '<table border="0" cellpadding="0" cellspacing="0">';
 
       while($ren_periods->next())       // for each rendezvous period shot table with slots
@@ -353,8 +354,8 @@ if(check_db())
                $rs->getCurrentValueByNr(0).':&nbsp;'.
                $rs->getCurrentValueByNr(1).' </option>';
         ?>
-      </select><br><br><br>
-      <input name="review_btn" type="submit" id="review_btn" value="Cancel">
+      </select><br><br>
+      <input class="btn btn-warning" name="review_btn" type="submit" id="review_btn" value="Cancel Rendezvous">
       <input type="hidden" value = "1" name="state">
     </form>
     <?php
@@ -402,8 +403,8 @@ if(check_db())
       function review_form()
       {
         echo '<form name="review_form" method="POST" action="">';
-        select_ren_fields($title="Select Rendezvous Session:",
-                          $button_text='Review');
+        select_ren_fields("Select Rendezvous Session:",
+                          'btn-primary', 'Review');
         echo '</form>';
       }     // review_form
 
@@ -492,10 +493,10 @@ if(check_db())
             </select>
           </td></tr></table>
         <br>
-        <b>Automatic deactivation at the deadline:&nbsp;</b>
+        <label><b>Automatic deactivation at the deadline:&nbsp;</b>
         <nobr><input type="checkbox" name="active"
-                     value="A" <?php if($active == "A")echo 'checked="checked"';?> >
-          <br><br><input class="btn btn-success" name="login_btn"
+                     value="A" <?php if($active == "A")echo 'checked="checked"';?> ></label>
+          <br><br><input class="btn btn-primary" name="login_btn"
                          type="submit" id="login_btn2"
                          value="<?php echo $button_text ?>">
       </div>
@@ -603,7 +604,7 @@ if(check_db())
         function select_ren_form()
         {
           echo '<form name="select_ren_form" method="POST" action="">';
-          select_ren_fields($title="Select Rendezvous Session:", $button_text='Edit');
+          select_ren_fields("Select Rendezvous Session:", 'btn-warning', 'Edit');
           echo '<input type="hidden" value = "1" name="state">';
           echo '</form>';
         }   // review_form
@@ -690,7 +691,7 @@ if(check_db())
         function review_form()
         {
           echo '<form name="review_form" method="POST" action="">';
-          select_ren_fields($title="Select Rendezvous Session:", $button_text='Review');
+          select_ren_fields("Select Rendezvous Session:", 'btn-primary', 'Review');
           echo '</form>';
         }   // review_form
 
@@ -890,7 +891,7 @@ if(check_db())
                 <b><input name="length" type="text" value="<?php echo "$length";?>" required></b><br>
                 <b> Number of Examiners: </b>
                 <b><input name="slots" type="text" value="<?php echo "$slots";?>" required></b><br><br>
-                <input class="btn btn-success" name="login_btn" type="submit" id="login_btn2" value="Add">
+                <input class="btn btn-primary" name="login_btn" type="submit" id="login_btn2" value="Add">
         </form>
 
         <?php
@@ -983,7 +984,8 @@ if(check_db())
           function del_exam_form1()
           {
             echo '<form name="del_exam_form1" method="POST" action="">';
-            select_ren_fields($title="Select Rendezvous Session:", $button_text='Continue');
+            select_ren_fields("Select Rendezvous Session:",
+                              'btn-warning', 'Continue');
             echo '<input type="hidden" value = "1" name="state">';
             echo '</form>';
           }     // del_exam_form1
@@ -1059,7 +1061,7 @@ if(check_db())
             function close_ren_form()
             {
               echo '<form name="close_ren_form" method="POST" action="">';
-              select_ren_fields($title="Select Rendezvous Session:", $button_text='Close');
+              select_ren_fields("Select Rendezvous Session:", 'btn-primary', 'Close');
               echo '</form>';
             }       //close_form
 
@@ -1096,7 +1098,8 @@ if(check_db())
             function del_ren_form()
             {
               echo '<form name="del_ren_form" method="POST" action="">';
-              select_ren_fields($title="Select Rendezvous Session:", $button_text='Delete');
+              select_ren_fields("Select Rendezvous Session:",
+                                'btn-danger', 'Delete');
               echo '</form>';
             }   // review_form
 
