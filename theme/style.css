@@ -1,4 +1,4 @@
-a.huge, a.huge:hover, a.huge:focus {
+a.huge, a.huge:link, a.huge:visited, a.huge:hover, a.huge:focus {
     text-decoration:none;
     color:#000000;
 }
@@ -16,7 +16,7 @@ a.huge, a.huge:hover, a.huge:focus {
 .university {font-size: 14px; font-weight:bold;}
 .credits {font-size: 12px; font: 14px Verdana, sans-serif; color:#BCBEBC}
 /*.credits {font-size: 12px; font-weight:normal; }*/
-.links {text-decoration:none; color:#000000;}
+.links, a.links, a.links:link, a.links:visited {text-decoration:none; color:#000000;}
 .contact {font-size: 14px; color:#BCBEBC;}
 .time {font-size: 14px;}
 .version {font-size: 10px; color:#BCBEBC;}
