@@ -303,10 +303,27 @@ if(check_db())
                   $email = $_SESSION['login'].'@csd.uoc.gr';
 
 				  $icalLink = "https://" . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/')) . "/ical.php?summary=" . urlencode($title) . "&datestart=" . ($time - 3600 * 2) . "&dateend=" . (($time - 3600 * 2) + $RVduration * 60) . "&address=" . urlencode($examRoom)  . "&uri=" . urlencode("https://" . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/'))) . "&filename=RV.ics" ;
-
+		
+				  $boundary = uniqid("np");
+				  
+				  $headers  = "MIME-Version: 1.0\r\n";
+				  $headers .= "From: Rendezvous <donotreply>\r\n";
+				  $headers .= "To: " . $email . "\r\n";
+				  $headers .= "Content-Type: multipart/alternative;boundary=" . $boundary . "\r\n";
+				  
                   $subject = "Rendezvous Confirmation for ".$title;
-                  $message = "<style>th{text-align:left;}</style>You have successfully updated your rendezvous with the following details:<br/><br/><table><tr><th>Rendezvous<br/>Session:</th><td>" . $title . "</td></tr><tr><th>Date:</th><td>" . date("F j, Y", $time) . "</td></tr><tr><th>Time:</th><td>" . date("H:i", $time) . "</td></tr><tr><th>Slot:</th><td>".$slot."</td></tr><tr><th>iCal:</th><td><a href=\"" . $icalLink . "\">Download</a></td></tr></table><br/><br/><hr/>The Rendezvous System<br/>You have not been added to any mailing lists.<br/>Please do not reply to this message.";
-                  if( mail($email, $subject, $message, "From: Rendezvous <donotreply>\r\nContent-Type: text/html;charset=utf-8") )
+                  
+				  $message  = "This is a MIME encoded message.";
+				  $message .= "\r\n\r\n--" . $boundary . "\r\n";
+				  $message .= "Content-type: text/plain;charset=utf-8\r\n\r\n";
+				  $message .= "You have successfully updated your rendezvous with the following details:\n\nRendezvous Session:\t" . $title . "\nDate:\t\t" . date("F j, Y", $time) . "\nTime:\t\t" . date("H:i", $time) . "\nSlot:\t\t" . $slot . "\n\nThe Rendezvous System\n";
+				  $message .= "\r\n\r\n--" . $boundary . "\r\n";
+				  $message .= "Content-type: text/html;charset=utf-8\r\n\r\n";
+				  $message .= "<style>th{text-align:left;}</style>You have successfully updated your rendezvous with the following details:<br/><br/><table><tr><th>Rendezvous<br/>Session:</th><td>" . $title . "</td></tr><tr><th>Date:</th><td>" . date("F j, Y", $time) . "</td></tr><tr><th>Time:</th><td>" . date("H:i", $time) . "</td></tr><tr><th>Slot:</th><td>".$slot."</td></tr><tr><th>iCal:</th><td><a href=\"" . $icalLink . "\">Download</a></td></tr></table><br/><br/><hr/>The Rendezvous System<br/>You have not been added to any mailing lists.<br/>Please do not reply to this message.";
+
+				  $message .= "\r\n\r\n--" . $boundary . "--";
+
+                  if( mail("", $subject, $message, $headers) )
                     echo 'A confirmation e-mail has been sent to '.$email ;
                 }
               }
@@ -336,10 +353,27 @@ if(check_db())
 				  
 				  $icalLink = "https://" . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/')) . "/ical.php?summary=" . urlencode($title) . "&datestart=" . ($time - 3600 * 2) . "&dateend=" . (($time - 3600 * 2) + $RVduration * 60) . "&address=" . urlencode($examRoom)  . "&uri=" . urlencode("https://" . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/'))) . "&filename=RV.ics" ;
 
+				  $boundary = "np" . md5(crypt(uniqid("DaKnOb")) . uniqid("mail", TRUE));
+				  $headers  = "MIME-Version: 1.0\r\n";
+				  $headers .= "From: Rendezvous <donotreply>\r\n";
+				  $headers .= "To: " . $email . "\r\n";
+				  $headers .= "Content-Type: multipart/alternative;boundary=" . $boundary . "\r\n";
 				  
                   $subject = "Rendezvous Confirmation for ".$title;
-                  $message = "<style>th{text-align:left;}</style>You have successfully booked a rendezvous with the following details:<br/><br/><table><tr><th>Rendezvous<br/>Session:</th><td>" . $title . "</td></tr><tr><th>Date:</th><td>" . date("F j, Y", $time) . "</td></tr><tr><th>Time:</th><td>" . date("H:i", $time) . "</td></tr><tr><th>Slot:</th><td>".$slot."</td></tr><tr><th>iCal:</th><td><a href=\"" . $icalLink . "\">Download</a></td></tr></table><br/><br/><hr/>The Rendezvous System<br/>You have not been added to any mailing lists.<br/>Please do not reply to this message.";
-                  if( mail($email, $subject, $message, "From: Rendezvous <donotreply>\r\nContent-Type: text/html;charset=utf-8") )
+                  
+				  $message  = "This is a MIME encoded message.";
+				  $message .= "\r\n\r\n--" . $boundary . "\r\n";
+				  $message .= "Content-type: text/plain;charset=utf-8\r\n\r\n";
+				  $message .= "You have successfully booked a rendezvous with the following details:\n\nRendezvous Session:\t" . $title . "\nDate:\t\t" . date("F j, Y", $time) . "\nTime:\t\t" . date("H:i", $time) . "\nSlot:\t\t" . $slot . "\n\nThe Rendezvous System\n";
+				  $message .= "\r\n\r\n--" . $boundary . "\r\n";
+				  $message .= "Content-type: text/html;charset=utf-8\r\n\r\n";
+				  $message .= "<style>th{text-align:left;}</style>You have successfully booked a rendezvous with the following details:<br/><br/><table><tr><th>Rendezvous<br/>Session:</th><td>" . $title . "</td></tr><tr><th>Date:</th><td>" . date("F j, Y", $time) . "</td></tr><tr><th>Time:</th><td>" . date("H:i", $time) . "</td></tr><tr><th>Slot:</th><td>".$slot."</td></tr><tr><th>iCal:</th><td><a href=\"" . $icalLink . "\">Download</a></td></tr></table><br/><br/><hr/>The Rendezvous System<br/>You have not been added to any mailing lists.<br/>Please do not reply to this message.";
+
+				  $message .= "\r\n\r\n--" . $boundary . "--";
+
+
+
+                   if( mail("", $subject, $message, $headers) )
                     echo 'A confirmation e-mail has been sent to '.$email ;
                 }
               }
