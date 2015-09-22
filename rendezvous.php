@@ -258,7 +258,7 @@ if(check_db())
           {
             if($update)
             {
-              $query = "update rendezvous set ren_time = ".$time.", ren_per_id = ".$ren_per_id.", ren_slot = ".$slot." where ren_ses_id = ".$ren_ses_id." and login = '".$_SESSION['login']."'";
+              $query = "update rendezvous set ren_time = ".$time.", ren_per_id = ".$ren_per_id.", ren_slot = ".$slot.", book_time = ".time()." where ren_ses_id = ".$ren_ses_id." and login = '".$_SESSION['login']."'";
               $rs2 = $db->executeQuery($query);
               if($rs2 == 1)
               {
@@ -288,9 +288,9 @@ if(check_db())
             else                    // user had no rendezvous before
             {
               $query = "insert into rendezvous".
-                        "(ren_ses_id, ren_per_id, login, ren_time, ren_slot)".
+                        "(ren_ses_id, ren_per_id, login, ren_time, ren_slot, book_time)".
                         "values ( '".$ren_ses_id."', '".$ren_per_id."', '".
-                        $_SESSION['login']."', ".$time.", ".$slot.")";
+                        $_SESSION['login']."', ".$time.", ".$slot.", ".time().")";
               $rs3 = $db->executeQuery($query);
               if($rs3 == 1)
               {
@@ -777,12 +777,12 @@ if(check_db())
 
               $booked = array();
               $logins = array();
-              $query = "select ren_time, ren_slot, login from rendezvous where ren_per_id = ".$ren_per_id;
+              $query = "select ren_time, ren_slot, login, book_time from rendezvous where ren_per_id = ".$ren_per_id;
               $b_rs = $db->executeQuery($query);
               while($b_rs->next())
               {
                 array_push($booked, array($b_rs->getCurrentValueByNr(0), $b_rs->getCurrentValueByNr(1)) );
-                array_push($logins, $b_rs->getCurrentValueByNr(2) );
+                array_push($logins, array($b_rs->getCurrentValueByNr(2), date("Y-m-d H:i:s", $b_rs->getCurrentValueByNr(3))) );
               }
               //print_r($booked);
               //print_r($logins);
@@ -798,7 +798,7 @@ if(check_db())
                   $found = array_search( array($time, $i), $booked );
                   if($found !== false)      // Slot is reserved
                   {
-                    echo '<td><div align = "center"><font size = 3><nobr>&nbsp;'. $logins[$found] .'&nbsp;</nobr></font></div></td>';
+                    echo '<td><div align = "center"><font size = 3><nobr>'. $logins[$found][0] .' @<br>'. $logins[$found][1] .'</nobr></font></div></td>';
                   }
                   else      // Slot is free
                   {

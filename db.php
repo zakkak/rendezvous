@@ -21,7 +21,7 @@ function create_db()
   echo 'Creating Tables...<br>';
   $db->executeQuery("CREATE TABLE ren_sessions (ren_ses_id inc, title str, deadline int, active str);");
   $db->executeQuery("CREATE TABLE ren_periods (ren_per_id inc, ren_ses_id int, ren_start int, ren_end int, ren_length int, ren_slots int);");
-  $db->executeQuery("CREATE TABLE rendezvous (ren_ses_id int, ren_per_id int, login str, ren_time int, ren_slot int);");
+  $db->executeQuery("CREATE TABLE rendezvous (ren_ses_id int, ren_per_id int, login str, ren_time int, ren_slot int, book_time int);");
   echo '&nbsp;&nbsp;&nbsp;&nbsp;  ren_sessions, ren_periods, rendezvous<br>';
   echo '<br> DONE!';
 
