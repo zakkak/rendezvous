@@ -31,7 +31,7 @@
             <nobr>Rendezvous</nobr>
           </a></b></td>
           <td style="color:#BCBEBC;" valign="bottom">
-            <span class="version"><nobr>version 2.2.0</nobr></span>
+            <span class="version"><nobr>version 3.0.0</nobr></span>
           </td>
           <td class="title" valign="center" align="center" width="99%">
             <?php echo $title; ?>
