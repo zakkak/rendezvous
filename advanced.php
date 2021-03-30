@@ -5,7 +5,7 @@ session_save_path(DB_DIR);
 include("db.php");     // include txtDB
 include("conf.php");   // settings
 include("https_check.inc.php");  // check for https and redirect if necessary
-
+include("functions.php");
 include("header.inc.php");
 include "php/show_links.php";
 
@@ -143,11 +143,11 @@ if(check_db())
       /************* SQL Query *************/
       if ($_GET['op'] == 'query')
       {
-
         function query_form($query="")
         {
 ?>
   <form name="form1" method="post" action="">
+  <?php csrfToken(); ?>
     <b><font size = "4" >SQL Query : </font></b><br><br>
     <textarea name="textarea" cols="50" rows="5"
               wrap="PHYSICAL"><?php echo "$query";?></textarea></td> <br><br>
@@ -158,6 +158,7 @@ if(check_db())
 
   if($_SERVER['REQUEST_METHOD'] == 'POST')
   {
+    validateToken();
     include ("txtDB/txt-db-api.php");
     if (!file_exists(DB_DIR . "mydb"))
     {		// Database doesn't exist
@@ -191,6 +192,7 @@ if(check_db())
     {
   ?>
     <form name="reset_form" method="POST" action="">
+    <?php csrfToken(); ?>
       <b>Are you sure you want to reset the System?</b><br>
       Warning: All database files will be deleted. <br><br>
       <input class="btn btn-danger" name="yes_btn" type="submit"
@@ -202,6 +204,7 @@ if(check_db())
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
       //include ("db.php");
+        validateToken();
       reset_db();
 
       // log the user out!
