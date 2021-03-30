@@ -5,7 +5,7 @@ session_save_path(DB_DIR);
 include("db.php");     // include txtDB
 include("conf.php");   // settings
 include("https_check.inc.php");  // check for https and redirect if necessary
-
+include("functions.php");
 include("header.inc.php");
 
 // safe mode check
@@ -16,6 +16,7 @@ if( ini_get('safe_mode') )
   echo 'administrator.<br><br>';
 }
 
+renewToken(); //renew token each time this file is accessed
 
 /*************  REST OF PAGE  *****************/
 
@@ -80,6 +81,7 @@ if(check_db())
           {
 ?>
   <form name="book_form1" method="POST" action="">
+      <?php csrfToken(); ?>
     <b>Select Rendezvous Session: </b><br><br>
     <select name="ren_ses_id">
       <?php
@@ -110,6 +112,7 @@ if(check_db())
     {
       $looking_for_free_slot = true;
       echo '<form name="book_form2" method="POST" action="">';
+      csrfToken();
       echo '<b>Select an available slot and click </b>';
       echo '<input class="btn btn-primary btn-xs" name="review_btn" type="submit" id="review_btn" value="Book"><br><br>';
       echo '<table border="0" cellpadding="0" cellspacing="0">';
@@ -206,6 +209,7 @@ if(check_db())
 
   if($_SERVER['REQUEST_METHOD'] == 'POST')
   {
+      validateToken();
     if ($_POST['state'] == 1){
       $ren_ses_id = $_POST['ren_ses_id'];
       if (empty($ren_ses_id))
@@ -354,6 +358,7 @@ if(check_db())
       {
   ?>
     <form name="cancel_ren_form" method="POST" action="">
+        <?php csrfToken(); ?>
       <b>Select Rendezvous Session: </b><br><br>
       <select name="ren_ses_id">
         <?php
@@ -376,6 +381,7 @@ if(check_db())
 
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
+        validateToken();
       $ren_ses_id = $_POST['ren_ses_id'];
       if (empty($ren_ses_id))
       {
@@ -411,6 +417,7 @@ if(check_db())
       function review_form()
       {
         echo '<form name="review_form" method="POST" action="">';
+        csrfToken();
         select_ren_fields("Select Rendezvous Session:",
                           'btn-primary', 'Review');
         echo '</form>';
@@ -418,7 +425,7 @@ if(check_db())
 
       if($_SERVER['REQUEST_METHOD'] == 'POST')
       {
-
+        validateToken();
         $ren_ses_id = $_POST['ren_ses_id'];
         $db = new Database("mydb");
         $query = "select * from rendezvous where ren_ses_id = ".$ren_ses_id.
@@ -536,7 +543,7 @@ if(check_db())
 <?php
       }
 
-      /************* Crate a rendezvous session *************/
+      /************* Create a rendezvous session *************/
       if ($_GET['op'] == 'create')
       {
 
@@ -544,6 +551,7 @@ if(check_db())
         {
           echo '<h2> New session </h2>';
           echo '<form name="create_ren_form" method="POST" action="">';
+          csrfToken();
           ren_fields($title, $d_date, $d_hour, $d_min,
                      $active, $button_text='Create');
           echo '</form>';
@@ -552,6 +560,7 @@ if(check_db())
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
           //include "php/date_check.php";
+            validateToken();
           $title = $_POST['title'];
           $d_date = $_POST['d_date'];
           $h = $_POST['d_hour'];
@@ -612,6 +621,7 @@ if(check_db())
         function select_ren_form()
         {
           echo '<form name="select_ren_form" method="POST" action="">';
+          csrfToken();
           select_ren_fields("Select Rendezvous Session:", 'btn-warning', 'Edit');
           echo '<input type="hidden" value = "1" name="state">';
           echo '</form>';
@@ -620,6 +630,7 @@ if(check_db())
         function edit_ren_form($ren_ses_id, $title="", $d_date="", $d_hour=12, $d_min=0, $active="A")
         {
           echo '<form name="create_ren_form" method="POST" action="">';
+          csrfToken();
           ren_fields($title, $d_date, $d_hour, $d_min, $active, $button_text='Update');
           echo '<input type="hidden" value = "2" name="state">';
           echo '<input type="hidden" value = "'.$ren_ses_id.'" name="ren_ses_id">';
@@ -628,6 +639,7 @@ if(check_db())
 
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
+            validateToken();
           if($_POST['state'] == 1)
           {
             $ren_ses_id = $_POST['ren_ses_id'];
@@ -699,12 +711,14 @@ if(check_db())
         function review_form()
         {
           echo '<form name="review_form" method="POST" action="">';
+          csrfToken();
           select_ren_fields("Select Rendezvous Session:", 'btn-primary', 'Review');
           echo '</form>';
         }   // review_form
 
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
+            validateToken();
           $ren_ses_id = $_POST['ren_ses_id'];
           $db = new Database("mydb");
           $query = "select * from ren_sessions where ren_ses_id = ".$ren_ses_id;
@@ -838,6 +852,7 @@ if(check_db())
         {
       ?>
         <form name="add_exam_form" method="POST" action="">
+        <?php csrfToken(); ?>
           <b><nobr>Select Rendezvous Session:&nbsp;</b>
             <nobr><select name="ren_ses_id">
               <?php
@@ -907,6 +922,7 @@ if(check_db())
 
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
+            validateToken();
           //include "php/date_check.php";
           $ren_ses_id = $_POST['ren_ses_id'];
           $date = $_POST['date'];
@@ -992,6 +1008,7 @@ if(check_db())
           function del_exam_form1()
           {
             echo '<form name="del_exam_form1" method="POST" action="">';
+            csrfToken();
             select_ren_fields("Select Rendezvous Session:",
                               'btn-warning', 'Continue');
             echo '<input type="hidden" value = "1" name="state">';
@@ -1002,8 +1019,9 @@ if(check_db())
           {
         ?>
           <form name="del_exam_form2" method="POST" action="">
-            <b>Select Exam Period: </b><br><br>
-            <select name="ren_per_id">
+              <?php csrfToken(); ?>
+              <b>Select Exam Period: </b><br><br>
+              <select name="ren_per_id">
               <?php
               $db = new Database("mydb");
               $query = "select ren_per_id, ren_start, ren_end from ren_periods where ren_ses_id = ".$ren_ses_id;
@@ -1025,6 +1043,7 @@ if(check_db())
 
           if($_SERVER['REQUEST_METHOD'] == 'POST')
           {
+              validateToken();
             if ($_POST['state'] == 1){
               $ren_ses_id = $_POST['ren_ses_id'];
               if (empty($ren_ses_id))
@@ -1069,12 +1088,14 @@ if(check_db())
             function close_ren_form()
             {
               echo '<form name="close_ren_form" method="POST" action="">';
+              csrfToken();
               select_ren_fields("Select Rendezvous Session:", 'btn-primary', 'Close');
               echo '</form>';
             }       //close_form
 
             if($_SERVER['REQUEST_METHOD'] == 'POST')
             {
+                validateToken();
               $ren_ses_id = $_POST['ren_ses_id'];
               if (empty($ren_ses_id))
               {
@@ -1106,6 +1127,7 @@ if(check_db())
             function del_ren_form()
             {
               echo '<form name="del_ren_form" method="POST" action="">';
+              csrfToken();
               select_ren_fields("Select Rendezvous Session:",
                                 'btn-danger', 'Delete');
               echo '</form>';
@@ -1113,6 +1135,7 @@ if(check_db())
 
             if($_SERVER['REQUEST_METHOD'] == 'POST')
             {
+                validateToken();
               $ren_ses_id = $_POST['ren_ses_id'];
               if (empty($ren_ses_id))
               {
