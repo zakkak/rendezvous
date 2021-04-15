@@ -162,7 +162,7 @@ if(check_db())
     include ("txtDB/txt-db-api.php");
     if (!file_exists(DB_DIR . "mydb"))
     {		// Database doesn't exist
-      echo 'No Database Found!<br>Please constact your instructor or teaching assistants.<br>';
+      echo 'No Database Found!<br>Please contact your instructor or teaching assistants.<br>';
     }
     else
     {
@@ -213,7 +213,7 @@ if(check_db())
       unset($_SESSION['name']);
       unset($_SESSION['acc_type']);
 
-      echo "<br>System was succesfully reset!<br>";
+      echo "<br>System was successfully reset!<br>";
       echo "Note: If you would like to delete the database directory (or this whole website) close this page and do it now.";
 
     }
