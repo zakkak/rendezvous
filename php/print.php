@@ -1,5 +1,4 @@
 <?php
-
 function print_table($rs)
 {
   if($rs instanceof ResultSet)
@@ -11,7 +10,7 @@ function print_table($rs)
     {
       //echo "<th>".ora_columnname($cursor, $col)."</th>";
       echo "<th><b>";
-      echo $ColumnNames[$col];
+      echo filter_var($ColumnNames[$col],FILTER_SANITIZE_SPECIAL_CHARS);
       echo "</b></th>";
     }
     echo "</thread><tbody>";

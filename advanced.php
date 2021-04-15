@@ -168,8 +168,8 @@ if(check_db())
     {
       $query = stripslashes($_POST['textarea']);
       $db = new Database("mydb");
+      checkValidQuery($query);
       $rs = $db->executeQuery($query);
-
       echo "<b>Your SQL Query returned the following results:</b><br><br>";
 
       //printing simple html

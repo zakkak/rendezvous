@@ -236,6 +236,7 @@ if(check_db())
 
         checkNumericParam($ren_ses_id);
         checkNumericParam($ren_per_id);
+        checkNumericParam($time);
         checkNumericParam($slot);
 
         $db = new Database("mydb");
@@ -296,7 +297,7 @@ if(check_db())
             {
               $query = "insert into rendezvous".
                         "(ren_ses_id, ren_per_id, login, ren_time, ren_slot, book_time)".
-                        "values ( '".$ren_ses_id."', '".$ren_per_id."', '".
+                        "values ( '".filter_var($ren_ses_id,FILTER_SANITIZE_SPECIAL_CHARS)."', '".$ren_per_id."', '".
                         $_SESSION['login']."', ".$time.", ".$slot.", ".time().")";
               $rs3 = $db->executeQuery($query);
               if($rs3 == 1)
@@ -604,7 +605,7 @@ if(check_db())
           else
           {
             $query = "insert into ren_sessions (title, deadline, active)
-                            values ('".$title."', ".strtotime($month."/".$day."/".$year." ".$h.":".$m).", '".$active."')";
+                            values ('".filter_var($title,FILTER_SANITIZE_SPECIAL_CHARS)."', ".strtotime($month."/".$day."/".$year." ".$h.":".$m).", '".$active."')";
             //echo $query;
             $db = new Database("mydb");
             $rs = $db->executeQuery($query);
@@ -931,7 +932,7 @@ if(check_db())
 
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            validateToken();
+          validateToken();
           //include "php/date_check.php";
           $ren_ses_id = $_POST['ren_ses_id'];
           checkNumericParam($ren_ses_id);
@@ -995,7 +996,7 @@ if(check_db())
             $ren_start = strtotime($month."/".$day."/".$year." ".$s_h.":".$s_m);
             $ren_end = strtotime($month."/".$day."/".$year." ".$e_h.":".$e_m);
             $query = "insert into ren_periods (ren_ses_id, ren_start, ren_end, ren_length, ren_slots)
-                            values (".$ren_ses_id.", ".$ren_start.", ".$ren_end.", ".$length.", ".$slots." )";
+                            values (".filter_var($ren_ses_id,FILTER_SANITIZE_SPECIAL_CHARS).", ".$ren_start.", ".$ren_end.", ".$length.", ".$slots." )";
             //echo $query;
             $db = new Database("mydb");
             $rs = $db->executeQuery($query);

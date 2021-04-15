@@ -23,4 +23,18 @@
             die("Invalid Request!");
         }
     }
+    //check if the string contains html tags
+    function hasHTMLTags($string)
+    {
+        if($string === strip_tags($string))
+            return false;
+        return true;
+    }
+    function checkValidQuery($query)
+    {
+        if(hasHTMLTags($query))
+        {
+            die("HTML tags are not allowed!");
+        }
+    }
 ?>
