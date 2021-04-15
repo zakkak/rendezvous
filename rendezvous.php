@@ -697,7 +697,7 @@ if(check_db())
             }
             else
             {
-              $query = "update ren_sessions set title = '".$title."', deadline = ".strtotime($month."/".$day."/".$year." ".$h.":".$m).", active = '".$active."' where ren_ses_id = ".$ren_ses_id;
+              $query = "update ren_sessions set title = '".filter_var($title,FILTER_SANITIZE_SPECIAL_CHARS)."', deadline = ".strtotime($month."/".$day."/".$year." ".$h.":".$m).", active = '".$active."' where ren_ses_id = ".$ren_ses_id;
               $db = new Database("mydb");
               $rs = $db->executeQuery($query);
               if($rs === 1)
@@ -1028,7 +1028,6 @@ if(check_db())
 
           function del_exam_form2($ren_ses_id)
           {
-              checkNumericParam($ren_ses_id);
         ?>
           <form name="del_exam_form2" method="POST" action="">
               <?php csrfToken(); ?>
@@ -1056,9 +1055,9 @@ if(check_db())
           if($_SERVER['REQUEST_METHOD'] == 'POST')
           {
             validateToken();
-            checkNumericParam($ren_ses_id);
             if ($_POST['state'] == 1){
               $ren_ses_id = $_POST['ren_ses_id'];
+              checkNumericParam($ren_ses_id);
               if (empty($ren_ses_id))
               {
                 echo "Invalid Rendezvous Session!<br>Please create a rendezvous first. <br><br>";
