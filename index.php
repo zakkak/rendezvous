@@ -5,6 +5,7 @@ session_save_path(DB_DIR);
 include("db.php");     // include txtDB
 include("conf.php");   // settings
 include("header.inc.php");
+include("addons.php");
 include "php/show_links.php";
 include("https_check.inc.php");  // check for https and redirect if necessary
 
@@ -30,9 +31,9 @@ function ldaplogin($mail, $pass) {
     }
     
     // Search for the user
-    $search=@ldap_search($con, $ldap_bdn, "(mail=$mail)", array('dn', 'mail'));
+    $search=@ldap_search($con, $ldap_bdn, "(mail=".ldap_escape($mail, "", LDAP_ESCAPE_FILTER).")", array('dn', 'mail'));
     $entry =@ldap_first_entry($con, $search);
-    
+
     if (!$entry)
         return false;
     
@@ -171,7 +172,7 @@ if(check_db())
         unset($_SESSION['full_path']);
         $url = "index.php"; // target of the redirect
         $delay = "0"; // 1 second delay
-        echo "You have succesfully logged out<br>";
+        echo "You have successfully logged out<br>";
         echo "Please wait...";
         echo '<meta http-equiv="refresh" content="'.$delay.';url='.$url.'">';
       }
@@ -233,7 +234,7 @@ if(check_db())
 
           if (!$verified) // You were not found in the administrators list
           {
-            echo 'Your login "'.$login.'" was not found in the list of administrators ("'.$admins_file.'")!<br>';
+            echo 'Your login "'.filter_var($login,FILTER_SANITIZE_SPECIAL_CHARS).'" was not found in the list of administrators ("'.$admins_file.'")!<br>';
             echo 'Please check the admins_file specified by the "conf.php" file ("'.realpath('.').'/conf.php").';
             exit;
           }
@@ -258,7 +259,7 @@ if(check_db())
         //$_SESSION['name'] = ora_getcolumn($cursor, 1);
         $url = "index.php"; // target of the redirect
         $delay = "1"; // 1 second delay
-        echo "<b>You have succesfully logged in.</b><br>";
+        echo "<b>You have successfully logged in.</b><br>";
         echo "Please wait...";
 
         echo '<meta http-equiv="refresh" content="'.$delay.';url='.$url.'">';

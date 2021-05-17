@@ -37,4 +37,5 @@
             die("HTML tags are not allowed!");
         }
     }
+
 ?>
