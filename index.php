@@ -5,7 +5,6 @@ session_save_path(DB_DIR);
 include("db.php");     // include txtDB
 include("conf.php");   // settings
 include("header.inc.php");
-include("addons.php");
 include "php/show_links.php";
 include("https_check.inc.php");  // check for https and redirect if necessary
 
