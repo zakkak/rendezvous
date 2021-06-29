@@ -36,7 +36,7 @@
   $affil2_link = "http://www.uoc.gr";     // enter URL or leave blank for no link
   $affil3      = "Edit conf.php to change affiliation and logo";
   $affil3_link = "";                      // enter URL or leave blank for no link
-  $logo_path   = "theme/csd_logo.jpg";    // specify path to logo
+  $logo_path   = "https://www.csd.uoc.gr/images/UoC_logo.png";    // specify path to logo
   $logo_link   = "http://www.uoc.gr";     // enter URL or leave blank for no link
 
   /* Change favicon */
