@@ -11,7 +11,7 @@ if($_SERVER['HTTPS'] != "on"){
     $_SERVER['FULL_URL'] .=  '?'.$_SERVER['QUERY_STRING'];
   }
 
-  header("Location: " . $_SERVER['FULL_URL']);
+  header("Location: " . $_SERVER['FULL_URL'], true, 301);
   exit();
 } else {
   /* Only use HTTPS for the next year */
