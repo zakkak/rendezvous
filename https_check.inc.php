@@ -16,6 +16,7 @@ if($_SERVER['HTTPS'] != "on"){
 } else {
   /* Only use HTTPS for the next year */
   header("Strict-Transport-Security: max-age=31536000");
+  header("Content-Security-Policy: upgrade-insecure-requests;");
 }
 
 ?>
