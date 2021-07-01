@@ -31,13 +31,13 @@
 
   /* These strings appear at the top right of the page next to the logo */
   $affil1      = "Computer Science Department";
-  $affil1_link = "http://www.csd.uoc.gr"; // enter URL or leave blank for no link
+  $affil1_link = "https://www.csd.uoc.gr"; // enter URL or leave blank for no link
   $affil2      = "University of Crete";
   $affil2_link = "http://www.uoc.gr";     // enter URL or leave blank for no link
   $affil3      = "Edit conf.php to change affiliation and logo";
   $affil3_link = "";                      // enter URL or leave blank for no link
   $logo_path   = "https://www.csd.uoc.gr/images/UoC_logo.png";    // specify path to logo
-  $logo_link   = "http://www.uoc.gr";     // enter URL or leave blank for no link
+  $logo_link   = "https://www.uoc.gr";     // enter URL or leave blank for no link
 
   /* Change favicon */
   $favicon_path = "theme/logo.ico";         // specify path to favicon

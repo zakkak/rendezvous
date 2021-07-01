@@ -1,6 +1,7 @@
 <?php
 
-if($_SERVER['HTTPS'] != "on"){ // if there was no secure connection, redirect to https version
+/* Redirect to HTTPS and refuse to serve HTTP */
+if($_SERVER['HTTPS'] != "on"){
   $_SERVER['FULL_URL'] = 'https://';
   if($_SERVER['SERVER_PORT']!='80')
     $_SERVER['FULL_URL'] .=  $_SERVER['HTTP_HOST'].':'.$_SERVER['SERVER_PORT'].$_SERVER['SCRIPT_NAME'];
@@ -10,16 +11,12 @@ if($_SERVER['HTTPS'] != "on"){ // if there was no secure connection, redirect to
     $_SERVER['FULL_URL'] .=  '?'.$_SERVER['QUERY_STRING'];
   }
 
-  //echo $_SERVER['FULL_URL'];
-
-  $delay = "3"; // 3 second delay
-  echo "For security reasons encryption needs to be enabled! Make sure to accept any security alerts.<br>";
-  echo "You will be redirected in ".$delay." seconds. Please wait...<br><br>";
-  echo "If redirection does not work please click <a href=".$_SERVER['FULL_URL'].">here</a>.";
-
-  echo '<meta http-equiv="refresh" content="'.$delay.';url='.$_SERVER['FULL_URL'].'">';
-
+  header("Location: " . $_SERVER['FULL_URL'], true, 301);
   exit();
+} else {
+  /* Only use HTTPS for the next year */
+  header("Strict-Transport-Security: max-age=31536000");
+  header("Content-Security-Policy: upgrade-insecure-requests;");
 }
 
 ?>
