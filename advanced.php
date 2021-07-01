@@ -5,7 +5,7 @@ session_save_path(DB_DIR);
 include("db.php");     // include txtDB
 include("conf.php");   // settings
 include("https_check.inc.php");  // check for https and redirect if necessary
-
+include("functions.php");
 include("header.inc.php");
 include "php/show_links.php";
 
@@ -19,7 +19,10 @@ if( ini_get('safe_mode') )
 
 if(check_db())
 {
-
+  if($_SERVER['REQUEST_METHOD'] == "POST")
+  {
+    validateToken();
+  }
   if (isset($_SESSION['login']) && $_SESSION['full_path'] == realpath(".") )			// logged in
   {
     if ($_SESSION['acc_type'] == 'user')	// simple user
@@ -143,11 +146,11 @@ if(check_db())
       /************* SQL Query *************/
       if ($_GET['op'] == 'query')
       {
-
         function query_form($query="")
         {
 ?>
   <form name="form1" method="post" action="">
+  <?php csrfToken(); ?>
     <b><font size = "4" >SQL Query : </font></b><br><br>
     <textarea name="textarea" cols="50" rows="5"
               wrap="PHYSICAL"><?php echo "$query";?></textarea></td> <br><br>
@@ -161,14 +164,14 @@ if(check_db())
     include ("txtDB/txt-db-api.php");
     if (!file_exists(DB_DIR . "mydb"))
     {		// Database doesn't exist
-      echo 'No Database Found!<br>Please constact your instructor or teaching assistants.<br>';
+      echo 'No Database Found!<br>Please contact your instructor or teaching assistants.<br>';
     }
     else
     {
       $query = stripslashes($_POST['textarea']);
       $db = new Database("mydb");
+      checkValidQuery($query);
       $rs = $db->executeQuery($query);
-
       echo "<b>Your SQL Query returned the following results:</b><br><br>";
 
       //printing simple html
@@ -191,6 +194,7 @@ if(check_db())
     {
   ?>
     <form name="reset_form" method="POST" action="">
+    <?php csrfToken(); ?>
       <b>Are you sure you want to reset the System?</b><br>
       Warning: All database files will be deleted. <br><br>
       <input class="btn btn-danger" name="yes_btn" type="submit"
@@ -210,7 +214,7 @@ if(check_db())
       unset($_SESSION['name']);
       unset($_SESSION['acc_type']);
 
-      echo "<br>System was succesfully reset!<br>";
+      echo "<br>System was successfully reset!<br>";
       echo "Note: If you would like to delete the database directory (or this whole website) close this page and do it now.";
 
     }

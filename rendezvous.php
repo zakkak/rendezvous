@@ -5,7 +5,7 @@ session_save_path(DB_DIR);
 include("db.php");     // include txtDB
 include("conf.php");   // settings
 include("https_check.inc.php");  // check for https and redirect if necessary
-
+include("functions.php");
 include("header.inc.php");
 
 // safe mode check
@@ -15,7 +15,6 @@ if( ini_get('safe_mode') )
   echo 'problems with this site. To disable SAFE MODE contact your web server';
   echo 'administrator.<br><br>';
 }
-
 
 /*************  REST OF PAGE  *****************/
 
@@ -45,7 +44,10 @@ if(check_db())
       echo "There are no available Rendezvous Sessions!<br><br>";
     }
   }   //select_ren_fields
-
+  if($_SERVER['REQUEST_METHOD'] == "POST")
+  {
+      validateToken();
+  }
   // if logged in
   if (isset($_SESSION['login']) && $_SESSION['full_path'] == realpath(".") )
   {
@@ -80,6 +82,7 @@ if(check_db())
           {
 ?>
   <form name="book_form1" method="POST" action="">
+    <?php csrfToken(); ?>
     <b>Select Rendezvous Session: </b><br><br>
     <select name="ren_ses_id">
       <?php
@@ -102,6 +105,7 @@ if(check_db())
 
   function book_form2($ren_ses_id)
   {
+    checkNumericParam($ren_ses_id);
     $db = new Database("mydb");
     $query = "select * from ren_periods where ren_ses_id = ".$ren_ses_id." order by ren_start";
     $ren_periods = $db->executeQuery($query);
@@ -110,6 +114,7 @@ if(check_db())
     {
       $looking_for_free_slot = true;
       echo '<form name="book_form2" method="POST" action="">';
+      csrfToken();
       echo '<b>Select an available slot and click </b>';
       echo '<input class="btn btn-primary btn-xs" name="review_btn" type="submit" id="review_btn" value="Book"><br><br>';
       echo '<table border="0" cellpadding="0" cellspacing="0">';
@@ -231,6 +236,11 @@ if(check_db())
         $time = strtok("|");
         $slot = strtok("|");
 
+        checkNumericParam($ren_ses_id);
+        checkNumericParam($ren_per_id);
+        checkNumericParam($time);
+        checkNumericParam($slot);
+
         $db = new Database("mydb");
         $query = "select ren_per_id from rendezvous where
                                 ren_ses_id = ".$ren_ses_id."
@@ -263,7 +273,7 @@ if(check_db())
               if($rs2 == 1)
               {
                 echo '<div class="alert alert-dismissible alert-success">';
-                echo '<b>Rendezvous succesfully updated!</b><br>';
+                echo '<b>Rendezvous successfully updated!</b><br>';
                 if($email_confirmation)
                 {
                   $query = "select title from ren_sessions where ren_ses_id = ".$ren_ses_id;
@@ -272,7 +282,7 @@ if(check_db())
                   $title = $rs4->getCurrentValueByNr(0);
                   $email = $_SESSION['email'];
                   $subject = "Rendezvous Confirmation for ".$title;
-                  $message = "You have succesfully updated your rendezvous with the following details:\n\nRendezvous Session: ".$title."\nDate: ".date("F j, Y", $time)."\nTime: ".date("H:i", $time)."\nSlot: ".$slot."\n\n\nPlease do not reply to this message";
+                  $message = "You have successfully updated your rendezvous with the following details:\n\nRendezvous Session: ".$title."\nDate: ".date("F j, Y", $time)."\nTime: ".date("H:i", $time)."\nSlot: ".$slot."\n\n\nPlease do not reply to this message";
                   if( mail($email, $subject, $message, "From: Rendezvous <donotreply>\r\nContent-Type: text/plain;charset=utf-8") )
                     echo 'A confirmation e-mail has been sent to '.$email ;
                 }
@@ -289,13 +299,13 @@ if(check_db())
             {
               $query = "insert into rendezvous".
                         "(ren_ses_id, ren_per_id, login, ren_time, ren_slot, book_time)".
-                        "values ( '".$ren_ses_id."', '".$ren_per_id."', '".
+                        "values ( '".filter_var($ren_ses_id,FILTER_SANITIZE_SPECIAL_CHARS)."', '".$ren_per_id."', '".
                         $_SESSION['login']."', ".$time.", ".$slot.", ".time().")";
               $rs3 = $db->executeQuery($query);
               if($rs3 == 1)
               {
                 echo '<div class="alert alert-dismissible alert-success">';
-                echo '<b>Rendezvous succesfully booked!</b><br>';
+                echo '<b>Rendezvous successfully booked!</b><br>';
 
                 if($email_confirmation)
                 {
@@ -305,7 +315,7 @@ if(check_db())
                   $title = $rs4->getCurrentValueByNr(0);
                   $email = $_SESSION['email'];
                   $subject = "Rendezvous Confirmation for ".$title;
-                  $message = "You have succesfully booked a rendezvous with the following details:\n\nRendezvous Session: ".$title."\nDate: ".date("F j, Y", $time)."\nTime: ".date("H:i", $time)."\nSlot: ".$slot."\n\n\nPlease do not reply to this message";
+                  $message = "You have successfully booked a rendezvous with the following details:\n\nRendezvous Session: ".$title."\nDate: ".date("F j, Y", $time)."\nTime: ".date("H:i", $time)."\nSlot: ".$slot."\n\n\nPlease do not reply to this message";
                   if( mail($email, $subject, $message, "From: Rendezvous <donotreply>\r\nContent-Type: text/plain;charset=utf-8") )
                     echo 'A confirmation e-mail has been sent to '.$email ;
                 }
@@ -354,6 +364,7 @@ if(check_db())
       {
   ?>
     <form name="cancel_ren_form" method="POST" action="">
+      <?php csrfToken(); ?>
       <b>Select Rendezvous Session: </b><br><br>
       <select name="ren_ses_id">
         <?php
@@ -377,6 +388,7 @@ if(check_db())
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
       $ren_ses_id = $_POST['ren_ses_id'];
+      checkNumericParam($ren_ses_id);
       if (empty($ren_ses_id))
       {
         echo "Invalid Rendezvous Session!<br>Please create a rendezvous first. <br><br>";
@@ -388,7 +400,7 @@ if(check_db())
         $rs = $db->executeQuery($query);
         if($rs == 1)
         {
-          echo '<b>Rendezvous has been succesfully canceled!</b>' ;
+          echo '<b>Rendezvous has been successfully canceled!</b>' ;
         }
         else
         {
@@ -411,6 +423,7 @@ if(check_db())
       function review_form()
       {
         echo '<form name="review_form" method="POST" action="">';
+        csrfToken();
         select_ren_fields("Select Rendezvous Session:",
                           'btn-primary', 'Review');
         echo '</form>';
@@ -418,8 +431,8 @@ if(check_db())
 
       if($_SERVER['REQUEST_METHOD'] == 'POST')
       {
-
         $ren_ses_id = $_POST['ren_ses_id'];
+        checkNumericParam($ren_ses_id);
         $db = new Database("mydb");
         $query = "select * from rendezvous where ren_ses_id = ".$ren_ses_id.
                  " and login = '".$_SESSION['login']."'";
@@ -519,7 +532,7 @@ if(check_db())
         You have the following options:<br><br>
         <table>
           <tr><td align="right"><b> Create: </b></td>
-            <td align="left">Create a Rendezvous Session. Don\'t forget to add examination slots afterwards! </td></tr>
+            <td align="left">Create a Rendezvous Session. Don't forget to add examination slots afterwards! </td></tr>
           <tr><td align="right"><b> Edit: </b></td>
             <td align="left">Edit a Rendezvous Session.</td></tr>
           <tr><td align="right"><b> Review: </b></td>
@@ -536,7 +549,7 @@ if(check_db())
 <?php
       }
 
-      /************* Crate a rendezvous session *************/
+      /************* Create a rendezvous session *************/
       if ($_GET['op'] == 'create')
       {
 
@@ -544,6 +557,7 @@ if(check_db())
         {
           echo '<h2> New session </h2>';
           echo '<form name="create_ren_form" method="POST" action="">';
+          csrfToken();
           ren_fields($title, $d_date, $d_hour, $d_min,
                      $active, $button_text='Create');
           echo '</form>';
@@ -590,12 +604,12 @@ if(check_db())
           else
           {
             $query = "insert into ren_sessions (title, deadline, active)
-                            values ('".$title."', ".strtotime($month."/".$day."/".$year." ".$h.":".$m).", '".$active."')";
+                            values ('".filter_var($title,FILTER_SANITIZE_SPECIAL_CHARS)."', ".strtotime($month."/".$day."/".$year." ".$h.":".$m).", '".$active."')";
             //echo $query;
             $db = new Database("mydb");
             $rs = $db->executeQuery($query);
 
-            echo '<br><b> Rendezvous Session has been succesfully created!</b><br>
+            echo '<br><b> Rendezvous Session has been successfully created!</b><br>
                             Do not forget to add Examination Slots to the Rendezvous Session you just created.';
           }
 
@@ -612,6 +626,7 @@ if(check_db())
         function select_ren_form()
         {
           echo '<form name="select_ren_form" method="POST" action="">';
+          csrfToken();
           select_ren_fields("Select Rendezvous Session:", 'btn-warning', 'Edit');
           echo '<input type="hidden" value = "1" name="state">';
           echo '</form>';
@@ -619,7 +634,9 @@ if(check_db())
 
         function edit_ren_form($ren_ses_id, $title="", $d_date="", $d_hour=12, $d_min=0, $active="A")
         {
+          checkNumericParam($ren_ses_id);
           echo '<form name="create_ren_form" method="POST" action="">';
+          csrfToken();
           ren_fields($title, $d_date, $d_hour, $d_min, $active, $button_text='Update');
           echo '<input type="hidden" value = "2" name="state">';
           echo '<input type="hidden" value = "'.$ren_ses_id.'" name="ren_ses_id">';
@@ -631,6 +648,7 @@ if(check_db())
           if($_POST['state'] == 1)
           {
             $ren_ses_id = $_POST['ren_ses_id'];
+            checkNumericParam($ren_ses_id);
             $query = 'select * from ren_sessions where ren_ses_id = '.$ren_ses_id; // (title, sub_dir, filename, filesize, deadline, active)
             $db = new Database("mydb");
             $rs = $db->executeQuery($query);
@@ -641,6 +659,7 @@ if(check_db())
           else if ($_POST['state'] == 2)
           {
             $ren_ses_id = $_POST['ren_ses_id'];
+            checkNumericParam($ren_ses_id);
             $title = $_POST['title'];
             $d_date = $_POST['d_date'];
             $h = $_POST['d_hour'];
@@ -676,11 +695,11 @@ if(check_db())
             }
             else
             {
-              $query = "update ren_sessions set title = '".$title."', deadline = ".strtotime($month."/".$day."/".$year." ".$h.":".$m).", active = '".$active."' where ren_ses_id = ".$ren_ses_id;
+              $query = "update ren_sessions set title = '".filter_var($title,FILTER_SANITIZE_SPECIAL_CHARS)."', deadline = ".strtotime($month."/".$day."/".$year." ".$h.":".$m).", active = '".$active."' where ren_ses_id = ".$ren_ses_id;
               $db = new Database("mydb");
               $rs = $db->executeQuery($query);
               if($rs === 1)
-                echo '<br><b> Rendezvous Session has been succesfully updated and activated!</b><br>';
+                echo '<br><b> Rendezvous Session has been successfully updated and activated!</b><br>';
               else
                 echo '<br> Update failed!';
             }
@@ -699,6 +718,7 @@ if(check_db())
         function review_form()
         {
           echo '<form name="review_form" method="POST" action="">';
+          csrfToken();
           select_ren_fields("Select Rendezvous Session:", 'btn-primary', 'Review');
           echo '</form>';
         }   // review_form
@@ -706,6 +726,7 @@ if(check_db())
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
           $ren_ses_id = $_POST['ren_ses_id'];
+          checkNumericParam($ren_ses_id);
           $db = new Database("mydb");
           $query = "select * from ren_sessions where ren_ses_id = ".$ren_ses_id;
           $rs = $db->executeQuery($query);
@@ -838,6 +859,7 @@ if(check_db())
         {
       ?>
         <form name="add_exam_form" method="POST" action="">
+        <?php csrfToken(); ?>
           <b><nobr>Select Rendezvous Session:&nbsp;</b>
             <nobr><select name="ren_ses_id">
               <?php
@@ -909,6 +931,7 @@ if(check_db())
         {
           //include "php/date_check.php";
           $ren_ses_id = $_POST['ren_ses_id'];
+          checkNumericParam($ren_ses_id);
           $date = $_POST['date'];
           $s_h = $_POST['s_h'];
           $s_m = $_POST['s_m'];
@@ -969,12 +992,12 @@ if(check_db())
             $ren_start = strtotime($month."/".$day."/".$year." ".$s_h.":".$s_m);
             $ren_end = strtotime($month."/".$day."/".$year." ".$e_h.":".$e_m);
             $query = "insert into ren_periods (ren_ses_id, ren_start, ren_end, ren_length, ren_slots)
-                            values (".$ren_ses_id.", ".$ren_start.", ".$ren_end.", ".$length.", ".$slots." )";
+                            values (".filter_var($ren_ses_id,FILTER_SANITIZE_SPECIAL_CHARS).", ".$ren_start.", ".$ren_end.", ".$length.", ".$slots." )";
             //echo $query;
             $db = new Database("mydb");
             $rs = $db->executeQuery($query);
 
-            echo '<br> Rendezvous Session has been succesfully created!' ;
+            echo '<br> Rendezvous Session has been successfully created!' ;
           }
 
         }
@@ -992,6 +1015,7 @@ if(check_db())
           function del_exam_form1()
           {
             echo '<form name="del_exam_form1" method="POST" action="">';
+            csrfToken();
             select_ren_fields("Select Rendezvous Session:",
                               'btn-warning', 'Continue');
             echo '<input type="hidden" value = "1" name="state">';
@@ -1002,8 +1026,9 @@ if(check_db())
           {
         ?>
           <form name="del_exam_form2" method="POST" action="">
-            <b>Select Exam Period: </b><br><br>
-            <select name="ren_per_id">
+              <?php csrfToken(); ?>
+              <b>Select Exam Period: </b><br><br>
+              <select name="ren_per_id">
               <?php
               $db = new Database("mydb");
               $query = "select ren_per_id, ren_start, ren_end from ren_periods where ren_ses_id = ".$ren_ses_id;
@@ -1027,6 +1052,7 @@ if(check_db())
           {
             if ($_POST['state'] == 1){
               $ren_ses_id = $_POST['ren_ses_id'];
+              checkNumericParam($ren_ses_id);
               if (empty($ren_ses_id))
               {
                 echo "Invalid Rendezvous Session!<br>Please create a rendezvous first. <br><br>";
@@ -1050,7 +1076,7 @@ if(check_db())
                 $query = "delete from rendezvous where ren_per_id = ".$ren_per_id;
                 $rs2 = $db->executeQuery($query);
                 if($rs == 1 && $rs2 !== false)
-                  echo '<br><b>Exam Period has been succesfully removed!</b><br>Note: '.$rs2.' bookings belonging to this Exam Period were also deleted.' ;
+                  echo '<br><b>Exam Period has been successfully removed!</b><br>Note: '.$rs2.' bookings belonging to this Exam Period were also deleted.' ;
                 else
                   echo '<br><b>Operation failed!</b> <br>Probably someone else already deleted this Exam Period.';
               }
@@ -1069,6 +1095,7 @@ if(check_db())
             function close_ren_form()
             {
               echo '<form name="close_ren_form" method="POST" action="">';
+              csrfToken();
               select_ren_fields("Select Rendezvous Session:", 'btn-primary', 'Close');
               echo '</form>';
             }       //close_form
@@ -1076,6 +1103,7 @@ if(check_db())
             if($_SERVER['REQUEST_METHOD'] == 'POST')
             {
               $ren_ses_id = $_POST['ren_ses_id'];
+              checkNumericParam($ren_ses_id);
               if (empty($ren_ses_id))
               {
                 echo "Invalid Rendezvous Session!<br>Please create a rendezvous first. <br><br>";
@@ -1088,7 +1116,7 @@ if(check_db())
                             where ren_ses_id = ".$ren_ses_id;
                 $rs = $db->executeQuery($query);
                 if($rs == 1)
-                  echo '<br> Rendezvous Session has been succesfully closed!' ;
+                  echo '<br> Rendezvous Session has been successfully closed!' ;
                 else
                   echo '<br> Operation failed!';
               }
@@ -1106,6 +1134,7 @@ if(check_db())
             function del_ren_form()
             {
               echo '<form name="del_ren_form" method="POST" action="">';
+              csrfToken();
               select_ren_fields("Select Rendezvous Session:",
                                 'btn-danger', 'Delete');
               echo '</form>';
@@ -1114,6 +1143,7 @@ if(check_db())
             if($_SERVER['REQUEST_METHOD'] == 'POST')
             {
               $ren_ses_id = $_POST['ren_ses_id'];
+              checkNumericParam($ren_ses_id);
               if (empty($ren_ses_id))
               {
                 echo "Invalid Rendezvous Session!<br>Please create a rendezvous first. <br><br>";
@@ -1129,7 +1159,7 @@ if(check_db())
                 $rs3 = $db->executeQuery($query);
 
                 if($rs == 1)
-                  echo '<br><b>Rendezvous Session has been succesfully deleted!</b><br>
+                  echo '<br><b>Rendezvous Session has been successfully deleted!</b><br>
                             Note: '.$rs2.' Exam Periods and '.$rs3.' bookings belonging to this Rendezvous Session were also deleted.';
                 else
                   echo '<br><b>Operation failed!</b><br>Probably someone else already deleted this Rendezvous Session.';
