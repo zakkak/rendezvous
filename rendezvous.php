@@ -44,7 +44,10 @@ if(check_db())
       echo "There are no available Rendezvous Sessions!<br><br>";
     }
   }   //select_ren_fields
-
+  if($_SERVER['REQUEST_METHOD'] == "POST")
+  {
+      validateToken();
+  }
   // if logged in
   if (isset($_SESSION['login']) && $_SESSION['full_path'] == realpath(".") )
   {
@@ -79,7 +82,7 @@ if(check_db())
           {
 ?>
   <form name="book_form1" method="POST" action="">
-      <?php csrfToken(); ?>
+    <?php csrfToken(); ?>
     <b>Select Rendezvous Session: </b><br><br>
     <select name="ren_ses_id">
       <?php
@@ -208,7 +211,6 @@ if(check_db())
 
   if($_SERVER['REQUEST_METHOD'] == 'POST')
   {
-    validateToken();
     if ($_POST['state'] == 1){
       $ren_ses_id = $_POST['ren_ses_id'];
       if (empty($ren_ses_id))
@@ -362,7 +364,7 @@ if(check_db())
       {
   ?>
     <form name="cancel_ren_form" method="POST" action="">
-        <?php csrfToken(); ?>
+      <?php csrfToken(); ?>
       <b>Select Rendezvous Session: </b><br><br>
       <select name="ren_ses_id">
         <?php
@@ -385,7 +387,6 @@ if(check_db())
 
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-      validateToken();
       $ren_ses_id = $_POST['ren_ses_id'];
       checkNumericParam($ren_ses_id);
       if (empty($ren_ses_id))
@@ -430,7 +431,6 @@ if(check_db())
 
       if($_SERVER['REQUEST_METHOD'] == 'POST')
       {
-        validateToken();
         $ren_ses_id = $_POST['ren_ses_id'];
         checkNumericParam($ren_ses_id);
         $db = new Database("mydb");
@@ -532,7 +532,7 @@ if(check_db())
         You have the following options:<br><br>
         <table>
           <tr><td align="right"><b> Create: </b></td>
-            <td align="left">Create a Rendezvous Session. Don\'t forget to add examination slots afterwards! </td></tr>
+            <td align="left">Create a Rendezvous Session. Don't forget to add examination slots afterwards! </td></tr>
           <tr><td align="right"><b> Edit: </b></td>
             <td align="left">Edit a Rendezvous Session.</td></tr>
           <tr><td align="right"><b> Review: </b></td>
@@ -566,7 +566,6 @@ if(check_db())
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
           //include "php/date_check.php";
-          validateToken();
           $title = $_POST['title'];
           $d_date = $_POST['d_date'];
           $h = $_POST['d_hour'];
@@ -646,7 +645,6 @@ if(check_db())
 
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            validateToken();
           if($_POST['state'] == 1)
           {
             $ren_ses_id = $_POST['ren_ses_id'];
@@ -727,7 +725,6 @@ if(check_db())
 
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-          validateToken();
           $ren_ses_id = $_POST['ren_ses_id'];
           checkNumericParam($ren_ses_id);
           $db = new Database("mydb");
@@ -932,7 +929,6 @@ if(check_db())
 
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-          validateToken();
           //include "php/date_check.php";
           $ren_ses_id = $_POST['ren_ses_id'];
           checkNumericParam($ren_ses_id);
@@ -1054,7 +1050,6 @@ if(check_db())
 
           if($_SERVER['REQUEST_METHOD'] == 'POST')
           {
-            validateToken();
             if ($_POST['state'] == 1){
               $ren_ses_id = $_POST['ren_ses_id'];
               checkNumericParam($ren_ses_id);
@@ -1107,7 +1102,6 @@ if(check_db())
 
             if($_SERVER['REQUEST_METHOD'] == 'POST')
             {
-              validateToken();
               $ren_ses_id = $_POST['ren_ses_id'];
               checkNumericParam($ren_ses_id);
               if (empty($ren_ses_id))
@@ -1148,7 +1142,6 @@ if(check_db())
 
             if($_SERVER['REQUEST_METHOD'] == 'POST')
             {
-              validateToken();
               $ren_ses_id = $_POST['ren_ses_id'];
               checkNumericParam($ren_ses_id);
               if (empty($ren_ses_id))

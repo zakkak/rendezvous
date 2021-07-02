@@ -5,7 +5,14 @@
     {
         if(function_exists("random_bytes"))
         {
-            $token = $_SESSION['token'] = bin2hex(random_bytes(20));
+            try
+            {
+                $token = $_SESSION['token'] = bin2hex(random_bytes(20));
+            }
+            catch(Exception $e)
+            {
+                die("Exception thrown: " . $e);
+            }
         }
         else
         {
@@ -19,7 +26,8 @@
     {
         if(!hash_equals($_SESSION['token'],$_POST['token']))
         {
-            die("Invalid Token!");
+            echo("The CSRF token has expired! Please try again.");
+            die("<br><a href='?op=" . filter_var($_GET['op'],FILTER_SANITIZE_SPECIAL_CHARS) . "'>Back</a>");
         }
     }
     //check if a parameter is indeed numeric
@@ -27,7 +35,8 @@
     {
         if(!is_numeric($param))
         {
-            die("Invalid Request!");
+            echo("Parameters must be numeric! Please try again");
+            die("<br><a href='?op=" . filter_var($_GET['op'],FILTER_SANITIZE_SPECIAL_CHARS) . "'>Back</a>");
         }
     }
     //check if the string contains html tags

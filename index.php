@@ -233,7 +233,7 @@ if(check_db())
 
           if (!$verified) // You were not found in the administrators list
           {
-            echo 'Your login "'.filter_var($login,FILTER_SANITIZE_SPECIAL_CHARS).'" was not found in the list of administrators ("'.$admins_file.'")!<br>';
+            echo 'Your login "'.filter_var($login,FILTER_SANITIZE_SPECIAL_CHARS).'" was not found in the list of administrators!<br>';
             echo 'Please check the admins_file specified by the "conf.php" file ("'.realpath('.').'/conf.php").';
             exit;
           }

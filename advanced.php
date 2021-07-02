@@ -19,7 +19,10 @@ if( ini_get('safe_mode') )
 
 if(check_db())
 {
-
+  if($_SERVER['REQUEST_METHOD'] == "POST")
+  {
+    validateToken();
+  }
   if (isset($_SESSION['login']) && $_SESSION['full_path'] == realpath(".") )			// logged in
   {
     if ($_SESSION['acc_type'] == 'user')	// simple user
@@ -158,7 +161,6 @@ if(check_db())
 
   if($_SERVER['REQUEST_METHOD'] == 'POST')
   {
-    validateToken();
     include ("txtDB/txt-db-api.php");
     if (!file_exists(DB_DIR . "mydb"))
     {		// Database doesn't exist
@@ -204,7 +206,6 @@ if(check_db())
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
       //include ("db.php");
-        validateToken();
       reset_db();
 
       // log the user out!
