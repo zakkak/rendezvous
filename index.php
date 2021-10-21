@@ -36,7 +36,13 @@ function ldaplogin($mail, $pass) {
     
     if (!$entry)
         return false;
-    
+    else{
+      // Check that mail given is the same as the one on LDAP
+      $ldap_mails = @ldap_get_values($con, $entry, 'mail');
+      if ($mail!=$ldap_mails[0])
+        return false;
+    }    
+
     $bind = false;
 
     $dn   = @ldap_get_dn($con, $entry);
