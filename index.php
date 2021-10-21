@@ -16,7 +16,7 @@ function ldaplogin($mail, $pass) {
         or die ("Could not connect to $ldap_server.");
     if (!is_resource($con)) {
         trigger_error("Unable to connect to $ldap_server.", E_USER_WARNING);
-        return false;
+        return array(false, '');
     }
     ldap_set_option($con, LDAP_OPT_PROTOCOL_VERSION, 3);
     ldap_set_option($con, LDAP_OPT_REFERRALS, 0);
@@ -27,7 +27,7 @@ function ldaplogin($mail, $pass) {
     $bind = ldap_bind($con, "", "");
     if (!$bind) {
         trigger_error("Unable to anonymously bind to $ldap_server.", E_USER_WARNING);
-        return false;
+        return array(false, '');
     }
     
     // Search for the user
@@ -35,13 +35,10 @@ function ldaplogin($mail, $pass) {
     $entry =@ldap_first_entry($con, $search);
     
     if (!$entry)
-        return false;
-    else{
-      // Check that mail given is the same as the one on LDAP
-      $ldap_mails = @ldap_get_values($con, $entry, 'mail');
-      if ($mail!=$ldap_mails[0])
-        return false;
-    }    
+        return array(false, '');
+
+    // Get Mail found from ldap to replace the one user gave for consistency
+    $ldap_mail = @ldap_get_values($con, $entry, 'mail')[0];
 
     $bind = false;
 
@@ -51,7 +48,7 @@ function ldaplogin($mail, $pass) {
     $lastError = ldap_errno($con);
     ldap_close($con);
 
-    return $bind;
+    return array($bind,$ldap_mail);
 }
 
 function show_form($msg="")
@@ -210,7 +207,9 @@ if(check_db())
     {
       $verified = false;
 
-      $bind = ldaplogin($login, $passwd);
+      $results   = ldaplogin($login, $passwd);
+      $bind      = $results[0]; // Get the bind return Value
+      $ldap_mail = $results[1]; // Get the mail from ldap for consistency
 
       if ($bind)
       {
@@ -250,7 +249,8 @@ if(check_db())
 
       if ($verified)      // user verified
       {
-        $email = $login;
+        //$email = $login;
+        $email = $ldap_mail;
         $login = explode("@", $email);
         $_SESSION['login'] = $login[0];
         $_SESSION['email'] = $email;
