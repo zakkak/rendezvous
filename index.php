@@ -249,7 +249,6 @@ if(check_db())
 
       if ($verified)      // user verified
       {
-        //$email = $login;
         $email = $ldap_mail;
         $login = explode("@", $email);
         $_SESSION['login'] = $login[0];
