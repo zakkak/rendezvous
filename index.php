@@ -38,7 +38,11 @@ function ldaplogin($mail, $pass) {
         return array(false, '');
 
     // Get Mail found from ldap to replace the one user gave for consistency
-    $ldap_mail = @ldap_get_values($con, $entry, 'mail')[0];
+    $ldap_mail = $mail;
+    $mail_values = @ldap_get_values($con, $entry, 'mail');
+    if ($mail_values){
+      $ldap_mail = $mail_values[0];
+    }
 
     $bind = false;
 
