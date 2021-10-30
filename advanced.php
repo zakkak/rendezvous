@@ -1,8 +1,12 @@
 <?php
-session_start();
-session_save_path(DB_DIR);
 
-include("db.php");     // include txtDB
+require_once("const.php");
+require_once("sessions/handler.php");
+session_save_path(DB_FILE);
+session_set_save_handler(new SQLite3Session());
+session_start();
+
+include("db.php");     // Include the database
 include("conf.php");   // settings
 include("https_check.inc.php");  // check for https and redirect if necessary
 
@@ -40,35 +44,40 @@ if(check_db())
       {
 
         echo '<b> Rendezvous History: </b>';
-        include ("txtDB/txt-db-api.php");
-        $db = new Database("mydb");
-        $query = 'select ren_ses_id, ren_time, ren_slot from rendezvous where login = "'.$_SESSION['login'].'"';
-        $rs = $db->executeQuery($query);
-        if($rs->getRowCount() == 0)
+        $bookings = get_user_bookings($_SESSION['login']);
+        if (!$bookings)
+        {
+          exit("A problem occurred in the server.");
+        }
+
+        if(count($bookings) === 0)
         {
           echo "You have never booked a rendezvous.<br>";
         }
         else
         {
-          echo 'You have booked '.$rs->getRowCount().' rendezvous.<br><br>';
+          echo 'You have booked '.count($bookings).' appointments.<br><br>';
           echo '<table class="table table-striped">';
           echo '<tr><th>Rendezvous Session</th><th>Time</th><th>Slot</th></tr>';
-          while($rs->next())
+          foreach($bookings as $book)
           {
             echo '<tr><td>"';
-            $query = 'select title from ren_sessions where ren_ses_id = '.
-                     $rs->getCurrentValueByNr(0);
-            $rs2 = $db->executeQuery($query);
-            if($rs2->next())		// title found
-              echo $rs2->getCurrentValueByNr(0);
+            $sess = get_session($book['ren_ses_id']);
+            if (!$sess)
+            {
+              echo 'Unknown';
+            }
             else
-              echo "unknown";
-            echo '" </td><td>'.
-                 date("F j, Y, g:i a", $rs->getCurrentValueByNr(1)).
-                 '</td><td>'.
-                 $rs->getCurrentValueByNr(2).'</td></tr>';
+            {
+              echo $sess['title'];
+            }
+            echo '</td><td>';
+            echo date("F j, Y, g:i a", $book['ren_time']);
+            echo '</td><td>';
+            echo $book['ren_slot'];
+            echo '</td></tr>';
           }
-          echo "</table>";
+          echo '</table>';
         }
       }
     }
@@ -125,18 +134,41 @@ if(check_db())
       if ($_GET['op'] == 'ren_hist')
       {
         echo '<b> Rendezvous History: </b>';
-        $db = new Database("mydb");
-        $query = 'select * from ren_sessions';
-        $rs = $db->executeQuery($query);
-        if($rs->getRowCount() == 0)
+        $sess = get_all_sessions();
+        if (count($sess) === 0)
         {
           echo "No Rendezvous Sessions found in the database!.<br>";
         }
         else
         {
-          echo 'Found '.$rs->getRowCount().' Rendezvous Sessions in the database.<br><br>';
-          include "php/print.php";
-          print_rendezvous($rs);
+          echo "Found " . count($sess) . " Rendezvous Sessions in the database.<br><br>";
+          echo "<table class=\"table table-striped\">";
+          echo "<thread><th>Title</th><th>Deadline</th><th>State</th><th>Deactivation</th></thread>";
+          echo "<tbody>";
+          foreach($sess as $session)
+          {
+            echo "<tr>";
+            echo "<td>" . $session['title'] . "</td>";
+            echo "<td>" . date("F j, Y, g:i a", $session['deadline']) . "</td>";
+            if ($session['active'] === "Y" || $session['active'] === "A" && $session['deadline'] >= time())
+            {
+              echo "<td>Active</td>";
+            }
+            else
+            {
+              echo "<td>Closed</td>";
+            }
+            if ($session['active'] === "A")
+            {
+              echo "<td>Automatic</td>";
+            }
+            else
+            {
+              echo "<td>Manual</td>";
+            }
+            echo "</tr>";
+          }
+          echo "</tbody></table>";
         }
       }
 
@@ -147,34 +179,25 @@ if(check_db())
         function query_form($query="")
         {
 ?>
-  <form name="form1" method="post" action="">
-    <b><font size = "4" >SQL Query : </font></b><br><br>
-    <textarea name="textarea" cols="50" rows="5"
-              wrap="PHYSICAL"><?php echo "$query";?></textarea></td> <br><br>
+  <form method="post" action="">
+    <b>SQL Query : </b><br><br>
+    <textarea name="sqlquery" cols="50" rows="5"
+              wrap="PHYSICAL"><?php echo stripslashes($_POST['sqlquery']);?></textarea></td> <br><br>
     <input type="submit" name="Submit" value="Submit">
   </form>
-  <?php
-  }	// query_form
+<?php
+        }	// query_form
 
   if($_SERVER['REQUEST_METHOD'] == 'POST')
   {
-    include ("txtDB/txt-db-api.php");
-    if (!file_exists(DB_DIR . "mydb"))
-    {		// Database doesn't exist
-      echo 'No Database Found!<br>Please constact your instructor or teaching assistants.<br>';
-    }
-    else
+    $results = raw_db_query(stripslashes($_POST['sqlquery']));
+    if (!$results)
     {
-      $query = stripslashes($_POST['textarea']);
-      $db = new Database("mydb");
-      $rs = $db->executeQuery($query);
-
-      echo "<b>Your SQL Query returned the following results:</b><br><br>";
-
-      //printing simple html
-      include "php/print.php";
-      print_table($rs);
+      exit("Failed to execute query.");
     }
+    require_once("print.php");
+    echo "<b>Your SQL Query returned the following results:</b><br><br>";
+    print_table($results);
   }
   else
   {
@@ -201,7 +224,6 @@ if(check_db())
 
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-      //include ("db.php");
       reset_db();
 
       // log the user out!

@@ -1,8 +1,12 @@
 <?php
-session_start();
-session_save_path(DB_DIR);
 
-include("db.php");     // include txtDB
+require_once("const.php");
+require_once("sessions/handler.php");
+session_save_path(DB_FILE);
+session_set_save_handler(new SQLite3Session());
+session_start();
+
+include("db.php");     // include database
 include("conf.php");   // settings
 
 include("header.inc.php");
@@ -133,24 +137,26 @@ if(check_db())
     /* /\************* Status Page *************\/ */
     /* if ($_GET['op'] == 'status')        // Status Page */
     /* { */
-      include ("txtDB/txt-db-api.php");
-      $db = new Database("mydb");
+      $sessions = get_available_sessions();
+      if (!$sessions)
+      {
+        exit("A problem occurred in the server.");
+      }
 
       echo '<b> Rendezvous Sessions: </b>';
-      $query = "select title, deadline from ren_sessions where active = 'Y' or (active = 'A' and deadline >= ".time().")";
-      $rs = $db->executeQuery($query);
-      if($rs->getRowCount() == 0)
+
+      if(count($sessions) === 0)
       {
         echo "No available active rendezvous sessions.<br>";
       }
       else
       {
-        echo $rs->getRowCount()." available active rendezvous sessions.<br><br>";
+        echo count($sessions)." available active rendezvous sessions.<br><br>";
         echo '<table class="table table-striped">';
         echo '<tr><th>Title</th><th>Deadline</th></tr><tbody>';
-        while($rs->next())
+        foreach ($sessions as $rs)
         {
-          echo '<tr><td>"'.$rs->getCurrentValueByNr(0).'" </td><td>'.date("F j, Y, g:i a", $rs->getCurrentValueByNr(1)).'</td></tr>';
+          echo '<tr><td>"'.$rs["title"].'" </td><td>'.date("F j, Y, g:i a", $rs["deadline"]).'</td></tr>';
         }
         echo "</tbody></table>";
       }

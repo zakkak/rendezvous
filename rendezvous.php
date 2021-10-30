@@ -1,6 +1,10 @@
 <?php
+
+require_once("const.php");
+require_once("sessions/handler.php");
+session_save_path(DB_FILE);
+session_set_save_handler(new SQLite3Session());
 session_start();
-session_save_path(DB_DIR);
 
 include("db.php");     // include txtDB
 include("conf.php");   // settings
